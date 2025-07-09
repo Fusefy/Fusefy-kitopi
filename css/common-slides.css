@@ -1,12 +1,23 @@
 /* Common styles for all Fusefy slides */
 
-/* Ensure slide container has proper scaling */
+/* Ensure slides load without flashing content from other slides */
+.reveal {
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.8s ease;
+}
+
+.reveal.ready {
+  opacity: 1;
+}
+
+/* Ensure proper slide transitions */
 .reveal .slides section {
   transform-origin: top center;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   font-size: 90%; /* Further reduce base font size */
+  transition: opacity 0.5s ease; /* Smooth transitions between slides */
 }
 
 /* Scale adjustments for different screen sizes */
