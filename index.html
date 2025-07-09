@@ -1,252 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Fusefy Slides</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Reveal.js core styles -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css" />
-  <!-- Common styles for all slides -->
-  <link rel="stylesheet" href="css/common-slides.css" />
+  <head>
+    <meta charset="utf-8" />
+    <title>Fusefy Slides</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Reveal.js core styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css"
+    />
+    <!-- Common styles for all slides -->
+    <link rel="stylesheet" href="css/common-slides.css" />
 
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
 
-    .reveal {
-      visibility: hidden; /* Prevent FOUC */
-      height: 100%;
-    }
+      .reveal {
+        visibility: hidden; /* Prevent FOUC */
+        height: 100%;
+      }
 
-    /* Override Reveal.js defaults that may cause gaps */
-    .reveal .slides {
-      height: 100%;
-      top: 0;
-      margin: 0;
-    }
+      /* Override Reveal.js defaults that may cause gaps */
+      .reveal .slides {
+        height: 100%;
+        top: 0;
+        margin: 0;
+      }
 
-    .reveal .slides > section {
-      padding: 0;
-      height: 100vh;
-      top: 0 !important;
-      margin: 0 !important;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      padding-bottom: 40px; /* Reduced padding for footer */
-      font-size: 95%; /* Base reduction for all slides */
-    }
-
-
-
-    .company-logo {
-      height: 40px;
-      max-width: 40px;
-      padding-top: 0px !important;
-    }
-
-    .slide-content {
-      flex: 1;
-      padding: 20px;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 30px; /* Space for header */
-    }
-
-    /* Footer adjustments */
-    .slide-footer {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      padding: 0 20px;
-      z-index: 100;
-      pointer-events: none; /* Allow clicking through */
-    }
-    
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 18px; /* Smaller font */
-      color: white;
-      max-width: 95%; /* Prevent overflow */
-      margin: 15px auto;
-    }
-
-    .page-number {
-      background-color: white;
-      color: #002060;
-      font-weight: bold;
-      font-size: 16px;
-      padding: 4px 14px;
-      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    /* Custom Navigation Arrows */
-    .custom-controls {
-      position: fixed;
-      bottom: 60px; /* Position above footer */
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 20px;
-      box-sizing: border-box;
-      z-index: 100;
-    }
-
-    .nav-arrow {
-      background-color: rgba(0, 32, 96, 0.7);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: 24px;
-      transition: background-color 0.3s ease;
-    }
-
-    .nav-arrow:hover {
-      background-color: rgba(0, 32, 96, 1);
-    }
-
-    /* Additional overrides to remove any potential gaps */
-    .reveal .progress { height: 0; }
-
-    /* Show the controls but customize them */
-    .reveal .controls {
-      display: block;
-      bottom: 60px; /* Position above footer */
-    }
-
-    /* For mobile responsiveness */
-    @media (max-width: 768px) {
+      .reveal .slides > section {
+        padding: 0;
+        height: 100vh;
+        top: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 40px; /* Reduced padding for footer */
+        font-size: 95%; /* Base reduction for all slides */
+      }
 
       .company-logo {
-        height: 30px;
+        height: 40px;
+        max-width: 40px;
+        padding-top: 0px !important;
+      }
+
+      .slide-content {
+        flex: 1;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 30px; /* Space for header */
+      }
+
+      /* Footer adjustments */
+      .slide-footer {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        z-index: 100;
+        pointer-events: none; /* Allow clicking through */
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px; /* Smaller font */
+        color: white;
+        max-width: 95%; /* Prevent overflow */
+        margin: 15px auto;
+      }
+
+      .page-number {
+        background-color: white;
+        color: #002060;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 4px 14px;
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Custom Navigation Arrows */
+      .custom-controls {
+        position: fixed;
+        bottom: 60px; /* Position above footer */
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-sizing: border-box;
+        z-index: 100;
       }
 
       .nav-arrow {
-        width: 30px;
-        height: 30px;
-        font-size: 18px;
+        background-color: rgba(0, 32, 96, 0.7);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 24px;
+        transition: background-color 0.3s ease;
       }
-    }
 
-    /* Screen-based scaling */
-    @media (min-width: 1600px) {
-      .reveal .slides > section {
-        font-size: 95%;
+      .nav-arrow:hover {
+        background-color: rgba(0, 32, 96, 1);
       }
-    }
-    
-    @media (max-width: 1440px) {
-      .reveal .slides > section {
-        font-size: 90%;
+
+      /* Additional overrides to remove any potential gaps */
+      .reveal .progress {
+        height: 0;
       }
-    }
-    
-    @media (max-width: 1280px) {
-      .reveal .slides > section {
-        font-size: 85%;
+
+      /* Show the controls but customize them */
+      .reveal .controls {
+        display: block;
+        bottom: 60px; /* Position above footer */
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="reveal">
-    <div class="slides" id="slides-container">
-      <!-- Slides will load here -->
-    </div>
 
-  </div>
+      /* For mobile responsiveness */
+      @media (max-width: 768px) {
+        .company-logo {
+          height: 30px;
+        }
 
-  <!-- Fixed footer -->
-  <div class="slide-footer">
-    <div class="footer-content">
-      <span>www.fusefy.ai | All rights reserved, © 2025</span>
-      <div class="page-number"><span id="current-slide">1</span></div>
-    </div>
-  </div>
-
-  <!-- Reveal.js -->
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
-  <!-- Custom consistency script -->
-  <script src="js/slide-consistency.js"></script>
-  <!-- Storylane Preloader -->
-  <script src="js/storylane-loader.js"></script>
-  <!-- Global interactive elements handler -->
-  <script src="js/slides-interactive.js"></script>
-
-  <script>
-    const slideFiles = ["slide1.html", "slide2.html", "slide3.html", "slide4.html", "slide5.html", "slide6.html","slide7.html","slide8.html", "slide9.html"];
-
-    async function loadSlides() {
-      const container = document.getElementById("slides-container");
-
-      for (const file of slideFiles) {
-        try {
-          const response = await fetch(file);
-          const html = await response.text();
-          const wrapper = document.createElement("div");
-          wrapper.innerHTML = html;
-          container.append(...wrapper.children);
-        } catch (err) {
-          console.error(`❌ Failed to load ${file}`, err);
+        .nav-arrow {
+          width: 30px;
+          height: 30px;
+          font-size: 18px;
         }
       }
 
-      // Reveal.js initialization
-      Reveal.initialize({
-        hash: true,
-        width: "100%",
-        height: "100%",
-        margin: 0,
-        minScale: 0.85, // Allow scaling down if needed
-        maxScale: 1,
-        center: false,
-        disableLayout: false,
-        progress: false,
-        controls: true, // Enable built-in controls
-        transition: 'slide',
-        autoSlide: 0, // No auto-sliding
-        viewDistance: 3, // Preload nearby slides
-        slideNumber: false // We have our own slide counter
-      });
+      /* Screen-based scaling */
+      @media (min-width: 1600px) {
+        .reveal .slides > section {
+          font-size: 95%;
+        }
+      }
 
-      // Update slide number in footer
-      Reveal.on('slidechanged', function(event) {
-        document.getElementById('current-slide').textContent = event.indexh + 1;
-      });
+      @media (max-width: 1440px) {
+        .reveal .slides > section {
+          font-size: 90%;
+        }
+      }
 
-      // Show Reveal after all slides load
-      document.querySelector(".reveal").style.visibility = "visible";
+      @media (max-width: 1280px) {
+        .reveal .slides > section {
+          font-size: 85%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides" id="slides-container">
+        <!-- Slides will load here -->
+      </div>
+    </div>
 
-      // Add keyboard navigation
-      // document.addEventListener('keydown', function(event) {
-      //   if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === " ") {
-      //     Reveal.next();
-      //   }
-      //   else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      //     Reveal.prev();
-      //   }
-      // });
-    }
+    <!-- Fixed footer -->
+    <div class="slide-footer">
+      <div class="footer-content">
+        <span>www.fusefy.ai | All rights reserved, © 2025</span>
+        <div class="page-number"><span id="current-slide">1</span></div>
+      </div>
+    </div>
 
-    loadSlides();
-  </script>
-</body>
+    <!-- Reveal.js -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <!-- Custom consistency script -->
+    <script src="js/slide-consistency.js"></script>
+    <!-- Storylane Preloader -->
+    <script src="js/storylane-loader.js"></script>
+    <!-- Global interactive elements handler -->
+    <script src="js/slides-interactive.js"></script>
+
+    <script>
+      const slideFiles = [
+        "./slide1.html",
+        "./slide2.html",
+        "./slide3.html",
+        "./slide4.html",
+        "./slide5.html",
+        "./slide6.html",
+        "./slide7.html",
+        "./slide8.html",
+        "./slide9.html",
+      ];
+
+      async function loadSlides() {
+        const container = document.getElementById("slides-container");
+
+        for (const file of slideFiles) {
+          try {
+            const response = await fetch(file);
+            const html = await response.text();
+            const wrapper = document.createElement("div");
+            wrapper.innerHTML = html;
+            container.append(...wrapper.children);
+          } catch (err) {
+            console.error(`❌ Failed to load ${file}`, err);
+          }
+        }
+
+        // Reveal.js initialization
+        Reveal.initialize({
+          hash: true,
+          width: "100%",
+          height: "100%",
+          margin: 0,
+          minScale: 0.85, // Allow scaling down if needed
+          maxScale: 1,
+          center: false,
+          disableLayout: false,
+          progress: false,
+          controls: true, // Enable built-in controls
+          transition: "slide",
+          autoSlide: 0, // No auto-sliding
+          viewDistance: 3, // Preload nearby slides
+          slideNumber: false, // We have our own slide counter
+        });
+
+        // Update slide number in footer
+        Reveal.on("slidechanged", function (event) {
+          document.getElementById("current-slide").textContent =
+            event.indexh + 1;
+        });
+
+        // Show Reveal after all slides load
+        document.querySelector(".reveal").style.visibility = "visible";
+
+        // Add keyboard navigation
+        // document.addEventListener('keydown', function(event) {
+        //   if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === " ") {
+        //     Reveal.next();
+        //   }
+        //   else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        //     Reveal.prev();
+        //   }
+        // });
+      }
+
+      loadSlides();
+    </script>
+  </body>
 </html>
