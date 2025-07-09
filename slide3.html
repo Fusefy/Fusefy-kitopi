@@ -95,6 +95,29 @@
       align-items: center;
     }
 
+    /* Styles for clickable elements */
+    .clickable-image {
+      transition: transform 0.2s ease-out;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .clickable-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+    }
+    
+    .navigation-button {
+      position: relative;
+      z-index: 20;
+      transition: transform 0.2s ease;
+    }
+    
+    .navigation-button:hover {
+      transform: scale(1.05);
+    }
+    
     @media screen and (max-width: 1024px) {
       .service-box {
         padding: 15px;
@@ -108,7 +131,7 @@
 
   <!-- Zoom Overlay -->
   <div class="zoom-overlay" id="zoomOverlay">
-    <div class="close-zoom" onclick="closeZoom()">×</div>
+    <div class="close-zoom">×</div>
     <img class="zoom-image" id="zoomedImage" src="" alt="Zoomed Image" />
   </div>
 
@@ -127,9 +150,9 @@
               <strong style="color :#0021f3;">FUSE Framework</strong>
             </div>
             <img src="images/Flow.jpg" alt="FLOW: FUSE Framework"
-              class="animate-on-load fade-in-up"
-              style="width: 60%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 1.2s; animation-delay: 0.5s;"
-              onclick="showZoom(this.src)" />
+              class="animate-on-load fade-in-up clickable-image"
+              style="width: 60%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 1.2s; animation-delay: 0.5s; cursor: pointer;"
+              data-src="images/Flow.jpg" />
           </div>
           <div style="width: 50%;">
             <p style="font-size: medium; color: blue; font-weight: 900; margin-bottom: 10px;">Strategy:</p>
@@ -137,16 +160,16 @@
               <div style="width: 45%; text-align: center;">
                 <div style="color: #002060; font-size: x-small; font-weight: bold; margin-bottom: 2px;"><strong style="font-weight: 900; font-size: medium;">Heatmap</strong></div>
                 <img src="images/Heatmap.png" alt="ROI by Workflow"
-                  class="animate-on-load fade-in-right"
-                  style="width: 100%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 1.2s; animation-delay: 1.2s;"
-                  onclick="showZoom(this.src)" />
+                  class="animate-on-load fade-in-right clickable-image"
+                  style="width: 100%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 1.2s; animation-delay: 1.2s; cursor: pointer;"
+                  data-src="images/Heatmap.png" />
               </div>
               <div style="width: 45%; text-align: center;">
                 <div style="color: #002060; font-size: x-small; font-weight: bold; margin-bottom: 3px;"><strong style="font-weight: 900; font-size: medium;">TCO Calculation</strong></div>
                 <img src="images/TCO-2.png" alt="ROI Trend Graph"
-                  class="animate-on-load fade-in-right"
-                  style="width: 100%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 1.2s; animation-delay: 2.0s;"
-                  onclick="showZoom(this.src)" />
+                  class="animate-on-load fade-in-right clickable-image"
+                  style="width: 100%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 1.2s; animation-delay: 2.0s; cursor: pointer;"
+                  data-src="images/TCO-2.png" />
               </div>
             </div>
           </div>
@@ -158,22 +181,22 @@
             <div style="width: 25%; text-align: center;">
               <div style="color: #002060; font-size: x-small; font-weight: bold; margin-bottom: 3px;"><strong style="font-weight: 900; font-size: medium;">ROI</strong></div>
               <img src="images/ROI-1.png" alt="Implementation Requirements Heatmap"
-                class="animate-on-load scale-in"
-                style="width: 85%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 0.7s; animation-delay: 1.2s;"
-                onclick="showZoom(this.src)" />
+                class="animate-on-load scale-in clickable-image"
+                style="width: 85%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 0.7s; animation-delay: 1.2s; cursor: pointer;"
+                data-src="images/ROI-1.png" />
             </div>
             <div style="width: 28%; text-align: center;">
               <div style="color: #002060; font-size: x-small; font-weight: bold; margin-bottom: 3px;"><strong style="font-weight: 900; font-size: medium;">ROI Calculation</strong></div>
               <img src="images/ROI-G.png" alt="Total Cost of Ownership Calculation"
-                class="animate-on-load scale-in"
-                style="width: 60%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 0.7s; animation-delay: 1.5s;"
-                onclick="showZoom(this.src)" />
+                class="animate-on-load scale-in clickable-image"
+                style="width: 60%; height: auto; border: 1px solid black; border-radius: 8px; animation-duration: 0.7s; animation-delay: 1.5s; cursor: pointer;"
+                data-src="images/ROI-G.png" />
             </div>
 
             <!-- Fixed Navigation Button -->
             <div id="next-button-wrapper"
               style="margin-left: 20px; opacity: 0; animation: fadeIn 0.8s 1.8s forwards; animation-fill-mode: forwards; padding-bottom: 10px;">
-              <button onclick="showContentSet2()"
+              <button id="next-button" class="navigation-button"
                 style="background-color: white; color: blue; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center;">
                 <span>Next</span>
                 <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImJsdWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNNiA5bDYgNiA2LTYiLz48L3N2Zz4=" alt="Down Arrow" style="width: 24px; height: 24px; margin-left: 8px;">
@@ -216,7 +239,7 @@
             </div>
           </div>
           <div class="back-button-container animate-on-show">
-            <button onclick="showContentSet1()"
+            <button id="back-button" class="navigation-button"
               style="background-color: white; color: blue; border: none; border-radius: 4px; padding: 10px 20px; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center;">
               <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImJsdWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTggMTVsLTYtNi02IDYiLz48L3N2Zz4=" alt="Up Arrow" style="width: 24px; height: 24px; margin-right: 8px;">
               <span>Back</span>
@@ -227,88 +250,5 @@
     </div>
   </div>
 
-  <script>
-    function showContentSet1() {
-      document.getElementById('content-set-2').style.display = 'none';
-      document.getElementById('content-set-1').style.display = 'block';
-
-      const elementsToReset = document.querySelectorAll('#content-set-2 .animate-on-show');
-      elementsToReset.forEach(el => el.style.animation = 'none');
-    }
-
-    function showContentSet2() {
-      document.getElementById('content-set-1').style.display = 'none';
-      const contentSet2 = document.getElementById('content-set-2');
-      contentSet2.style.display = 'block';
-
-      const title = contentSet2.querySelector('.services-title');
-      const boxes = contentSet2.querySelectorAll('.service-box');
-      const backButton = contentSet2.querySelector('.back-button-container');
-
-      title.style.animation = 'fadeInUp 0.6s 0.2s forwards';
-      boxes.forEach((box, index) => {
-         box.style.animation = `fadeInUp 0.6s ${0.4 + index * 0.2}s forwards`;
-      });
-      backButton.style.animation = 'fadeIn 0.8s 1.2s forwards';
-    }
-
-    function showZoom(imgSrc) {
-      const overlay = document.getElementById("zoomOverlay");
-      const zoomedImg = document.getElementById("zoomedImage");
-      zoomedImg.src = imgSrc;
-      overlay.classList.add("active");
-      Reveal.configure({ keyboard: false });
-    }
-
-    function closeZoom() {
-      const overlay = document.getElementById("zoomOverlay");
-      overlay.classList.remove("active");
-      Reveal.configure({ keyboard: true });
-    }
-
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        if (document.getElementById("zoomOverlay").classList.contains("active")) {
-          closeZoom();
-        }
-      } else if (event.key === 'ArrowDown') {
-        const currentSlide = Reveal.getCurrentSlide();
-        if (currentSlide && currentSlide.classList.contains('ai-adoption-slide')) {
-          showContentSet2();
-          event.preventDefault();
-        }
-      } else if (event.key === 'ArrowUp') {
-        const currentSlide = Reveal.getCurrentSlide();
-        if (currentSlide && currentSlide.classList.contains('ai-adoption-slide')) {
-          showContentSet1();
-          event.preventDefault();
-        }
-      }
-    });
-
-    Reveal.addEventListener('slidechanged', function(event) {
-      if (event.currentSlide && event.currentSlide.classList.contains('ai-adoption-slide')) {
-        showContentSet1();
-        const animatedElements = event.currentSlide.querySelectorAll('.animate-on-load');
-        animatedElements.forEach(el => {
-          el.style.animation = 'none';
-          void el.offsetWidth;
-          el.style.animation = '';
-        });
-
-        const buttonDiv = document.getElementById('next-button-wrapper');
-        if (buttonDiv) {
-          buttonDiv.style.opacity = '0';
-          buttonDiv.style.animation = 'none';
-          void buttonDiv.offsetWidth;
-          buttonDiv.style.animation = 'fadeIn 0.8s 1.8s forwards';
-          setTimeout(() => {
-            if (getComputedStyle(buttonDiv).opacity === '0') {
-              buttonDiv.style.opacity = '1';
-            }
-          }, 2500);
-        }
-      }
-    });
-  </script>
+  <!-- No inline script needed - handled by global slides-interactive.js -->
 </section>

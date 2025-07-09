@@ -152,19 +152,17 @@
       class="company-logo"
       data-auto-animate
       data-auto-animate-duration="1"
-      onclick="this.classList.add('pulse'); setTimeout(() => this.classList.remove('pulse'), 500);"
     />
   </header>
 
   <div class="slide-body">
-    <h2 class="subtitle">Transforming Business With Intelligent Automation</h2>
     <!-- Logo container for better centering -->
     <div class="fusefy-logo-container fragment" data-fragment-index="0">
       <img
+      style="padding-top: 70px; width: 300px; height: 85px;"
         src="images/fusefy.svg"
         alt="Fusefy Logo"
         class="fusefy-logo custom-appear"
-        onclick="this.classList.add('pulse'); setTimeout(() => this.classList.remove('pulse'), 500);"
       />
     </div>
 
@@ -172,33 +170,8 @@
     <p class="main-heading fragment" data-fragment-index="1">
       AI Adoption As A Service
     </p>
+    <p data-fragment-index="2"  class="main-heading fragment" style="font-weight: 900; color: #002060; line-height: 0.3 !important;">Empowering Intelligent Automation at Scale</p>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Get the logo element
-      const logo = document.querySelector(".fusefy-logo");
-
-      // Add click event to the logo for pulse animation
-      if (logo) {
-        logo.addEventListener("click", function (event) {
-          this.classList.add("pulse");
-          setTimeout(() => this.classList.remove("pulse"), 500);
-
-          // Prevent this click from triggering fragment navigation
-          event.stopPropagation();
-        });
-      }
-
-      // Configure Reveal.js to use fragments properly
-      if (typeof Reveal !== "undefined") {
-        // When this slide becomes active, reset to first fragment
-        Reveal.addEventListener("slidechanged", function (event) {
-          if (event.currentSlide.classList.contains("index-slide")) {
-            Reveal.navigateFragment(-1); // Reset to beginning
-          }
-        });
-      }
-    });
-  </script>
+  <!-- No inline script needed - handled by global slides-interactive.js -->
 </section>

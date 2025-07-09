@@ -21,6 +21,76 @@
       position: relative;
       font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
     }
+    
+    /* Storylane modal styles */
+    .storylane-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    }
+    
+    .storylane-modal.active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease;
+    }
+    
+    .storylane-container {
+      width: 90%;
+      height: auto;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.26, 0.86, 0.44, 0.985);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .storylane-modal.active .storylane-container {
+      transform: scale(1);
+    }
+    
+    .close-storylane {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 36px;
+      height: 36px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--dark-blue);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    
+    .close-storylane:hover {
+      background-color: white;
+      transform: scale(1.1);
+      color: #ff6b35;
+    }
 
     .intelligent-agents-slide * {
       box-sizing: border-box;
@@ -78,7 +148,7 @@
 
     .top-row, .bottom-row {
       display: flex;
-      gap: 15px;
+      gap: 50px;
       justify-content: center;
     }
 
@@ -102,14 +172,16 @@
       border: 1px solid var(--card-border);
       flex: 1;
       min-width: 200px;
-      max-width: 280px;
-      height: 170px;
+      max-width: 400px;
+      height: 200px;
       transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer; /* Make it clear cards are clickable */
     }
 
+    /* Add a subtle hover hint to indicate clickability */
     .agent-card:hover {
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      transform: translateY(-5px);
+      transform: translateY(-5px) scale(1.02);
       border-color: var(--light-blue);
     }
 
@@ -322,11 +394,108 @@
       );
       opacity: 0;
     }
+
+    /* Improve modal content positioning */
+    .storylane-container {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Create a standardized aspect ratio for all storylane embeds */
+    .sl-embed {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    /* Loading spinner and text for Storylane */
+    .storylane-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 1;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(58, 134, 255, 0.2);
+      border-top: 4px solid var(--light-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    
+    .loading-text {
+      color: var(--dark-blue);
+      font-size: 16px;
+      text-align: center;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Better click feedback for agent cards */
+    .agent-card.clickable {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .agent-card.clickable:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .agent-card.clicked {
+      transform: scale(0.96);
+      transition: transform 0.1s ease;
+    }
+    
+    /* Better indication that agent cards are clickable */
+    .agent-card::after {
+      content: "Click to view demo";
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: rgba(10, 37, 64, 0.1);
+      color: var(--dark-blue);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .agent-card:hover::after {
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .storylane-container {
+        width: 95%;
+        height: 90%;
+      }
+      
+      .sl-embed {
+        padding-bottom: 75% !important; /* Taller ratio for mobile */
+      }
+    }
   </style>
 
   <header class="slide-header" data-id="header">
     <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
-      Outcomes That Matter
+      AGENTIC AI USE CASES
     </h1>
     <img
       src="images/Logo.png"
@@ -348,10 +517,10 @@
     <div class="bg-accent bg-accent-2"></div>
 
     <div class="agent-cards-container">
-      <!-- Top row with 3 cards -->
+      <!-- Top row with 2 cards -->
       <div class="top-row">
-        <!-- SmartProcure AI Card - Fragment 1 -->
-        <div class="agent-card card-procurement glow shimmer fragment" data-fragment-index="1">
+        <!-- Vendor Purchase Order Processing - Agent(PO) - Fragment 1 -->
+        <div class="agent-card card-procurement glow shimmer fragment" data-fragment-index="1" data-agent-id="po-agent">
           <div class="card-header">
             <div class="agent-icon icon-procurement icon-pulse">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -359,8 +528,8 @@
               </svg>
             </div>
             <div class="agent-info">
-              <div class="agent-name">SmartProcure AI</div>
-              <div class="agent-use-case">PO Processing Agent</div>
+              <div class="agent-name">Purchase Order Agent</div>
+              <div class="agent-use-case">PO Processing Automation</div>
             </div>
           </div>
           <ul class="impact-list">
@@ -370,7 +539,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="60% less manual effort">60% less manual effort</span>
+              <span class="loading-text">60% less manual effort</span>
             </li>
             <li class="impact-item">
               <div class="impact-icon">
@@ -378,7 +547,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="95% data accuracy">95% data accuracy</span>
+              <span class="loading-text">95% data accuracy</span>
             </li>
             <li class="impact-item">
               <div class="impact-icon">
@@ -386,13 +555,13 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="3x cycle time speed-up">3x cycle time speed-up</span>
+              <span class="loading-text">3x cycle time speed-up</span>
             </li>
           </ul>
         </div>
 
-        <!-- AutoAssist AI Card - Fragment 2 -->
-        <div class="agent-card card-hr glow shimmer fragment" data-fragment-index="2">
+        <!-- Onboarding Agent - Fragment 2 -->
+        <div class="agent-card card-hr glow shimmer fragment" data-fragment-index="2" data-agent-id="onboarding-agent">
           <div class="card-header">
             <div class="agent-icon icon-hr icon-pulse">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -400,7 +569,7 @@
               </svg>
             </div>
             <div class="agent-info">
-              <div class="agent-name">AutoAssist AI</div>
+              <div class="agent-name">Onboarding Agent</div>
               <div class="agent-use-case">Employee Onboarding Assistant</div>
             </div>
           </div>
@@ -411,7 +580,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="70% faster onboarding">70% faster onboarding</span>
+              <span class="loading-text">70% faster onboarding</span>
             </li>
             <li class="impact-item">
               <div class="impact-icon">
@@ -419,7 +588,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="45% reduced HR support load">45% reduced HR support load</span>
+              <span class="loading-text">45% reduced HR support load</span>
             </li>
             <li class="impact-item">
               <div class="impact-icon">
@@ -427,48 +596,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="2x faster query resolution">2x faster query resolution</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Hire AI Card - Fragment 3 -->
-        <div class="agent-card card-recruitment glow shimmer fragment" data-fragment-index="3">
-          <div class="card-header">
-            <div class="agent-icon icon-recruitment icon-pulse">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M14,20V19C14,17.67 11.33,17 10,17C8.67,17 6,17.67 6,19V20H14M10,12A2,2 0 0,0 8,14A2,2 0 0,0 10,16A2,2 0 0,0 12,14A2,2 0 0,0 10,12Z"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Hire AI</div>
-              <div class="agent-use-case">Recruitment Agent</div>
-            </div>
-          </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span class="loading-text" data-text="50% faster screening">50% faster screening</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span class="loading-text" data-text="85% auto-scheduling">85% auto-scheduling</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span class="loading-text" data-text="3x recruiter productivity">3x recruiter productivity</span>
+              <span class="loading-text">2x faster query resolution</span>
             </li>
           </ul>
         </div>
@@ -476,8 +604,49 @@
 
       <!-- Bottom row with 2 cards -->
       <div class="bottom-row">
-        <!-- ClaimPath AI Card - Fragment 4 -->
-        <div class="agent-card card-claims glow shimmer fragment" data-fragment-index="4">
+        <!-- Interview Agent - Fragment 3 -->
+        <div class="agent-card card-recruitment glow shimmer fragment" data-fragment-index="3" data-agent-id="interview-agent">
+          <div class="card-header">
+            <div class="agent-icon icon-recruitment icon-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M14,20V19C14,17.67 11.33,17 10,17C8.67,17 6,17.67 6,19V20H14M10,12A2,2 0 0,0 8,14A2,2 0 0,0 10,16A2,2 0 0,0 12,14A2,2 0 0,0 10,12Z"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">Interview Agent</div>
+              <div class="agent-use-case">Recruitment Assistance</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text">50% faster screening</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text">85% auto-scheduling</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text">3x recruiter productivity</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Claim Reimbursement Agent - Fragment 4 -->
+        <div class="agent-card card-claims glow shimmer fragment" data-fragment-index="4" data-agent-id="claim-agent">
           <div class="card-header">
             <div class="agent-icon icon-claims icon-pulse">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -485,8 +654,8 @@
               </svg>
             </div>
             <div class="agent-info">
-              <div class="agent-name">ClaimPath AI</div>
-              <div class="agent-use-case">Claims Automation Agent</div>
+              <div class="agent-name">Claim Reimbursement Agent</div>
+              <div class="agent-use-case">Claims Automation</div>
             </div>
           </div>
           <ul class="impact-list">
@@ -496,7 +665,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="40% faster triage">40% faster triage</span>
+              <span class="loading-text">40% faster processing</span>
             </li>
             <li class="impact-item">
               <div class="impact-icon">
@@ -504,7 +673,7 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="30% less manual review">30% less manual review</span>
+              <span class="loading-text">30% less manual review</span>
             </li>
             <li class="impact-item">
               <div class="impact-icon">
@@ -512,50 +681,62 @@
                   <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
                 </svg>
               </div>
-              <span class="loading-text" data-text="Improved audit quality">Improved audit quality</span>
+              <span class="loading-text">Improved audit quality</span>
             </li>
           </ul>
         </div>
-
-        <!-- CXPilot AI Card - Fragment 5 -->
-        <div class="agent-card card-customer glow shimmer fragment" data-fragment-index="5">
-          <div class="card-header">
-            <div class="agent-icon icon-customer icon-pulse">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M20,15.5C18.8,15.5 17.5,15.3 16.4,14.9C16.3,14.9 16.2,14.9 16.1,14.9C15.8,14.9 15.6,15 15.4,15.2L13.2,17.4C10.4,15.9 8,13.6 6.6,10.8L8.8,8.6C9.1,8.3 9.2,7.9 9,7.6C8.7,6.5 8.5,5.2 8.5,4C8.5,3.5 8,3 7.5,3H4C3.5,3 3,3.5 3,4C3,13.4 10.6,21 20,21C20.5,21 21,20.5 21,20V16.5C21,16 20.5,15.5 20,15.5M5,5H6.5C6.6,5.9 6.8,6.8 7,7.6L5.8,8.8C5.4,7.6 5.1,6.3 5,5M19,19C17.7,18.9 16.4,18.6 15.2,18.2L16.4,17C17.2,17.2 18.1,17.4 19,17.4V19Z"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">CXPilot AI</div>
-              <div class="agent-use-case">Customer Ops Agent Assist</div>
-            </div>
+      </div>
+    </div>
+    
+    <!-- Storylane modals for each agent -->
+    <div id="storylane-modal-interview" class="storylane-modal">
+      <div class="storylane-container">
+        <div class="close-storylane">×</div>
+        <div class="sl-embed" style="position:relative;top:0;left:0;width:100%;height:100%;margin:0;padding:0">
+          <!-- Placeholder for the preloaded iframe -->
+          <div class="storylane-loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Interview Agent Demo...</div>
           </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span class="loading-text" data-text="35% lower AHT">35% lower AHT</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span class="loading-text" data-text="20% CSAT boost">20% CSAT boost</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span class="loading-text" data-text="50% shorter agent training time">50% shorter agent training time</span>
-            </li>
-          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div id="storylane-modal-claim" class="storylane-modal">
+      <div class="storylane-container">
+        <div class="close-storylane">×</div>
+        <div class="sl-embed" style="position:relative;top:0;left:0;width:100%;height:100%;margin:0;padding:0">
+          <!-- Placeholder for the preloaded iframe -->
+          <div class="storylane-loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Claim Reimbursement Demo...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="storylane-modal-po" class="storylane-modal">
+      <div class="storylane-container">
+        <div class="close-storylane">×</div>
+        <div class="sl-embed" style="position:relative;top:0;left:0;width:100%;height:100%;margin:0;padding:0">
+          <!-- Placeholder for the preloaded iframe -->
+          <div class="storylane-loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Purchase Order Demo...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="storylane-modal-onboarding" class="storylane-modal">
+      <div class="storylane-container">
+        <div class="close-storylane">×</div>
+        <div class="sl-embed" style="position:relative;top:0;left:0;width:100%;height:100%;margin:0;padding:0">
+          <!-- Placeholder for the preloaded iframe -->
+          <div class="storylane-loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Onboarding Agent Demo...</div>
+          </div>
         </div>
       </div>
     </div>

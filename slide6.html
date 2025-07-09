@@ -216,17 +216,13 @@
     }
     
     /* Class to apply animation when fragment is visible */
-    .progress-ring-circle-value {
-      transition: stroke-dashoffset 1.5s ease-out;
-    }
-    
     .progress-ring-circle-value.animate {
       animation: progress-animation 1.5s ease-out forwards;
     }
 
     @keyframes progress-animation {
       0% {
-        stroke-dashoffset: 125.6; /* Full circumference (0% filled) */
+        stroke-dashoffset: attr(data-circumference px); /* Start from full circumference (0%) */
       }
       100% {
         stroke-dashoffset: var(--target-offset); /* Animate to target value */
@@ -279,8 +275,8 @@
         var(--primary-orange)
       );
       width: 0;
-      transition: width 1.5s ease-out;
-      /* Transition added directly */
+      transition: none;
+      /* No default animation - will be added via JS */
     }
     
     /* Class to apply animation when fragment is visible */
@@ -293,7 +289,7 @@
         width: 0%;
       }
       100% {
-        width: var(--target-width, 60%);
+        width: 60%;
       }
     }
 
@@ -390,7 +386,7 @@
       font-size: 0.6rem;
       font-weight: 600;
       white-space: nowrap;
-      opacity: 1; /* Changed from 0 to ensure visibility */
+      opacity: 0;
       /* No default animation - will be added via JS */
     }
     
@@ -425,7 +421,6 @@
     /* Counter animation for percentage text */
     .animate-count {
       counter-reset: count 0;
-      display: inline-block; /* Ensure the element is visible */
       /* No default animation - will be added via JS */
     }
     
@@ -436,7 +431,6 @@
 
     .animate-count::after {
       content: counter(count) "%";
-      opacity: 1;
     }
 
     @keyframes counter-animation {
@@ -462,8 +456,8 @@
     }
   </style>
   <header class="slide-header" data-id="header">
-    <h1 style="visibility: visible !important; opacity: 1 !important; z-index: 20;" class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
-      WELCOME TO FUSEFY
+    <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5" visibility="visible">
+      OUTCOMES THAT MATTER
     </h1>
     <img
       src="images/Logo.png"
@@ -512,12 +506,11 @@
                     cy="25"
                     r="20"
                     stroke="url(#gradient-1)"
-                    data-target-percent="55"
-                    style="--target-offset: 57; stroke-dasharray: 125.6; stroke-dashoffset: 125.6;"
+                    style="--target-offset: 57"
                   ></circle>
                 </svg>
                 <div class="progress-percentage" style="--target-value: 55">
-                  55%
+                  <span class="animate-count" style="--target-value: 55"></span>
                 </div>
               </div>
             </div>
@@ -540,9 +533,9 @@
             <div class="metric-value"><span>3x Faster</span></div>
             <div class="chart-container">
               <div class="multiplier-container">
-                <div class="multiplier-value" style="opacity: 1; display: block; visibility: visible;">3x Faster</div>
+                <div class="multiplier-value">3x Faster</div>
                 <div class="multiplier-scale">
-                  <div class="multiplier-progress" style="--target-width: 60%;" data-target-position="3"></div>
+                  <div class="multiplier-progress"></div>
                 </div>
                 <div class="multiplier-markers">
                   <div class="multiplier-marker active"></div>
@@ -590,12 +583,11 @@
                     cy="25"
                     r="20"
                     stroke="url(#gradient-2)"
-                    data-target-percent="38"
-                    style="--target-offset: 78; stroke-dasharray: 125.6; stroke-dashoffset: 125.6;"
+                    style="--target-offset: 78"
                   ></circle>
                 </svg>
                 <div class="progress-percentage">
-                  38%
+                  <span class="animate-count" style="--target-value: 38"></span>
                 </div>
               </div>
             </div>
@@ -634,12 +626,11 @@
                     cy="25"
                     r="20"
                     stroke="url(#gradient-3)"
-                    data-target-percent="23"
-                    style="--target-offset: 97; stroke-dasharray: 125.6; stroke-dashoffset: 125.6;"
+                    style="--target-offset: 97"
                   ></circle>
                 </svg>
                 <div class="progress-percentage">
-                  23%
+                  <span class="animate-count" style="--target-value: 23"></span>
                 </div>
               </div>
             </div>
@@ -662,9 +653,9 @@
             <div class="metric-value"><span>2x-4x Gain</span></div>
             <div class="chart-container">
               <div class="multiplier-container">
-                <div class="multiplier-value" style="opacity: 1; display: block; visibility: visible;">3x Average</div>
+                <div class="multiplier-value">3x Average</div>
                 <div class="multiplier-scale">
-                  <div class="multiplier-progress" style="--target-width: 60%;" data-target-position="3"></div>
+                  <div class="multiplier-progress"></div>
                 </div>
                 <div class="multiplier-markers">
                   <div class="multiplier-marker active"></div>
@@ -705,176 +696,6 @@
       </defs>
     </svg>
     
-    <script>
-      // Initialize animations only when fragments are shown
-      document.addEventListener('DOMContentLoaded', function() {
-        // Function to calculate stroke-dashoffset based on percentage
-        function calculateOffset(percent, circumference) {
-          return circumference - (circumference * percent / 100);
-        }
-        
-        // Calculate the circumference of each progress ring
-        const circles = document.querySelectorAll('.progress-ring-circle');
-        circles.forEach(circle => {
-          const radius = circle.getAttribute('r');
-          const circumference = 2 * Math.PI * radius;
-          
-          // Set the stroke-dasharray to the circumference
-          const valueCircle = circle.nextElementSibling;
-          if (valueCircle && valueCircle.classList.contains('progress-ring-circle-value')) {
-            valueCircle.style.strokeDasharray = `${circumference}`;
-            valueCircle.setAttribute('data-circumference', circumference);
-            
-            // Initially set to full circumference (0% progress)
-            valueCircle.style.strokeDashoffset = circumference;
-            
-            // Store the target percentage
-            const targetPercent = valueCircle.getAttribute('data-target-percent') || "0";
-            valueCircle.setAttribute('data-target-percent', targetPercent);
-            
-            // Store the calculated offset for the target percentage
-            const targetOffset = calculateOffset(parseFloat(targetPercent), circumference);
-            valueCircle.setAttribute('data-target-offset', targetOffset);
-          }
-        });
-        
-        // Listen for fragment shown events
-        Reveal.addEventListener('fragmentshown', function(event) {
-          // Get the fragment element that was shown
-          const fragment = event.fragment;
-          
-          // Find all animation elements within this fragment
-          const ringCircle = fragment.querySelector('.progress-ring-circle-value');
-          const animateCount = fragment.querySelector('.animate-count');
-          const multiplierProgress = fragment.querySelector('.multiplier-progress');
-          const activeMarkers = fragment.querySelectorAll('.multiplier-marker.active');
-          const currentMarker = fragment.querySelector('.multiplier-marker.current');
-          const multiplierValue = fragment.querySelector('.multiplier-value');
-          
-          // Animate the progress ring
-          if (ringCircle) {
-            // Get the target percentage from the circle's data attribute
-            const targetPercent = parseInt(ringCircle.getAttribute('data-target-percent') || "0");
-            
-            // Set the text content directly to ensure it displays the correct percentage
-            const percentageEl = fragment.querySelector('.progress-percentage');
-            if (percentageEl) {
-              percentageEl.textContent = targetPercent + '%';
-            }
-            
-            // Calculate the appropriate strokeDashoffset
-            const circumference = parseFloat(ringCircle.getAttribute('data-circumference') || 2 * Math.PI * 20);
-            const targetOffset = calculateOffset(targetPercent, circumference);
-            
-            // Apply the calculated offset and animation
-            ringCircle.style.setProperty('--target-offset', targetOffset);
-            
-            // Important: Set initial position to full circle
-            ringCircle.style.strokeDashoffset = circumference;
-            
-            // Force a reflow to ensure the animation starts properly
-            void ringCircle.offsetWidth;
-            
-            // Now animate to the target percentage
-            ringCircle.style.transition = "stroke-dashoffset 1.5s ease-out";
-            ringCircle.style.strokeDashoffset = targetOffset;
-          }
-          
-          // Animate the counter
-          if (animateCount) {
-            animateCount.classList.add('animate');
-          }
-          
-          // Animate the multiplier progress bar
-          if (multiplierProgress) {
-            // Set the width based on the position of the current marker
-            const container = fragment.querySelector('.multiplier-container');
-            const currentMarkerIndex = Array.from(container.querySelectorAll('.multiplier-marker')).findIndex(m => m.classList.contains('current'));
-            const totalMarkers = container.querySelectorAll('.multiplier-marker').length;
-            
-            if (currentMarkerIndex >= 0) {
-              const progressWidth = (currentMarkerIndex + 1) / totalMarkers * 100;
-              
-              // Important: Reset width to 0 first
-              multiplierProgress.style.width = '0%';
-              
-              // Force a reflow to ensure the animation starts properly
-              void multiplierProgress.offsetWidth;
-              
-              // Set the target width as a custom property for animation
-              multiplierProgress.style.setProperty('--target-width', `${progressWidth}%`);
-              
-              // Apply the animation and transition
-              multiplierProgress.style.transition = "width 1.5s ease-out";
-              multiplierProgress.style.width = `${progressWidth}%`;
-            }
-          }
-          
-          // Animate the active markers
-          if (activeMarkers.length) {
-            activeMarkers.forEach(marker => marker.classList.add('animate'));
-          }
-          
-          // Animate the current marker
-          if (currentMarker) {
-            currentMarker.classList.add('animate');
-          }
-          
-          // Animate the multiplier value
-          if (multiplierValue) {
-            // Ensure the value is visible
-            multiplierValue.style.opacity = "1";
-            multiplierValue.classList.add('animate');
-          }
-        });
-        
-        // Listen for fragment hidden events (to reset animations if needed)
-        Reveal.addEventListener('fragmenthidden', function(event) {
-          // Get the fragment element that was hidden
-          const fragment = event.fragment;
-          
-          // Find all animation elements within this fragment
-          const ringCircle = fragment.querySelector('.progress-ring-circle-value');
-          const animateCount = fragment.querySelector('.animate-count');
-          const multiplierProgress = fragment.querySelector('.multiplier-progress');
-          const activeMarkers = fragment.querySelectorAll('.multiplier-marker.active');
-          const currentMarker = fragment.querySelector('.multiplier-marker.current');
-          const multiplierValue = fragment.querySelector('.multiplier-value');
-          
-          // Reset the progress ring animation
-          if (ringCircle) {
-            const circumference = parseFloat(ringCircle.getAttribute('data-circumference') || 2 * Math.PI * 20);
-            ringCircle.style.strokeDashoffset = circumference; // Reset to 0%
-            ringCircle.classList.remove('animate');
-          }
-          
-          // Reset the counter animation
-          if (animateCount) {
-            animateCount.classList.remove('animate');
-          }
-          
-          // Reset the multiplier progress animation
-          if (multiplierProgress) {
-            multiplierProgress.style.width = '0%';
-            multiplierProgress.classList.remove('animate');
-          }
-          
-          // Reset the active markers animation
-          if (activeMarkers.length) {
-            activeMarkers.forEach(marker => marker.classList.remove('animate'));
-          }
-          
-          // Reset the current marker animation
-          if (currentMarker) {
-            currentMarker.classList.remove('animate');
-          }
-          
-          // Reset the multiplier value animation
-          if (multiplierValue) {
-            multiplierValue.classList.remove('animate');
-          }
-        });
-      });
-    </script>
+    <!-- No inline script needed - handled by global slides-interactive.js -->
   </div>
 </section>
