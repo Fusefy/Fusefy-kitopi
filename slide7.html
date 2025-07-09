@@ -1,0 +1,563 @@
+<section class="intelligent-agents-slide" data-auto-animate data-transition="zoom">
+  <style>
+    .intelligent-agents-slide {
+      --dark-blue: #0a2540;
+      --light-blue: #3a86ff;
+      --orange: #ff6b35;
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --card-border: #e2e8f0;
+      --card-shadow: rgba(0, 0, 0, 0.1);
+      --gradient-bg: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+      --success-green: #10b981;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: white;
+      width: 100%;
+      height: 100%;
+      padding: 4vh 6vw;
+      box-sizing: border-box;
+      position: relative;
+      font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .intelligent-agents-slide * {
+      box-sizing: border-box;
+    }
+
+    .slide-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Enhanced design for h2 with improved visibility */
+  
+
+    .subtitle-wrapper {
+        font-size: 20px;
+        color: #0a2540 !important;
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    /* Ensure the company logo is properly sized */
+    .company-logo {
+      height: 40px;
+      max-width: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .company-logo:hover {
+      transform: scale(1.1);
+    }
+
+    .slide-content {
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Grid layout for cards */
+    .agent-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .top-row, .bottom-row {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .top-row {
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .bottom-row {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .agent-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      padding: 16px;
+      position: relative;
+      overflow: visible;
+      border: 1px solid var(--card-border);
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+      height: 170px;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .agent-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
+      border-color: var(--light-blue);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f4f8;
+    }
+
+    .agent-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      margin-right: 12px;
+      background: linear-gradient(135deg, #f0f5fa 0%, #e6eef7 100%);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .agent-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .agent-info {
+      flex: 1;
+    }
+
+    .agent-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      color: var(--dark-blue);
+      letter-spacing: -0.3px;
+    }
+
+    .agent-use-case {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Impact list */
+    .impact-list {
+      list-style-type: none;
+      margin-top: 10px;
+      padding: 0;
+    }
+
+    .impact-item {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-primary);
+      font-weight: 500;
+      position: relative;
+    }
+
+    .impact-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(16, 185, 129, 0.1);
+      position: relative;
+      overflow: visible;
+    }
+
+    .impact-icon svg {
+      width: 10px;
+      height: 10px;
+      fill: var(--success-green);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Card color themes */
+    .card-procurement {
+      border-top: 3px solid var(--light-blue);
+    }
+
+    .card-hr {
+      border-top: 3px solid var(--orange);
+    }
+
+    .card-recruitment {
+      border-top: 3px solid var(--light-blue);
+    }
+
+    .card-claims {
+      border-top: 3px solid var(--orange);
+    }
+
+    .card-customer {
+      border-top: 3px solid var(--light-blue);
+    }
+
+    /* Icon colors */
+    .icon-procurement {
+      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%);
+    }
+    .icon-procurement svg {
+      fill: var(--light-blue);
+    }
+
+    .icon-hr {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+    }
+    .icon-hr svg {
+      fill: var(--orange);
+    }
+
+    .icon-recruitment {
+      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%);
+    }
+    .icon-recruitment svg {
+      fill: var(--light-blue);
+    }
+
+    .icon-claims {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+    }
+    .icon-claims svg {
+      fill: var(--orange);
+    }
+
+    .icon-customer {
+      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%);
+    }
+    .icon-customer svg {
+      fill: var(--light-blue);
+    }
+
+    /* Fragment animations */
+    .fragment {
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .fragment.visible {
+      opacity: 1;
+    }
+
+    /* Glow effect for active cards */
+    .agent-card.glow::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--light-blue), transparent, var(--orange));
+      z-index: -1;
+      border-radius: 14px;
+      opacity: 0.2;
+    }
+
+    /* Subtle background elements */
+    .bg-accent {
+      position: absolute;
+      border-radius: 50%;
+      z-index: -1;
+      filter: blur(50px);
+      opacity: 0.1;
+    }
+
+    .bg-accent-1 {
+      width: 200px;
+      height: 200px;
+      top: -50px;
+      right: -50px;
+      background: var(--light-blue);
+    }
+
+    .bg-accent-2 {
+      width: 150px;
+      height: 150px;
+      bottom: -30px;
+      left: -30px;
+      background: var(--orange);
+    }
+
+    /* Shimmer loading effect */
+    .shimmer {
+      position: relative;
+      overflow: visible;
+    }
+
+    .shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      opacity: 0;
+    }
+  </style>
+
+  <header class="slide-header" data-id="header">
+    <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
+      Outcomes That Matter
+    </h1>
+    <img
+      src="images/Logo.png"
+      alt="Company Logo"
+      class="company-logo"
+      data-auto-animate
+      data-auto-animate-duration="1"
+    />
+  </header>
+
+  <div class="slide-content">
+    <div class="subtitle-wrapper">
+      <h2>
+        Intelligent Agents Built for Business Operations
+      </h2>
+    </div>
+
+    <div class="bg-accent bg-accent-1"></div>
+    <div class="bg-accent bg-accent-2"></div>
+
+    <div class="agent-cards-container">
+      <!-- Top row with 3 cards -->
+      <div class="top-row">
+        <!-- SmartProcure AI Card - Fragment 1 -->
+        <div class="agent-card card-procurement glow shimmer fragment" data-fragment-index="1">
+          <div class="card-header">
+            <div class="agent-icon icon-procurement icon-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L11.5,17.5L9.5,15.5L11.5,13.5L10,12L7,15L10,18V19Z"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">SmartProcure AI</div>
+              <div class="agent-use-case">PO Processing Agent</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="60% less manual effort">60% less manual effort</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="95% data accuracy">95% data accuracy</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="3x cycle time speed-up">3x cycle time speed-up</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- AutoAssist AI Card - Fragment 2 -->
+        <div class="agent-card card-hr glow shimmer fragment" data-fragment-index="2">
+          <div class="card-header">
+            <div class="agent-icon icon-hr icon-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">AutoAssist AI</div>
+              <div class="agent-use-case">Employee Onboarding Assistant</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="70% faster onboarding">70% faster onboarding</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="45% reduced HR support load">45% reduced HR support load</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="2x faster query resolution">2x faster query resolution</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Hire AI Card - Fragment 3 -->
+        <div class="agent-card card-recruitment glow shimmer fragment" data-fragment-index="3">
+          <div class="card-header">
+            <div class="agent-icon icon-recruitment icon-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M14,20V19C14,17.67 11.33,17 10,17C8.67,17 6,17.67 6,19V20H14M10,12A2,2 0 0,0 8,14A2,2 0 0,0 10,16A2,2 0 0,0 12,14A2,2 0 0,0 10,12Z"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">Hire AI</div>
+              <div class="agent-use-case">Recruitment Agent</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="50% faster screening">50% faster screening</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="85% auto-scheduling">85% auto-scheduling</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="3x recruiter productivity">3x recruiter productivity</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom row with 2 cards -->
+      <div class="bottom-row">
+        <!-- ClaimPath AI Card - Fragment 4 -->
+        <div class="agent-card card-claims glow shimmer fragment" data-fragment-index="4">
+          <div class="card-header">
+            <div class="agent-icon icon-claims icon-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,10.5A1.5,1.5 0 0,0 10.5,12A1.5,1.5 0 0,0 12,13.5A1.5,1.5 0 0,0 13.5,12A1.5,1.5 0 0,0 12,10.5M7.5,12A4.5,4.5 0 0,1 12,7.5A4.5,4.5 0 0,1 16.5,12H15A3,3 0 0,0 12,9A3,3 0 0,0 9,12H7.5Z"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">ClaimPath AI</div>
+              <div class="agent-use-case">Claims Automation Agent</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="40% faster triage">40% faster triage</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="30% less manual review">30% less manual review</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="Improved audit quality">Improved audit quality</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CXPilot AI Card - Fragment 5 -->
+        <div class="agent-card card-customer glow shimmer fragment" data-fragment-index="5">
+          <div class="card-header">
+            <div class="agent-icon icon-customer icon-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20,15.5C18.8,15.5 17.5,15.3 16.4,14.9C16.3,14.9 16.2,14.9 16.1,14.9C15.8,14.9 15.6,15 15.4,15.2L13.2,17.4C10.4,15.9 8,13.6 6.6,10.8L8.8,8.6C9.1,8.3 9.2,7.9 9,7.6C8.7,6.5 8.5,5.2 8.5,4C8.5,3.5 8,3 7.5,3H4C3.5,3 3,3.5 3,4C3,13.4 10.6,21 20,21C20.5,21 21,20.5 21,20V16.5C21,16 20.5,15.5 20,15.5M5,5H6.5C6.6,5.9 6.8,6.8 7,7.6L5.8,8.8C5.4,7.6 5.1,6.3 5,5M19,19C17.7,18.9 16.4,18.6 15.2,18.2L16.4,17C17.2,17.2 18.1,17.4 19,17.4V19Z"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">CXPilot AI</div>
+              <div class="agent-use-case">Customer Ops Agent Assist</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="35% lower AHT">35% lower AHT</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="20% CSAT boost">20% CSAT boost</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span class="loading-text" data-text="50% shorter agent training time">50% shorter agent training time</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

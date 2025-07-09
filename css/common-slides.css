@@ -1,0 +1,238 @@
+/* Common styles for all Fusefy slides */
+
+/* Ensure slide container has proper scaling */
+.reveal .slides section {
+  transform-origin: top center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 90%; /* Further reduce base font size */
+}
+
+/* Scale adjustments for different screen sizes */
+@media (min-width: 1600px) {
+  .reveal .slides section {
+    transform: scale(0.10);
+  }
+}
+
+@media (max-width: 1440px) {
+  .reveal .slides section {
+    transform: scale(0.95);
+  }
+}
+
+@media (max-width: 1280px) {
+  .reveal .slides section {
+    transform: scale(0.90);
+  }
+}
+
+@media (max-width: 1024px) {
+  .reveal .slides section {
+    transform: scale(0.8);
+  }
+}
+
+/* Global heading styles for consistency */
+.reveal h2 {
+  color: #012190;
+  font-size: 24px; /* Even smaller heading */
+  font-weight: 800 !important;
+  margin: 12px 0; /* Reduced margins */
+  position: relative;
+  z-index: 10; /* Ensure it's above other elements but below header */
+  visibility: visible !important; /* Force visibility */
+  opacity: 1 !important; /* Ensure opacity is set to visible */
+  text-align: center;
+  padding-bottom: 8px; /* Reduced padding */
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #012190, #0021F3, #FFAD0E);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  margin: 0 auto 10px; /* Reduced margin */
+  width: auto;
+}
+
+
+
+/* Header styles consistency */
+.slide-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px dashed #ccc; /* Thinner border */
+  padding: 4px 10px; /* Reduced padding */
+  box-sizing: border-box;
+  margin: 0;
+  height: 50px; /* Reduced height */
+  z-index: 1000;
+  background-color: white;
+}
+
+.slide-header h1 {
+  color: #002060 !important;
+  font-size: 20px; /* Smaller font */
+  font-weight: 900;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+}
+
+.company-logo {
+  height: 30px; /* Smaller logo */
+  max-width: 30px;
+  transition: transform 0.3s ease;
+}
+
+.company-logo:hover {
+  transform: scale(1.1);
+}
+
+/* Content container consistency */
+.slide-content {
+  flex: 1;
+  padding: 0 15px; /* Reduced padding */
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px; /* Reduced space for header */
+}
+
+/* Footer consistency */
+.slide-footer {
+  background-color: #002060;
+  color: white;
+  width: 100%;
+  padding: 5px 0; /* Reduced padding */
+  box-sizing: border-box;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 50px; /* Fixed height for the footer */
+}
+
+/* Fragment animations consistency */
+.fragment {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.fragment.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Common info box styling and hover functionality */
+.info-box {
+  position: fixed;
+  width: 240px; /* Smaller width */
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 33, 144, 0.7);
+  padding: 10px; /* Smaller padding */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  z-index: 9999;
+  display: none;
+  border: 2px solid #0021F3;
+  transform: translateY(10px);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.info-box.active,
+.info-box.hover-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  display: block !important;
+}
+
+/* Ensure content is always visible when box is shown */
+.info-box.active .info-box-body,
+.info-box.hover-visible .info-box-body,
+.info-box.active .info-box-body *,
+.info-box.hover-visible .info-box-body * {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.info-box.active .info-box-body ul, 
+.info-box.hover-visible .info-box-body ul {
+  display: block !important;
+}
+
+.info-box.active .info-box-body li, 
+.info-box.hover-visible .info-box-body li {
+  display: list-item !important;
+}
+
+/* Info box content styling */
+.info-box-body {
+  font-size: 12px;
+  color: #333;
+  text-align: left;
+}
+
+.info-box-body p {
+  margin: 0 0 6px 0;
+}
+
+.info-box-body ul {
+  margin: 0;
+  padding-left: 15px;
+}
+
+.info-box-body li {
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+/* Arrow indicators */
+.info-box.left-side::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 15px 0 15px 15px;
+  border-color: transparent transparent transparent #0021F3;
+}
+
+.info-box.right-side::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 15px 15px 15px 0;
+  border-color: transparent #0021F3 transparent transparent;
+}
+
+/* Make all funnel elements properly trigger hover events */
+.funnel-level, .funnel-face {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Make graphs and visualizations more compact */
+.reveal .chart-container,
+.reveal .graph-container {
+  transform: scale(0.95);
+  transform-origin: center center;
+}
