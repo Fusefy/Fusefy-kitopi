@@ -637,67 +637,65 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
-    /* AI to Fusefy connection */
+    /* --- UPDATED CONNECTOR STYLES START --- */
     .ai-services-era {
       position: relative;
     }
 
     .ai-fusefy-connector {
       position: absolute;
-      bottom: -30px;
+      bottom: -180px;
       left: 50%;
-      width: 3px;
-      height: 30px;
-      background: linear-gradient(to bottom, #0021f3, #002060);
+      transform: translateX(-50%);
+      width: 175px;   /* Match SVG width */
+      height: 180px;  /* Match SVG height */
+      z-index: 5;
+      pointer-events: none;
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
     }
-
     .ai-fusefy-connector.visible {
       opacity: 1;
+      transition: opacity 0.5s ease-in-out;
     }
+    .ai-fusefy-connector svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .ai-fusefy-connector .connector-path {
+      fill: none;
+      stroke: #7a71f8;
+      stroke-width: 2.3; /* Bolder line */
+      stroke-linecap: round;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+    }
+    .ai-fusefy-connector .connector-arrow {
+      fill: none;
+      stroke: #7a71f8;
+      stroke-width: 2.3; /* Match line thickness */
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ai-fusefy-connector.visible .connector-path {
+      transition: stroke-dashoffset 2s cubic-bezier(0.45, 0, 0.55, 1) 0.2s;
+      stroke-dashoffset: 0;
+    }
+    .ai-fusefy-connector .connector-endpoint-circle {
+      fill: none;
+      stroke: #8e85ff;
+      stroke-width: 2;
+    }
+    .ai-fusefy-connector .connector-endpoint-arc {
+      fill: none;
+      stroke: #8e85ff;
+      stroke-width: 2;
+      transform: translateY(-2px);
+    }
+    /* --- UPDATED CONNECTOR STYLES END --- */
 
-    .ai-fusefy-connector::after {
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: -4px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: #0021f3;
-      box-shadow: 0 0 6px rgba(0, 33, 243, 0.6);
-      animation: pulse-connector 2s infinite;
-    }
-
-    @keyframes pulse-connector {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.2);
-        opacity: 0.8;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
 
     /* Connection line between AI Services and Fusefy */
-    /* .timeline::after {
-      content: "";
-      position: absolute;
-      bottom: -25px;
-      right: 11%;
-      width: 2px;
-      height: 25px;
-      background-color: #0021f3;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out 0.3s;
-    } */
-
     .timeline.connected::after {
       opacity: 1;
     }
@@ -1085,9 +1083,23 @@
               <span class="tech-item">Gemini</span>
             </div>
           </div>
-          <!-- Add a connection element that will visually link to Fusefy -->
+          <!-- UPDATED SVG connection element -->
           <div class="ai-fusefy-connector fragment" data-fragment-index="5">
-            <img src="images/arrow.png" alt="" />
+              <svg viewBox="0 0 260 180" preserveAspectRatio="none">
+                  <!-- Downward zigzag, then a perfectly horizontal leftward extension -->
+                  <path d="M 130,0 
+                           L 130,30 
+                           L 140,40 
+                           L 120,50 
+                           L 140,60 
+                           L 120,70 
+                           L 130,80 
+                           L 130,120 
+                           L 30,120 
+                           L 10,120" class="connector-path"></path>
+                  <!-- Arrowhead at the end (Fusefy box side) -->
+                  <polygon points="10,120 18,115 18,125" class="connector-arrow" />
+              </svg>
           </div>
         </div>
       </div>

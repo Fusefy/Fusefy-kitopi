@@ -53,6 +53,9 @@ function setupAllSlideInteractions() {
   // Setup navigation buttons within slides
   setupNavigationButtons();
   
+  // Setup AI adoption slide specific functionality
+  setupAIAdoptionSlide();
+  
   // Setup progress rings and multipliers in business impact slide
   setupBusinessImpactAnimations();
   
@@ -147,118 +150,195 @@ function closeZoom() {
 }
 
 /**
+ * Setup AI adoption slide specific functionality
+ */
+function setupAIAdoptionSlide() {
+  const slide = document.querySelector('.ai-adoption-slide');
+  if (!slide) return;
+
+  // Page switching logic
+  const page1 = slide.querySelector('#content-set-1');
+  const page2 = slide.querySelector('#content-set-2');
+  const nextButton = slide.querySelector('#next-button');
+  const backButton = slide.querySelector('#back-button');
+
+  // Remove any existing event listeners to prevent duplicates
+  if (nextButton) {
+    nextButton.removeAttribute('onclick');
+    // Clone node to remove all event listeners
+    const newNextButton = nextButton.cloneNode(true);
+    nextButton.parentNode.replaceChild(newNextButton, nextButton);
+    
+    newNextButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (page1 && page2) {
+        page1.style.display = 'none';
+        page2.style.display = 'flex';
+        animateElementsOnShow(page2);
+      }
+      return false;
+    });
+  }
+
+  if (backButton) {
+    backButton.removeAttribute('onclick');
+    // Clone node to remove all event listeners
+    const newBackButton = backButton.cloneNode(true);
+    backButton.parentNode.replaceChild(newBackButton, backButton);
+    
+    newBackButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (page1 && page2) {
+        page2.style.display = 'none';
+        page1.style.display = 'flex';
+        resetAnimationsOnHide(page2);
+      }
+      return false;
+    });
+  }
+
+  // Setup explanation popups
+  setupExplanationPopups(slide);
+}
+
+/**
+ * Helper function to animate elements when shown
+ */
+function animateElementsOnShow(container) {
+  const elements = container.querySelectorAll('.animate-on-show');
+  elements.forEach((el, index) => {
+    el.classList.remove('start-animation');
+    setTimeout(() => {
+      el.style.animationDelay = `${index * 150}ms`;
+      el.classList.add('start-animation');
+    }, 10);
+  });
+}
+
+/**
+ * Helper function to reset animations when hidden
+ */
+function resetAnimationsOnHide(container) {
+  container.querySelectorAll('.animate-on-show').forEach(el => {
+    el.classList.remove('start-animation');
+    el.style.animationDelay = '';
+  });
+}
+
+/**
+ * Setup explanation popups for AI adoption slide
+ */
+function setupExplanationPopups(slide) {
+  const cardTitles = slide.querySelectorAll('.future-card-title');
+  
+  cardTitles.forEach(title => {
+    const card = title.closest('.future-card');
+    const popup = card.querySelector('.explanation-popup');
+    
+    if (!popup) return;
+    
+    // Remove any existing event listeners
+    const newTitle = title.cloneNode(true);
+    title.parentNode.replaceChild(newTitle, title);
+    
+    // Hover behavior
+    newTitle.addEventListener('mouseenter', () => {
+      // Hide any other active popups
+      slide.querySelectorAll('.explanation-popup.active').forEach(p => {
+        if (p !== popup) p.classList.remove('active');
+      });
+      popup.classList.add('active');
+    });
+    
+    newTitle.addEventListener('mouseleave', () => {
+      if (!popup.matches(':hover')) {
+        popup.classList.remove('active');
+      }
+    });
+    
+    // Keep popup open when hovering over it
+    popup.addEventListener('mouseenter', () => {
+      popup.classList.add('active');
+    });
+    
+    popup.addEventListener('mouseleave', () => {
+      popup.classList.remove('active');
+    });
+    
+    // Click behavior for mobile/touch devices
+    newTitle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Toggle this popup and hide others
+      const isCurrentlyActive = popup.classList.contains('active');
+      slide.querySelectorAll('.explanation-popup.active').forEach(p => {
+        p.classList.remove('active');
+      });
+      
+      if (!isCurrentlyActive) {
+        popup.classList.add('active');
+      }
+      
+      return false;
+    });
+  });
+  
+  // Close popups when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.future-card')) {
+      slide.querySelectorAll('.explanation-popup.active').forEach(popup => {
+        popup.classList.remove('active');
+      });
+    }
+  });
+}
+
+/**
  * Setup navigation buttons within slides
  */
 function setupNavigationButtons() {
-  // Remove any existing event handlers
+  // Remove any existing event handlers (excluding AI adoption slide which is handled separately)
   document.querySelectorAll('#next-button, #back-button').forEach(btn => {
+    // Skip if this button is in the AI adoption slide (handled separately)
+    if (btn.closest('.ai-adoption-slide')) return;
     btn.removeAttribute('onclick');
   });
   
-  // Use event delegation for navigation buttons
+  // Use event delegation for navigation buttons (excluding AI adoption slide)
   document.addEventListener('click', function(event) {
-    // Next button in slide3
+    // Skip if we're in the AI adoption slide (handled separately)
+    if (event.target.closest('.ai-adoption-slide')) return;
+    
+    // Next button in other slides
     if (event.target.closest('#next-button')) {
       event.preventDefault();
       event.stopPropagation();
       
-      const aiSlide = document.querySelector('.ai-adoption-slide');
-      if (aiSlide) {
-        // Get references to content sets
-        const contentSet1 = document.getElementById('content-set-1');
-        const contentSet2 = document.getElementById('content-set-2');
-        
-        if (contentSet1 && contentSet2) {
-          contentSet1.style.display = 'none';
-          contentSet2.style.display = 'block';
-          
-          // Animate elements
-          const title = contentSet2.querySelector('.services-title');
-          const boxes = contentSet2.querySelectorAll('.service-box');
-          const backButton = contentSet2.querySelector('.back-button-container');
-          
-          if (title) title.style.animation = 'fadeInUp 0.6s 0.2s forwards';
-          if (boxes.length) {
-            boxes.forEach((box, index) => {
-              box.style.animation = `fadeInUp 0.6s ${0.4 + index * 0.2}s forwards`;
-            });
-          }
-          if (backButton) backButton.style.animation = 'fadeIn 0.8s 1.2s forwards';
-        }
-      }
+      // Handle other slide navigation here if needed
       return false;
     }
     
-    // Back button in slide3
+    // Back button in other slides
     if (event.target.closest('#back-button')) {
       event.preventDefault();
       event.stopPropagation();
       
-      const aiSlide = document.querySelector('.ai-adoption-slide');
-      if (aiSlide) {
-        // Get references to content sets
-        const contentSet1 = document.getElementById('content-set-1');
-        const contentSet2 = document.getElementById('content-set-2');
-        
-        if (contentSet1 && contentSet2) {
-          contentSet2.style.display = 'none';
-          contentSet1.style.display = 'block';
-          
-          // Reset animations in content-set-2
-          const elementsToReset = contentSet2.querySelectorAll('.animate-on-show');
-          elementsToReset.forEach(el => el.style.animation = 'none');
-        }
-      }
+      // Handle other slide navigation here if needed
       return false;
     }
   }, true);
   
-  // Add keyboard navigation support
+  // Add keyboard navigation support (excluding AI adoption slide)
   document.addEventListener('keydown', function(event) {
-    const aiSlide = document.querySelector('.ai-adoption-slide');
-    if (!aiSlide) return;
+    // Skip if we're in the AI adoption slide
+    const currentSlide = typeof Reveal !== 'undefined' ? Reveal.getCurrentSlide() : null;
+    if (currentSlide && currentSlide.classList.contains('ai-adoption-slide')) return;
     
-    if (event.key === 'ArrowDown') {
-      const currentSlide = typeof Reveal !== 'undefined' ? Reveal.getCurrentSlide() : aiSlide;
-      if (currentSlide && currentSlide.classList.contains('ai-adoption-slide')) {
-        const contentSet1 = document.getElementById('content-set-1');
-        const contentSet2 = document.getElementById('content-set-2');
-        if (contentSet1 && contentSet2 && getComputedStyle(contentSet1).display !== 'none') {
-          contentSet1.style.display = 'none';
-          contentSet2.style.display = 'block';
-          
-          // Animate elements
-          const title = contentSet2.querySelector('.services-title');
-          const boxes = contentSet2.querySelectorAll('.service-box');
-          const backButton = contentSet2.querySelector('.back-button-container');
-          
-          if (title) title.style.animation = 'fadeInUp 0.6s 0.2s forwards';
-          if (boxes.length) {
-            boxes.forEach((box, index) => {
-              box.style.animation = `fadeInUp 0.6s ${0.4 + index * 0.2}s forwards`;
-            });
-          }
-          if (backButton) backButton.style.animation = 'fadeIn 0.8s 1.2s forwards';
-          
-          event.preventDefault();
-        }
-      }
-    } else if (event.key === 'ArrowUp') {
-      const currentSlide = typeof Reveal !== 'undefined' ? Reveal.getCurrentSlide() : aiSlide;
-      if (currentSlide && currentSlide.classList.contains('ai-adoption-slide')) {
-        const contentSet1 = document.getElementById('content-set-1');
-        const contentSet2 = document.getElementById('content-set-2');
-        if (contentSet1 && contentSet2 && getComputedStyle(contentSet2).display !== 'none') {
-          contentSet2.style.display = 'none';
-          contentSet1.style.display = 'block';
-          
-          // Reset animations in content-set-2
-          const elementsToReset = contentSet2.querySelectorAll('.animate-on-show');
-          elementsToReset.forEach(el => el.style.animation = 'none');
-          
-          event.preventDefault();
-        }
-      }
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      // Handle keyboard navigation for other slides if needed
     }
   });
 }

@@ -1,846 +1,197 @@
-<section class="aiass-lifecycle-slide" data-auto-animate data-transition="zoom">
+<section class="hidden-risks-slide" data-auto-animate data-transition="zoom">
   <style>
-    .aiass-lifecycle-slide {
-      position: relative;
-      background: white;
+    .slide-header img {
+      height: 30px;
+      max-width: 30px;
+    }
+     .hidden-risks-slide {
+      font-family: "Inter", sans-serif;
+      background: #ffffff;
+      color: var(--text-primary);
       width: 100vw;
       height: 100vh;
-      padding: 3vh 5vw; /* Reduced padding */
+      padding: 4vh 6vw;
       box-sizing: border-box;
-      text-align: center;
-      font-family: "Arial", sans-serif;
       overflow: hidden;
-      font-size: 95%; /* Base font size reduction */
-    }
-
-    .slide-padding {
-      width: 100%;
-      height: 100%;
       position: relative;
-    }
-
-    .company-logo {
-      height: 32px; /* Smaller logo */
-      max-width: 32px;
-      transition: transform 0.3s ease;
-    }
-
-    .company-logo:hover {
-      transform: scale(1.1);
-    }
-
-    /* Main Content Styles */
-    .slide-content {
-      height: calc(100% - 90px); /* Adjust for smaller header */
-    }
-    
-    
-    .slide-content {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    .slide-title {
-      color: #0021f3 !important;
-      font-size: 20px !important; /* Smaller font size */
-      font-weight: bold;
-      margin-bottom: 3px; /* Reduced margin */
-      text-align: center;
     }
 
     .slide-subtitle {
-      color: #333 !important;
-      font-size: 18px !important; /* Smaller font size */
-      margin-top: 0;
-      margin-bottom: 12px; /* Reduced margin */
+      color: var(--primary-blue);
+      font-size: 1rem;
+      font-weight: 900;
       text-align: center;
+      margin-bottom: 1.5rem;
     }
 
-    /* Funnel Container - More compact */
-    .funnel-container {
+    .slide-content {
       flex: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       position: relative;
     }
 
-    /* Horizontal 3D Funnel - More compact */
-    .funnel-3d-container {
+    .image-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: -20px;
+    }
+
+    .image-container {
       position: relative;
-      width: 95%; /* Slightly wider */
-      height: 360px; /* Reduced height */
-      perspective: 1200px;
-      margin-top: 15px; /* Reduced margin */
-      z-index: 1000;
     }
 
-    .funnel-3d {
-      position: absolute;
-      width: 95%;
-      height: 100%;
-      top: 10%;
-      transform-style: preserve-3d;
-      transform: rotateY(5deg);
-    }
-
-    /* Enhanced funnel design with hover interaction */
-    .funnel-level {
-      position: absolute;
-      height: 100%;
-      transform-style: preserve-3d;
-      transition: all 0.5s ease;
-      cursor: pointer;
-    }
-    
-    /* Hover effect to lift the funnel level slightly */
-    .funnel-level:hover {
-      transform: translateZ(30px) scale(1.05);
-    }
-
-    .funnel-level-1 {
-      left: 0%;
-      width: 20%;
-      transform: translateZ(20px);
-      clip-path: polygon(0 0, 100% 5%, 100% 95%, 0% 100%);
-    }
-
-    .funnel-level-2 {
-      left: 20%;
-      width: 20%;
-      height: 90%;
-      top: 5%;
-      transform: translateZ(15px);
-      clip-path: polygon(0 5%, 100% 10%, 100% 90%, 0% 95%);
-    }
-
-    .funnel-level-3 {
-      left: 40%;
-      width: 20%;
-      height: 80%;
-      top: 10%;
-      transform: translateZ(10px);
-      clip-path: polygon(0 10%, 100% 15%, 100% 85%, 0% 90%);
-    }
-
-    .funnel-level-4 {
-      left: 60%;
-      width: 20%;
-      height: 70%;
-      top: 15%;
-      transform: translateZ(5px);
-      clip-path: polygon(0 15%, 100% 20%, 100% 80%, 0% 85%);
-    }
-
-    .funnel-level-5 {
-      left: 80%;
-      width: 20%;
-      height: 60%;
-      top: 20%;
-      transform: translateZ(0px);
-      clip-path: polygon(0 20%, 100% 25%, 100% 75%, 0% 80%);
-    }
-
-    .funnel-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    .image-container.left {
+      flex: 3;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 5px;
-      opacity: 0;
-      transition: all 0.5s ease;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
+      justify-content: flex-end;
+      padding-right: 65px;
     }
 
-    .funnel-face.visible {
-      opacity: 1;
-    }
-
-    .funnel-face:hover {
-      transform: translateZ(10px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .funnel-face-front {
-      transform: rotateY(0deg) translateZ(50px);
-    }
-
-    /* Funnel face backgrounds with updated color scheme */
-    .funnel-level-1 .funnel-face {
-      background: #012190;
-    }
-
-    .funnel-level-2 .funnel-face {
-      background: linear-gradient(135deg, #F4A203);
-      background-size: 200% 200%;
-      animation: gradientShift 5s ease infinite;
-      animation-delay: 1s;
-    }
-
-    .funnel-level-3 .funnel-face {
-      background: linear-gradient(135deg, #012190);
-      background-size: 200% 200%;
-      animation: gradientShift 5s ease infinite;
-      animation-delay: 2s;
-    }
-
-    .funnel-level-4 .funnel-face {
-      background: linear-gradient(135deg,  #F4A203);
-      background-size: 200% 200%;
-      animation: gradientShift 5s ease infinite;
-      animation-delay: 3s;
-    }
-
-    .funnel-level-5 .funnel-face {
-      background: linear-gradient(135deg, #012190);
-      background-size: 200% 200%;
-      animation: gradientShift 5s ease infinite;
-      animation-delay: 4s;
-    }
-
-    @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    /* Funnel face inner content */
-    .funnel-content {
+    .image-container.right {
+      flex: 2;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: flex-start;
+      align-self: flex-end;
+      padding-left: 48px;
+    }
+
+    .image-container.center {
+      width: 100%;
+      display: flex;
       justify-content: center;
-      color: white;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-      z-index: 2;
-      padding: 0 10px;
-      text-align: center;
-      width: 100%;
-      height: 100%;
+      margin-top: 0;
     }
 
-    .funnel-icon {
-      width: 40px;
-      height: 40px;
-      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
-      margin-bottom: 10px;
-    }
-
-    .funnel-text {
-      text-align: center;
-    }
-
-    .funnel-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .funnel-description {
-      font-size: 12px;
-      opacity: 0.9;
-    }
-
-    /* Funnel face overlay effects */
-    .funnel-face::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(
-        circle at center,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(255, 255, 255, 0) 70%
-      );
-      z-index: 1;
-    }
-
-    .funnel-face::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0) 30%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0) 70%
-      );
-      transform: rotate(45deg);
-      transition: all 1.2s ease;
-      z-index: 1;
-    }
-
-    .funnel-face:hover::after {
-      top: 0;
-      left: 0;
-    }
-
-    /* Funnel connectors with enhanced design */
-    .funnel-connector {
-      position: absolute;
-      height: 4px;
-      width: 20%;
-      background: rgba(255, 255, 255, 0.7);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 0;
+    .image-row img {
+      max-width: 100%;
+      height: auto;
       opacity: 0;
-      transition: opacity 0.5s ease 0.3s;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
     }
 
-    .funnel-connector.visible {
+    .image-container.left img {
+      width: 39%;
+    }
+
+    .image-container.right img {
+      width: 40%;
+    }
+
+    .image-container.center img {
+      width: 60%;
+    }
+
+    .image-visible {
       opacity: 1;
-    }
-
-    .funnel-connector::before {
-      content: "";
-      position: absolute;
-      top: -3px;
-      left: 0;
-      width: 100%;
-      height: 10px;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 50%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      pointer-events: none;
-    }
-
-    .funnel-connector-1 {
-      left: 20%;
-    }
-
-    .funnel-connector-2 {
-      left: 40%;
-    }
-
-    .funnel-connector-3 {
-      left: 60%;
-    }
-
-    .funnel-connector-4 {
-      left: 80%;
-    }
-
-    /* Info boxes have been removed */
-
-    /* Particle Effects */
-    .particles-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    .stage-indicator {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin: 0 5px;
-      background-color: #ddd;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .stage-indicator.active {
-      transform: scale(1.3);
-    }
-
-    .stage-indicator-1 {
-      background-color: #ff5722;
-    }
-    .stage-indicator-2 {
-      background-color: #4caf50;
-    }
-    .stage-indicator-3 {
-      background-color: #2196f3;
-    }
-    .stage-indicator-4 {
-      background-color: #9c27b0;
-    }
-    .stage-indicator-5 {
-      background-color: #ffc107;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .funnel-title {
-        font-size: 14px;
-      }
-
-      .funnel-description {
-        font-size: 10px;
-      }
-
-      .info-box {
-        width: 200px;
-      }
+      transform: translateY(0);
     }
 
     @media (max-width: 768px) {
-      .funnel-icon {
-        width: 30px;
-        height: 30px;
+      .image-row {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0;
       }
 
-      .info-box {
-        width: 180px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .funnel-3d-container {
-        height: 250px;
+      .image-container.left,
+      .image-container.right {
+        padding: 0;
+        justify-content: center;
+        width: 100%;
       }
 
-      .info-box {
-        width: 150px;
+      .image-container.left img,
+      .image-container.right img {
+        width: 60%;
+        margin-bottom: 1rem;
       }
-    }
 
-    /* Animation for funnel rotation */
-    @keyframes rotateFunnel {
-      0% {
-        transform: rotateY(5deg) rotateX(0deg);
+      .image-container.center img {
+        width: 80%;
       }
-      50% {
-        transform: rotateY(8deg) rotateX(2deg);
-      }
-      100% {
-        transform: rotateY(5deg) rotateX(0deg);
-      }
-    }
-
-    .funnel-3d.animate {
-      animation: rotateFunnel 10s infinite ease-in-out;
-    }
-
-    /* Highlight animation for active level */
-    .funnel-level.active {
-      transform: translateZ(30px);
-      filter: brightness(1.2);
     }
   </style>
 
-  <div class="slide-padding">
-    <header class="slide-header">
-      <h1>AI Adoption as a Service</h1>
-      <img src="images/Logo.png" alt="Company Logo" class="company-logo" />
-    </header>
+  <header class="slide-header">
+    <h1>Hidden Risks in Intelligent Automation</h1>
+    <img src="images/Logo.png" alt="Company Logo" />
+  </header>
 
-    <main class="slide-content">
-      <h2>The AI Adoption Lifecycle</h2>
-      <h3 class="slide-subtitle">
-        End-to-End AI Adoption for Intelligent Automation
-      </h3>
+  <p class="slide-subtitle">What's Blocking Scale in AI-Driven Automation?</p>
 
-      <div class="funnel-container">
-        <!-- Horizontal 3D Funnel -->
-        <div class="funnel-3d-container">
-          <div class="funnel-3d">
-            <!-- Level 1: Discover & Assess -->
-            <div class="funnel-level funnel-level-1">
-              <div
-                class="funnel-face funnel-face-front fragment"
-                data-fragment-index="1"
-              >
-                <div class="funnel-content" data-level="0">
-                  <svg
-                    class="funnel-icon"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <div class="funnel-text">
-                    <div class="funnel-title">Discover & Assess</div>
-                    <div class="funnel-description">Automation Maturity</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="funnel-connector funnel-connector-1 fragment"
-              data-fragment-index="1"
-            ></div>
-
-            <!-- Level 2: Identify Use Cases -->
-            <div class="funnel-level funnel-level-2">
-              <div
-                class="funnel-face funnel-face-front fragment"
-                data-fragment-index="2"
-              >
-                <div class="funnel-content" data-level="1">
-                  <svg
-                    class="funnel-icon"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <div class="funnel-text">
-                    <div class="funnel-title">Identify Use Cases</div>
-                    <div class="funnel-description">High-ROI Opportunities</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="funnel-connector funnel-connector-2 fragment"
-              data-fragment-index="2"
-            ></div>
-
-            <!-- Level 3: Enable Platforms -->
-            <div class="funnel-level funnel-level-3">
-              <div
-                class="funnel-face funnel-face-front fragment"
-                data-fragment-index="3"
-              >
-                <div class="funnel-content" data-level="2">
-                  <svg
-                    class="funnel-icon"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <div class="funnel-text">
-                    <div class="funnel-title">Enable Platforms</div>
-                    <div class="funnel-description">Cloud + GenAI Models</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="funnel-connector funnel-connector-3 fragment"
-              data-fragment-index="3"
-            ></div>
-
-            <!-- Level 4: Deploy AI Pilots -->
-            <div class="funnel-level funnel-level-4">
-              <div
-                class="funnel-face funnel-face-front fragment"
-                data-fragment-index="4"
-              >
-                <div class="funnel-content" data-level="3">
-                  <svg
-                    class="funnel-icon"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <div class="funnel-text">
-                    <div class="funnel-title">Deploy AI Pilots</div>
-                    <div class="funnel-description">Agentic AI Solutions</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="funnel-connector funnel-connector-4 fragment"
-              data-fragment-index="4"
-            ></div>
-
-            <!-- Level 5: Scale with Governance -->
-            <div class="funnel-level funnel-level-5">
-              <div
-                class="funnel-face funnel-face-front fragment"
-                data-fragment-index="5"
-              >
-                <div class="funnel-content" data-level="4">
-                  <svg
-                    class="funnel-icon"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <div class="funnel-text">
-                    <div class="funnel-title">Scale with Governance</div>
-                    <div class="funnel-description">ROI & Risk Operations</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Info boxes have been completely removed -->
-
-        <!-- Particles Container -->
-        <div class="particles-container"></div>
+  <main class="slide-content">
+    <!-- Top row with image 1 and image 3 side by side -->
+    <div class="image-row">
+      <!-- Image 1 on top left/center -->
+      <div class="image-container left">
+        <img
+          src="images/d1.png"
+          alt="Trustworthy AI Value realization"
+          class="fragment"
+          data-fragment-index="1"
+        />
       </div>
-    </main>
-  </div>
+      <!-- Image 3 on top right -->
+      <div class="image-container right">
+        <img
+          src="images/a3 2.png"
+          alt="What is your AI Challenge"
+          class="fragment"
+          data-fragment-index="3"
+        />
+      </div>
+    </div>
+
+    <!-- Image 2 below image 1 -->
+    <div class="image-container center">
+      <img
+        src="images/D2 4.jpg"
+        alt="AI Challenge Factors"
+        class="fragment"
+        data-fragment-index="2"
+      />
+    </div>
+  </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      console.log("DOM fully loaded and parsed");
-
-      // Check if we're in a Reveal.js context
-      if (typeof Reveal !== 'undefined') {
-        // Initialize Reveal.js event listeners
-        setupRevealListeners();
-
-        // Make sure the slide is fully rendered before setting up particles
-        Reveal.addEventListener('slidechanged', function(event) {
-          if (event.currentSlide.classList.contains("aiass-lifecycle-slide")) {
-            setTimeout(function() {
-              createParticles();
-            }, 1000); // Give more time for slide to render
-          }
-        });
-
-        // Also set up particles when the page first loads if we're on this slide
-        if (document.querySelector('.aiass-lifecycle-slide')) {
-          setTimeout(function() {
-            createParticles();
-          }, 1000);
+    // Initialize animations when fragments are shown
+    document.addEventListener("DOMContentLoaded", function () {
+      // Listen for fragment shown events
+      Reveal.addEventListener("fragmentshown", function (event) {
+        const fragment = event.fragment;
+        if (fragment.tagName === "IMG") {
+          fragment.classList.add("image-visible");
         }
-      } else {
-        // Fallback for non-Reveal.js context
-        console.warn("Reveal.js not detected, using fallback initialization");
-        setTimeout(function() {
-          createParticles();
-        }, 1000);
-      }
+      });
+
+      // Listen for fragment hidden events (to reset animations if needed)
+      Reveal.addEventListener("fragmenthidden", function (event) {
+        const fragment = event.fragment;
+        if (fragment.tagName === "IMG") {
+          fragment.classList.remove("image-visible");
+        }
+      });
+
+      // Initialize the slide when first shown
+      Reveal.addEventListener("slidechanged", function (event) {
+        if (
+          event.currentSlide &&
+          event.currentSlide.classList.contains("hidden-risks-slide")
+        ) {
+          // Show images that are visible fragments
+          const visibleFragments =
+            event.currentSlide.querySelectorAll(".fragment.visible");
+          visibleFragments.forEach((fragment) => {
+            if (fragment.tagName === "IMG") {
+              fragment.classList.add("image-visible");
+            }
+          });
+        }
+      });
     });
-    
-    // Direct initialization for testing
-    window.onload = function() {
-      console.log("Window loaded - direct initialization");
-      setTimeout(function() {
-        createParticles();
-      }, 1500);
-    };
-
-    function setupRevealListeners() {
-      console.log("Setting up Reveal listeners");
-
-      if (typeof Reveal === 'undefined') {
-        console.error("Reveal.js not found");
-        return;
-      }
-
-      Reveal.addEventListener("fragmentshown", function(event) {
-        console.log("Fragment shown:", event.fragment);
-
-        if (event.fragment.classList.contains("funnel-face")) {
-          event.fragment.classList.add("visible");
-          console.log("Funnel face made visible");
-        }
-
-        if (event.fragment.classList.contains("funnel-connector")) {
-          event.fragment.classList.add("visible");
-          console.log("Funnel connector made visible");
-        }
-
-        if (event.fragment.dataset.fragmentIndex === "9") {
-          console.log("Final fragment shown. Starting funnel animation...");
-          setTimeout(() => {
-            document.querySelector(".funnel-3d").classList.add("animate");
-            console.log("Funnel animation started");
-          }, 1000);
-        }
-      });
-
-      Reveal.addEventListener("fragmenthidden", function(event) {
-        console.log("Fragment hidden:", event.fragment);
-
-        if (event.fragment.classList.contains("funnel-face")) {
-          event.fragment.classList.remove("visible");
-          console.log("Funnel face hidden");
-        }
-
-        if (event.fragment.classList.contains("funnel-connector")) {
-          event.fragment.classList.remove("visible");
-          console.log("Funnel connector hidden");
-        }
-
-        if (event.fragment.dataset.fragmentIndex === "9") {
-          document.querySelector(".funnel-3d").classList.remove("animate");
-          console.log("Funnel animation stopped");
-        }
-      });
-    }
-
-    function resetAllStates() {
-      console.log("Resetting all states");
-
-      document.querySelectorAll(".funnel-level").forEach((level) => {
-        level.classList.remove("active");
-      });
-
-      document.querySelectorAll(".stage-indicator").forEach((indicator) => {
-        indicator.classList.remove("active");
-      });
-
-      closeAllInfoBoxes();
-
-      const funnelElement = document.querySelector(".funnel-3d");
-      if (funnelElement) {
-        funnelElement.classList.remove("animate");
-      }
-    }
-
-    // All info box related functions have been removed
-
-    function highlightFunnelLevel(index) {
-      console.log(`highlightFunnelLevel(${index}) called`);
-
-      // Remove highlight from all levels
-      const allLevels = document.querySelectorAll('.funnel-level');
-      console.log(`Removing 'active' class from ${allLevels.length} funnel levels`);
-
-      allLevels.forEach(level => {
-        level.classList.remove("active");
-      });
-
-      // Add highlight to the selected level
-      const level = document.querySelector(`.funnel-level-${parseInt(index) + 1}`);
-      console.log(`Funnel level ${parseInt(index) + 1}:`, level ? 'found' : 'not found');
-
-      if (level) {
-        level.classList.add("active");
-        console.log(`Added 'active' class to funnel level ${parseInt(index) + 1}`);
-
-        // Create particle effect
-        createParticlesBurst(index);
-      }
-    }
-
-    function createParticles() {
-      console.log("Creating base particles");
-      const container = document.querySelector(".particles-container");
-      if (!container) {
-        console.warn("Particles container not found");
-        return;
-      }
-
-      container.innerHTML = "";
-
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("particle");
-
-        const size = Math.random() * 4 + 2;
-        particle.style.width = size + "px";
-        particle.style.height = size + "px";
-        particle.style.left = Math.random() * 100 + "%";
-        particle.style.top = Math.random() * 100 + "%";
-
-        container.appendChild(particle);
-      }
-    }
-
-    function createParticlesBurst(index) {
-      console.log(`Creating particle burst at level ${index}`);
-      const colors = ["#FF5722", "#4CAF50", "#2196F3", "#9C27B0", "#FFC107"];
-      const currentColor = colors[parseInt(index)];
-
-      const container = document.querySelector(".particles-container");
-      if (!container) {
-        console.warn("Particles container not found for burst");
-        return;
-      }
-
-      const funnelLevel = document.querySelector(
-        `.funnel-level-${parseInt(index) + 1}`
-      );
-      if (!funnelLevel) {
-        console.warn(`Funnel level ${index} not found for burst`);
-        return;
-      }
-
-      const levelRect = funnelLevel.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-
-      const posX = levelRect.left + levelRect.width / 2 - containerRect.left;
-      const posY = levelRect.top + levelRect.height / 2 - containerRect.top;
-
-      for (let i = 0; i < 30; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("particle");
-
-        const size = Math.random() * 5 + 3;
-        particle.style.width = size + "px";
-        particle.style.height = size + "px";
-        particle.style.left = posX + "px";
-        particle.style.top = posY + "px";
-        particle.style.background = currentColor;
-
-        container.appendChild(particle);
-
-        setTimeout(() => {
-          const angle = Math.random() * Math.PI * 2;
-          const distance = Math.random() * 150 + 50;
-          const destX = posX + Math.cos(angle) * distance;
-          const destY = posY + Math.sin(angle) * distance;
-
-          particle.style.transition =
-            "all 1.5s cubic-bezier(0.165, 0.84, 0.44, 1)";
-          particle.style.left = destX + "px";
-          particle.style.top = destY + "px";
-          particle.style.opacity = "1";
-
-          setTimeout(() => {
-            particle.style.opacity = "0";
-            setTimeout(() => {
-              if (particle.parentNode) {
-                particle.parentNode.removeChild(particle);
-              }
-            }, 1000);
-          }, 800);
-        }, Math.random() * 300);
-      }
-    }
-
-    // Position info box function has been removed
   </script>
 </section>

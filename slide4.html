@@ -1,197 +1,490 @@
-<section class="hidden-risks-slide" data-auto-animate data-transition="zoom">
+<section class="ai-adoption-slide" data-transition="zoom">
   <style>
-    .slide-header img {
-      height: 30px;
-      max-width: 30px;
-    }
-     .hidden-risks-slide {
-      font-family: "Inter", sans-serif;
-      background: #ffffff;
-      color: var(--text-primary);
-      width: 100vw;
-      height: 100vh;
-      padding: 4vh 6vw;
-      box-sizing: border-box;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .slide-subtitle {
-      color: var(--primary-blue);
-      font-size: 1rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .slide-content {
-      flex: 1;
+    /* --- General & Shared Styles (UNCHANGED) --- */
+    .content-set {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      position: relative;
+      height: 100%;
+      overflow: hidden;
+    }
+    .clickable-image {
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+      position: relative; z-index: 10; cursor: pointer;
+    }
+    .clickable-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .navigation-button {
+      position: relative; z-index: 20;
+      transition: transform 0.2s ease;
+      background-color: white; color: blue; border: none;
+      border-radius: 4px; font-size: 12px; cursor: pointer;
+      display: inline-flex; align-items: center;
+    }
+    .navigation-button:hover { transform: scale(1.05); }
+
+    /* --- Zoom Overlay Styles (UNCHANGED) --- */
+    .zoom-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 2000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    }
+    .zoom-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+    .zoom-image {
+      max-width: 80%; max-height: 80%; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-radius: 8px; transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    }
+    .zoom-overlay.active .zoom-image { transform: scale(1); }
+    .close-zoom {
+      position: fixed; top: 30px; right: 40px; font-size: 30px; color: #002060;
+      cursor: pointer; background: white; width: 40px; height: 40px; border-radius: 50%;
+      display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 2100;
     }
 
-    .image-row {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: -20px;
+    /* --- Reveal.js Fragment Animation Styles (UNCHANGED) --- */
+    .reveal .slides section .fragment.fade-in-up {
+      opacity: 0; visibility: hidden; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s linear 0.6s;
+    }
+    .reveal .slides section .fragment.fade-in-up.visible {
+      opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
     }
 
-    .image-container {
-      position: relative;
+    /* --- PAGE 1: UPDATED STYLES for "A Glimpse Into the Future" --- */
+    .future-title {
+        color: #0021f3; 
+        font-weight: bold;
+        font-size: small;
+        text-align: center;
+        margin-bottom: 10px;
+        text-transform: uppercase;
     }
-
-    .image-container.left {
-      flex: 3;
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 65px;
+     .future-title .gold-text {
+        color: #f5b01b; /* Gold/Yellow */
     }
-
-    .image-container.right {
-      flex: 2;
-      display: flex;
-      justify-content: flex-start;
-      align-self: flex-end;
-      padding-left: 48px;
+    .future-grid-container {
+        display: flex;
+        justify-content: center;
+        gap: 6%; /* UPDATED: Increased gap between columns */
+        width: 100%;
     }
-
-    .image-container.center {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 0;
+    .future-column {
+        flex: 0 1 220px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        /* UPDATED: The border and padding are removed from here */
     }
-
-    .image-row img {
-      max-width: 100%;
-      height: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.8s ease-out;
+    .future-column-title {
+        font-size: medium;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+        margin-bottom: 5px;
+        text-transform: uppercase;
     }
-
-    .image-container.left img {
-      width: 39%;
-    }
-
-    .image-container.right img {
-      width: 40%;
-    }
-
-    .image-container.center img {
-      width: 60%;
-    }
-
-    .image-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 768px) {
-      .image-row {
+    .future-card {
+        background-color: #f9fafb;
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 0;
-      }
-
-      .image-container.left,
-      .image-container.right {
-        padding: 0;
-        justify-content: center;
         width: 100%;
-      }
+        height: 110px; /* Fixed height for all cards */
+        position: relative;
+    }
+    .future-card-img-container {
+        width: 100%;
+        height: 60px; /* Fixed height for the image area */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        gap: 10px; /* UPDATED: Adds space between the two images */
+    }
+    .future-card-img {
+        max-width: 45%; /* UPDATED: Sized to fit two images side-by-side */
+        max-height: 100%;
+        object-fit: contain;
+    }
+    .future-card-title {
+        font-size: small;
+        font-weight: bold;
+        color: #111827;
+        margin: 0;
+        line-height: 1.2;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+    .future-card-title:hover {
+        color: #0021f3;
+    }
+    .future-card-desc { display: none; } /* Hide description text */
+    .next-button-container {
+        display: flex; justify-content: center; align-items: center;
+        width: 100%; padding-top: 10px;
+    }
 
-      .image-container.left img,
-      .image-container.right img {
-        width: 60%;
-        margin-bottom: 1rem;
-      }
+    /* Explanation Popup Styles */
+    .explanation-popup {
+        position: absolute;
+        left: -230px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 220px;
+        background: #000;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+    }
+    .explanation-popup.active {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.2s ease;
+    }
+    .explanation-popup ul {
+        margin: 0;
+        padding-left: 16px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: #fff;
+    }
+    .explanation-popup li {
+        margin-bottom: 6px;
+    }
+    .explanation-popup::after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid #000;
+    }
 
-      .image-container.center img {
-        width: 80%;
-      }
+    /* --- PAGE 2: Custom JS-triggered Animation Styles (UNCHANGED) --- */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-on-show { opacity: 1; transform: translateY(20px); }
+    .animate-on-show.start-animation { animation: fadeInUp 0.6s ease-out forwards; }
+    .services-container { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+    .services-title { font-size: small; font-weight: 900; color: #0021F3; }
+    .service-box {
+      flex: 1; border: 1px solid #002060; border-radius: 6px;
+      padding: 15px; text-align: left; background-color: #f8faff;
+      min-height: 140px; display: flex; flex-direction: column;
+    }
+    .service-box p {
+      font-weight: bold; color: #002060; margin-top: 0;
+      margin-bottom: 8px; font-size: small;
+    }
+    .service-box ul {
+      font-size: small; line-height: 1.4; margin: 0;
+      padding-left: 16px; color: #333;
     }
   </style>
 
-  <header class="slide-header">
-    <h1>Hidden Risks in Intelligent Automation</h1>
-    <img src="images/Logo.png" alt="Company Logo" />
-  </header>
+  <!-- Zoom Overlay (UNCHANGED) -->
+  <div class="zoom-overlay" id="zoomOverlay">
+    <div class="close-zoom">×</div>
+    <img class="zoom-image" id="zoomedImage" src="" alt="Zoomed Image" />
+  </div>
 
-  <p class="slide-subtitle">What's Blocking Scale in AI-Driven Automation?</p>
+  <div class="slide-padding">
+    <!-- Slide Header (UNCHANGED) -->
+    <header class="slide-header">
+      <h1>What is AI Adoption as a Service?</h1>
+      <img src="./images/Logo.png" alt="Company Logo" class="company-logo">
+    </header>
 
-  <main class="slide-content">
-    <!-- Top row with image 1 and image 3 side by side -->
-    <div class="image-row">
-      <!-- Image 1 on top left/center -->
-      <div class="image-container left">
-        <img
-          src="images/d1.png"
-          alt="Trustworthy AI Value realization"
-          class="fragment"
-          data-fragment-index="1"
-        />
+    <!-- Page 1 (UNCHANGED HTML) -->
+    <div id="content-set-1" class="content-set">
+      <h2 class="future-title fragment fade-in-up" data-fragment-index="0">A Glimpse Into The <span class="gold-text">Future</span></h2>
+      
+      <div class="future-grid-container">
+        <!-- Column 1: AI & Automation -->
+        <div class="future-column fragment fade-in-up" data-fragment-index="1">
+          <h3 class="future-column-title" style="font-size: medium;">AI Inventory</h3>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Heatmap.png" alt="AI Adoption Insights" class="future-card-img clickable-image" data-src="./images/Heatmap.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Inventory.png" alt="AI Adoption Insights" class="future-card-img clickable-image" data-src="./images/AI Inventory.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: small;" data-explanation="Neural Networks">AI Inventory - Heatmap</h4>
+            <div class="explanation-popup">
+                <ul>
+                  <p>Evaluates AI use cases by factors like compliance, redundancy, data quality, and strategic fit.
+Color-coded scores with hover insights help quickly prioritize high-impact, low-risk use cases.</p>
+                </ul>
+            </div>
+          </div>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/TCO-1.png" alt="Robotic Process Automation" class="future-card-img clickable-image" data-src="./images/TCO-1.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/TCO-NEW-2.png" alt="Robotic Process Automation" class="future-card-img clickable-image" data-src="./images/TCO-NEW-2.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: medium;" data-explanation="Robotic Process Automation">TCO</h4>
+            <div class="explanation-popup">
+                <ul>
+                    <p>TCO breaks down total cost across five key factors, visualized in chart segments.
+Includes usability costs like training and support to highlight major expense areas for better planning.</p>
+                </ul>
+            </div>
+          </div>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/ROI-1.png" alt="Generative Companions" class="future-card-img clickable-image" data-src="./images/ROI-1.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/ROI-G.png" alt="Generative Companions" class="future-card-img clickable-image" data-src="./images/ROI-G.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: medium;" data-explanation="Generative Companions">ROI</h4>
+            <div class="explanation-popup">
+                <ul>
+                <p>Cumulative Benefits (blue) grow steadily over 5 years, while Costs (red) rise more slowly.
+Net Gain (green) shows profit over time, with ROI improving year by year.</p>
+                </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Biotech & Health -->
+        <div class="future-column fragment fade-in-up" data-fragment-index="2">
+          <h3 class="future-column-title"style="font-size: medium;">AI foundary</h3>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/ARC-Foundary.png" alt="CRISPR Gene Editing" class="future-card-img clickable-image" data-src="./images/ARC-Foundary.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: small ;" data-explanation="CRISPR Gene Editing">AI Foundry Platform Architecture</h4>
+            <div class="explanation-popup">
+                <ul>
+                  <p>The flow starts with users providing cloud and framework details. Git repositories are then fetched for analysis. Based on repo data and Jira stories, code is generated. This code goes through automated testing, and if it passes, it’s deployed to the target environment.</p>    
+                </ul>
+            </div>
+          </div>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-1.png" alt="CRISPR Gene Editing" class="future-card-img clickable-image" data-src="./images/AI Foundary-1.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-2.png" alt="CRISPR Gene Editing" class="future-card-img clickable-image" data-src="./images/AI Foundary-2.png" />
+              </div>
+            <h4 class="future-card-title" style="font-size: small;" data-explanation="3D Bioprinting">Use case selection and Service Choice</h4>
+            <div class="explanation-popup">
+                <ul>
+                    <p>AI Foundry lets you pick a use case, build agents instantly, choose a cloud provider, and integrate with frameworks like LangChain.</p>
+                </ul>
+            </div>
+          </div>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-3.png" alt="3D Bioprinting" class="future-card-img clickable-image" data-src="./images/AI Foundary-3.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-3a.png" alt="3D Bioprinting" class="future-card-img clickable-image" data-src="./images/AI Foundary-3a.png" />
+              </div>
+            <h4 class="future-card-title" style="font-size: small;" data-explanation="Personalized Medicine">Source code generation & testing</h4>
+            <div class="explanation-popup">
+                <ul>
+                    <p>Fusefy generates project code with key files like app.py and `Dockerfile.
+Built-in tests verify functions like topic handling and exit commands.</p>
+                </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Energy & Exploration -->
+        <div class="future-column fragment fade-in-up" data-fragment-index="3">
+          <h3 class="future-column-title" style="font-size: medium;">Audit suite</h3>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Model Monitoring-1.png" alt="Fusion Power" class="future-card-img clickable-image" data-src="./images/Model Monitoring-1.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Model Monitoring-2.png" alt="Fusion Power" class="future-card-img clickable-image" data-src="./images/Model Monitoring-2.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: small;" data-explanation="Fusion Power">Model validation </h4>
+            <div class="explanation-popup">
+                <ul>
+                    <p>The Audit Suite validates model runs with metrics like accuracy, drift, and data quality.It highlights issues, tracks performance over time, and flags models needing attention.</p>
+                </ul>
+            </div>
+          </div>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Model Validatio-1.png" alt="Asteroid Mining" class="future-card-img clickable-image" data-src="./images/Model Validatio-1.png" />
+                <img style="width: 50%;border: 1.3px solid grey !important; " src="./images/Model Validation-2.png" alt="Asteroid Mining" class="future-card-img clickable-image" data-src="./images/Model Validation-2.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: small;" data-explanation="Asteroid Mining">Model Monitoring</h4>
+            <div class="explanation-popup">
+                <ul>
+                    <p>The Monitoring module tracks deployed models in real-time using metrics like accuracy, precision, and F1-score.
+It detects performance drops, data drift, and library vulnerabilities to ensure ongoing model reliability.</p>
+                </ul>
+            </div>
+          </div>
+          <div class="future-card">
+            <div class="future-card-img-container">
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Heatmap.png" alt="Next-Gen Space Telescopes" class="future-card-img clickable-image" data-src="./images/Heatmap.png" />
+                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Heatmap.png" alt="Next-Gen Space Telescopes" class="future-card-img clickable-image" data-src="./images/Heatmap.png" />
+            </div>
+            <h4 class="future-card-title" style="font-size: small;" data-explanation="Next-Gen Space Telescopes">Risk Assessment</h4>
+            <div class="explanation-popup">
+                <ul>
+                    <li>Deeper space observation</li>
+                    <li>Exoplanet discovery</li>
+                    <li>Advanced imaging</li>
+                    <li>Cosmic mysteries unraveled</li>
+                </ul>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Image 3 on top right -->
-      <div class="image-container right">
-        <img
-          src="images/a3 2.png"
-          alt="What is your AI Challenge"
-          class="fragment"
-          data-fragment-index="3"
-        />
+      
+      <div class="next-button-container fragment fade-in-up" data-fragment-index="4">
+          <button id="next-button" class="navigation-button" style="padding: 8px 16px;">
+              <span>Next</span>
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImJsdWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNNiA5bDYgNiA2LTYiLz48L3N2Zz4=" alt="Down Arrow" style="width: 20px; height: 20px; margin-left: 6px;">
+          </button>
       </div>
     </div>
 
-    <!-- Image 2 below image 1 -->
-    <div class="image-container center">
-      <img
-        src="images/D2 4.jpg"
-        alt="AI Challenge Factors"
-        class="fragment"
-        data-fragment-index="2"
-      />
+    <!-- Page 2 (Hidden by default, UNCHANGED) -->
+    <div id="content-set-2" class="content-set" style="display: none;">
+      <p class="services-title animate-on-show">Services</p>
+      <div class="services-container">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 35px;">
+          <div style="display: flex; justify-content: space-around; align-items: stretch; gap: 20px; width: 85%;">
+            <div class="service-box animate-on-show">
+              <p>GenAI + Agent Integration</p>
+              <ul>
+                <li>Seamlessly combine Generative AI models with intelligent agents.</li>
+                <li>Automate complex workflows and critical decision-making processes.</li>
+                <li>Personalize user experiences in real-time through adaptive, goal-driven interactions.</li>
+              </ul>
+            </div>
+            <div class="service-box animate-on-show">
+              <p>Cloud Enablement</p>
+              <ul>
+                <li>Leverage leading cloud platforms like Vertex AI, Azure, and Gemini.</li>
+                <li>Deploy scalable, secure, and high-performance AI solutions.</li>
+                <li>Accelerate innovation with managed services and streamlined experimentation.</li>
+              </ul>
+            </div>
+            <div class="service-box animate-on-show">
+              <p>Enterprise-Grade Deployment</p>
+              <ul>
+                <li>Ensure robust security and full regulatory compliance.</li>
+                <li>Streamline deployment and management across all environments.</li>
+                <li>Embed governance and trust throughout the entire AI lifecycle.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="back-button-container animate-on-show">
+            <button id="back-button" class="navigation-button" style="padding: 10px 20px;">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImJsdWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTggMTVsLTYtNi02IDYiLz48L3N2Zz4=" alt="Up Arrow" style="width: 24px; height: 24px; margin-right: 8px;">
+              <span>Back</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </main>
+  </div>
 
   <script>
-    // Initialize animations when fragments are shown
-    document.addEventListener("DOMContentLoaded", function () {
-      // Listen for fragment shown events
-      Reveal.addEventListener("fragmentshown", function (event) {
-        const fragment = event.fragment;
-        if (fragment.tagName === "IMG") {
-          fragment.classList.add("image-visible");
-        }
+    // SCRIPT IS UNCHANGED
+    (function() {
+      const slide = document.querySelector('.ai-adoption-slide');
+      if (!slide) return;
+
+      const page1 = slide.querySelector('#content-set-1');
+      const page2 = slide.querySelector('#content-set-2');
+      const nextButton = slide.querySelector('#next-button');
+      const backButton = slide.querySelector('#back-button');
+      const zoomOverlay = slide.querySelector('#zoomOverlay');
+      const zoomedImage = slide.querySelector('#zoomedImage');
+      const closeZoomButton = slide.querySelector('.close-zoom');
+
+      // --- Content Switching Logic ---
+      if (nextButton) {
+        nextButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          page1.style.display = 'none';
+          page2.style.display = 'flex';
+
+          const elementsToAnimate = page2.querySelectorAll('.animate-on-show');
+          elementsToAnimate.forEach((el, index) => {
+            el.classList.remove('start-animation');
+            setTimeout(() => {
+                el.style.animationDelay = `${index * 150}ms`;
+                el.classList.add('start-animation');
+            }, 10);
+          });
+        });
+      }
+
+      if (backButton) {
+        backButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          page2.style.display = 'none';
+          page1.style.display = 'flex';
+          
+          page2.querySelectorAll('.animate-on-show').forEach(el => {
+            el.classList.remove('start-animation');
+            el.style.animationDelay = '';
+          });
+        });
+      }
+
+      // --- Image Zoom Logic ---
+      slide.querySelectorAll('.clickable-image').forEach(img => {
+        img.addEventListener('click', function(e) {
+          if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+          
+          zoomedImage.src = this.dataset.src || this.src;
+          zoomOverlay.classList.add('active');
+        });
       });
 
-      // Listen for fragment hidden events (to reset animations if needed)
-      Reveal.addEventListener("fragmenthidden", function (event) {
-        const fragment = event.fragment;
-        if (fragment.tagName === "IMG") {
-          fragment.classList.remove("image-visible");
-        }
-      });
-
-      // Initialize the slide when first shown
-      Reveal.addEventListener("slidechanged", function (event) {
-        if (
-          event.currentSlide &&
-          event.currentSlide.classList.contains("hidden-risks-slide")
-        ) {
-          // Show images that are visible fragments
-          const visibleFragments =
-            event.currentSlide.querySelectorAll(".fragment.visible");
-          visibleFragments.forEach((fragment) => {
-            if (fragment.tagName === "IMG") {
-              fragment.classList.add("image-visible");
-            }
+      // --- Explanation Popup Logic ---
+      slide.querySelectorAll('.future-card-title').forEach(title => {
+        const popup = title.nextElementSibling;
+        if (popup && popup.classList.contains('explanation-popup')) {
+          title.addEventListener('mouseenter', function() {
+            popup.classList.add('active');
+          });
+          
+          title.addEventListener('mouseleave', function() {
+            popup.classList.remove('active');
           });
         }
       });
-    });
+
+      if (closeZoomButton) {
+        closeZoomButton.addEventListener('click', function() {
+          zoomOverlay.classList.remove('active');
+        });
+      }
+      
+      if (zoomOverlay) {
+        zoomOverlay.addEventListener('click', function(e) {
+            if (e.target === zoomOverlay) {
+                zoomOverlay.classList.remove('active');
+            }
+        });
+      }
+    })();
   </script>
-</section>
+  
+  <script src="slides-interactive.js"></script>
+</section> 
