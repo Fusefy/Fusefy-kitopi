@@ -21,7 +21,7 @@
 }
 
 /* Scale adjustments for different screen sizes */
-@media (min-width: 1600px) {
+/* @media (min-width: 1600px) {
   .reveal .slides section {
     transform: scale(0.10);
   }
@@ -43,7 +43,7 @@
   .reveal .slides section {
     transform: scale(0.8);
   }
-}
+} */
 
 /* Global heading styles for consistency */
 .reveal h2 {

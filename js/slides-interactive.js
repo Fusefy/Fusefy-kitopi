@@ -507,151 +507,41 @@ function setupStorylaneDemos() {
   if (!agentsSlide) return;
   
   // Remove any existing event listeners from agent cards
-  document.querySelectorAll('.agent-card').forEach(card => {
+  document.querySelectorAll('.agent-card[data-storylane-url]').forEach(card => {
     card.removeAttribute('onclick');
     
     // Add visual feedback for clickability
     card.classList.add('clickable');
     
-    // Show loading indicator on hover
-    card.addEventListener('mouseenter', function() {
-      this.classList.add('loading');
+    // Add click handler to open in new tab
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       
-      // Trigger preload on hover if preloader is available
-      const agentId = this.getAttribute('data-agent-id');
-      if (agentId && window.storylaneUtils && typeof window.storylaneUtils.preloadStorylaneDemos === 'function') {
-        window.storylaneUtils.preloadStorylaneDemos(agentId);
-      }
-    });
-  });
-  
-  // Use event delegation for agent card clicks
-  document.addEventListener('click', function(event) {
-    const agentCard = event.target.closest('.agent-card');
-    if (agentCard) {
-      event.preventDefault();
-      event.stopPropagation();
-      
-      // Get the agent ID from the data attribute
-      const agentId = agentCard.getAttribute('data-agent-id');
-      if (!agentId) return;
+      // Open link in new tab
+      window.open(card.dataset.storylaneUrl, '_blank');
       
       // Visual feedback on click
-      agentCard.classList.add('clicked');
-      
-      // Show the corresponding Storylane modal
-      showStoryLaneModal(agentId);
-      
-      // Reset visual state after delay
+      card.style.transform = 'scale(0.98)';
       setTimeout(() => {
-        agentCard.classList.remove('clicked');
-      }, 1000);
-      
-      return false;
-    }
-    
-    // Handle modal close button
-    if (event.target.closest('.close-storylane')) {
-      event.preventDefault();
-      event.stopPropagation();
-      closeStoryLaneModals();
-      return false;
-    }
-  }, true);
+        card.style.transform = '';
+      }, 200);
+    });
+  });
 
-  // Keyboard event for closing Storylane modals
+  // Add keyboard navigation for accessibility
   document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-      const activeModal = document.querySelector('.storylane-modal.active');
-      if (activeModal) {
-        closeStoryLaneModals();
+    if (event.key === 'Enter' || event.key === ' ') {
+      const focusedCard = document.activeElement;
+      if (focusedCard && focusedCard.classList.contains('agent-card') && focusedCard.dataset.storylaneUrl) {
         event.preventDefault();
+        window.open(focusedCard.dataset.storylaneUrl, '_blank');
       }
     }
   });
-  
-  // Start preloading if the preloader is available
-  if (typeof initStorylaneDemoPreloader === 'function') {
-    initStorylaneDemoPreloader();
-  }
 }
 
-/**
- * Show a specific Storylane modal
- */
-function showStoryLaneModal(agentId) {
-  // Close any open modals first
-  closeStoryLaneModals();
-  
-  // Map agent IDs to their corresponding modal IDs
-  const modalMap = {
-    'po-agent': 'storylane-modal-po',
-    'onboarding-agent': 'storylane-modal-onboarding',
-    'interview-agent': 'storylane-modal-interview',
-    'claim-agent': 'storylane-modal-claim'
-  };
-  
-  const modalId = modalMap[agentId];
-  if (!modalId) return;
-  
-  // Show the corresponding modal
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    console.log(`Opening modal for ${agentId}...`);
-    
-    // Make sure the overflow is hidden on body to prevent scrolling
-    document.body.style.overflow = 'hidden';
-    
-    // Try to use a preloaded iframe if available
-    let usedPreloadedFrame = false;
-    if (window.storylaneUtils && typeof window.storylaneUtils.swapPreloadedIframe === 'function') {
-      usedPreloadedFrame = window.storylaneUtils.swapPreloadedIframe(agentId);
-      console.log(`Using preloaded frame: ${usedPreloadedFrame}`);
-    }
-    
-    // Activate the modal
-    modal.classList.add('active');
-    
-    // Handle iframe loading if not using preloaded frame
-    if (!usedPreloadedFrame) {
-      const iframe = modal.querySelector('iframe');
-      if (iframe) {
-        // Show a loading spinner or text until the iframe is fully loaded
-        iframe.style.opacity = '0';
-        
-        iframe.addEventListener('load', function() {
-          // Make iframe visible once loaded
-          iframe.style.opacity = '1';
-          
-          // If we want to add transition effect
-          iframe.style.transition = 'opacity 0.3s ease';
-        });
-      }
-    }
-    
-    // Disable Reveal.js keyboard navigation while modal is open
-    if (typeof Reveal !== 'undefined') {
-      Reveal.configure({ keyboard: false });
-    }
-  }
-}
-
-/**
- * Close all Storylane modals
- */
-function closeStoryLaneModals() {
-  document.querySelectorAll('.storylane-modal').forEach(modal => {
-    modal.classList.remove('active');
-  });
-  
-  // Restore body scrolling
-  document.body.style.overflow = '';
-  
-  // Re-enable Reveal.js keyboard navigation
-  if (typeof Reveal !== 'undefined') {
-    Reveal.configure({ keyboard: true });
-  }
-}
+// Removing old modal-related functions since we're now using direct links in new tabs
 
 /**
  * Setup logo pulse effects
