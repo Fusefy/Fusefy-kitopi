@@ -1,3 +1,17 @@
+<<<<<<< HEAD
 "Fusefy-Demo/" 
 "Fusefy-Demo/" 
 "Fusefy-Demo/" 
+=======
+.idea/
+*.iml
+*.iws
+*.eml
+out/
+.DS_Store
+.svn
+log/*.log
+tmp/**
+node_modules/
+.sass-cache
+>>>>>>> 30a16b1e133aaf0792a2f234013239681fffea4b

@@ -1,0 +1,1274 @@
+<section class="evolution-slide" data-auto-animate data-transition="zoom">
+  <style>
+    /* Base styles for the slide */
+    .evolution-slide {
+      position: relative;
+      background: white;
+      width: 100vw;
+      height: 100vh;
+      padding: 4vh 6vw;
+      box-sizing: border-box;
+      text-align: center;
+      font-family: "Arial", sans-serif;
+      overflow: hidden;
+    }
+
+    .company-logo {
+      height: 40px;
+      max-width: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .company-logo:hover {
+      transform: scale(1.1);
+    }
+
+    /* Content styles */
+    .slide-content {
+      height: calc(100% - 60px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    /* Ensure h2 visibility */
+    .slide-content h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #002060;
+      margin-bottom: 25px;
+      visibility: visible !important;
+      opacity: 1 !important;
+      z-index: 50;
+      position: relative;
+    }
+
+    h2 {
+      color: #0e2470;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      transition: all 1s cubic-bezier(0.26, 0.86, 0.44, 0.985);
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    .evolution-slide.present h2 {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .evolution-slide.present h2::after {
+      width: 100%;
+      transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Architecture Evolution Styles */
+    .architecture-evolution {
+      display: flex;
+      flex-direction: column;
+      margin: 2px 0;
+      position: relative;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .era {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 22%;
+      padding: 3px;
+      border-radius: 10px;
+      background-color: rgba(240, 240, 240, 0.9);
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      opacity: 0;
+      transform: translateY(15px);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .era.fragment.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .era:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .clickable {
+      cursor: pointer;
+    }
+
+    .clickable:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
+    }
+
+    .highlight {
+      background-color: rgba(0, 33, 243, 0.1);
+      border: 1px solid #0021f3;
+      box-shadow: 0 2px 10px rgba(0, 33, 243, 0.2);
+    }
+
+    .highlight:hover {
+      box-shadow: 0 5px 15px rgba(0, 33, 243, 0.3);
+    }
+    
+
+    .icon-container {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      border-radius: 50%;
+      width: 30px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background-size: 200% 200%;
+      animation: gradientShift 5s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .icon-container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    .clickable:hover .icon-container {
+      transform: rotate(5deg);
+      box-shadow: 0 5px 12px rgba(0, 33, 243, 0.3);
+    }
+
+    .clickable:active .icon-container {
+      transform: scale(0.9) rotate(5deg);
+    }
+
+    .monolith-bg {
+      background: linear-gradient(135deg, #f0f3ff, #e0e6ff, #f0f3ff);
+    }
+
+    .web-bg {
+      background: linear-gradient(135deg, #e0e6ff, #d0d9ff, #e0e6ff);
+    }
+
+    .micro-bg {
+      background: linear-gradient(135deg, #d0d9ff, #c0ccff, #d0d9ff);
+    }
+
+    .ai-bg {
+      background: linear-gradient(135deg, #c0ccff, #b0bfff, #c0ccff);
+    }
+
+    .arch-icon {
+      width: 30px;
+      height: 25px;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .clickable:hover .arch-icon {
+      filter: drop-shadow(0 3px 5px rgba(0, 33, 243, 0.4));
+      transform: scale(1.1);
+    }
+
+    .clickable:active .arch-icon {
+      transform: scale(0.95);
+    }
+
+    .arch-type {
+      font-weight: bold;
+      margin-bottom: 3px;
+      font-size: 16px;
+      text-align: center;
+      color: #002060;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .arch-type::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #002060, transparent);
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
+    }
+
+    .clickable:hover .arch-type::after {
+      width: 70%;
+    }
+
+    .clickable:hover .arch-type {
+      color: #0021f3;
+    }
+
+    .infra {
+      font-size: 12px;
+      color: #555;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 5px;
+      border-radius: 8px;
+      width: 80%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) inset;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .infra::before {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+      );
+      transition: all 0.5s ease;
+    }
+
+    .clickable:hover .infra::before {
+      top: 0;
+    }
+
+    .infra-text {
+      text-align: center;
+      font-weight: 500;
+      color: #002060;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .clickable:hover .infra-text {
+      color: #0021f3;
+    }
+
+    .infra-icon {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 3px;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+      transition: all 0.3s ease;
+    }
+
+    .clickable:hover .infra-icon {
+      filter: drop-shadow(0 2px 3px rgba(0, 33, 243, 0.3));
+      transform: scale(1.1);
+    }
+
+    /* Deployment info styles */
+    .deployment-info {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #444;
+      text-align: center;
+      width: 90%;
+      padding: 5px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.6);
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .era:hover .deployment-info {
+      background-color: rgba(0, 33, 243, 0.05);
+      color: #0021f3;
+    }
+
+    .vendor-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+
+    .vendor-img {
+      height: 16px;
+      max-width: 45px;
+      object-fit: contain;
+      filter: grayscale(30%);
+      transition: all 0.3s ease;
+    }
+
+    .era:hover .vendor-img {
+      filter: grayscale(0%);
+      transform: scale(1.1);
+    }
+
+    .cloud-icons {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 2px;
+    }
+
+    .cloud-icon {
+      width: 18px;
+      height: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .cloud-icon.public {
+      filter: drop-shadow(0 1px 1px rgba(0, 33, 243, 0.3));
+    }
+
+    .cloud-icon.private {
+      filter: drop-shadow(0 1px 1px rgba(0, 32, 96, 0.3));
+    }
+
+    .era:hover .cloud-icon {
+      transform: scale(1.1);
+    }
+
+    .ai-chips {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .ai-chip {
+      background-color: rgba(0, 33, 243, 0.1);
+      color: #0021f3;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 33, 243, 0.2);
+    }
+
+    .era:hover .ai-chip {
+      background-color: rgba(0, 33, 243, 0.2);
+      transform: scale(1.05);
+      box-shadow: 0 2px 4px rgba(0, 33, 243, 0.15);
+    }
+
+    .evol {
+      position: absolute;
+      font-size: 28px;
+      right: -50px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #0021f3;
+      z-index: 10;
+      font-weight: bold;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .clickable:hover .evol {
+      right: -12px;
+      text-shadow: 0 1px 3px rgba(0, 33, 243, 0.3);
+    }
+
+    /* Flow container */
+    .flow-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-top: 20px;
+      perspective: 1000px;
+      padding-bottom: 30px;
+    }
+
+    .journey-path-container {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .journey-path {
+      width: 100%;
+      height: 100%;
+    }
+
+    .journey-path-bg {
+      fill: none;
+      stroke: rgba(14, 36, 112, 0.1);
+      stroke-width: 4;
+      stroke-dasharray: 5, 5;
+    }
+
+    .journey-path-progress {
+      fill: none;
+      stroke: url(#journeyGradient);
+      stroke-width: 4;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      filter: drop-shadow(0 0 3px rgba(14, 36, 112, 0.5));
+    }
+
+    .evolution-slide.present .journey-path-progress {
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Fusefy position */
+    .fusefy-position {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      opacity: 0;
+      transform: scale(0.9);
+      position: relative;
+    }
+
+    .fusefy-position.fragment.visible {
+      opacity: 1;
+      transform: scale(1);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .fusefy-box {
+      /* Design Tokens Scoped Locally */
+      --light-blue: #3a86ff;
+      --dark-blue: #0a2540;
+      --card-border: #e2e8f0;
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --gradient-bg: linear-gradient(135deg, #f8fafc 0%, #e6f0ff 100%);
+
+      /* Background: White with subtle blue wash */
+      background: var(--gradient-bg);
+      background-image: linear-gradient(135deg, #f8fafc 0%, #e6f0ff 100%),
+        radial-gradient(
+          circle at top left,
+          rgba(58, 134, 255, 0.05),
+          transparent 60%
+        ),
+        radial-gradient(
+          circle at bottom right,
+          rgba(10, 37, 64, 0.05),
+          transparent 60%
+        );
+      background-blend-mode: soft-light;
+
+      color: var(--text-primary);
+      padding: 18px 24px;
+      border-radius: 14px;
+      border-top: 4px solid var(--light-blue);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      transition: all 0.3s ease-in-out;
+      width: 60%;
+    }
+
+    .fusefy-box::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      opacity: 0;
+      transition: all 0.8s ease;
+    }
+
+    .fusefy-box:hover::before {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .glow-effect {
+      position: relative;
+    }
+
+    @keyframes glowing {
+      0% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.5;
+      }
+    }
+
+    .fusefy-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 33, 243, 0.4);
+    }
+
+    .fusefy-box:active {
+      transform: scale(0.98);
+    }
+
+    .fusefy-statement {
+      color: #002060;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .fusefy-statement::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+      );
+    }
+
+    .fusefy-logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+      position: relative;
+    }
+
+    .fusefy-logo {
+      height: 45px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+      transition: all 0.3s ease;
+    }
+
+    .fusefy-box:hover .fusefy-logo {
+      transform: scale(1.1);
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+    }
+
+    .fusefy-icon {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      background-color: #0021f3;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      border: 2px solid white;
+      z-index: 3;
+      transition: all 0.3s ease;
+    }
+
+    .fusefy-icon svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    }
+
+    .fusefy-box:hover .fusefy-icon {
+      transform: translateX(-50%) scale(1.1) rotate(10deg);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* --- UPDATED CONNECTOR STYLES START --- */
+    .ai-services-era {
+      position: relative;
+    }
+
+    .ai-fusefy-connector {
+      position: absolute;
+      bottom: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 175px;   /* Match SVG width */
+      height: 180px;  /* Match SVG height */
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .ai-fusefy-connector.visible {
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .ai-fusefy-connector svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .ai-fusefy-connector .connector-path {
+      fill: none;
+      stroke: #7a71f8;
+      stroke-width: 2.3; /* Bolder line */
+      stroke-linecap: round;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+    }
+    .ai-fusefy-connector .connector-arrow {
+      fill: none;
+      stroke: #7a71f8;
+      stroke-width: 2.3; /* Match line thickness */
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ai-fusefy-connector.visible .connector-path {
+      transition: stroke-dashoffset 2s cubic-bezier(0.45, 0, 0.55, 1) 0.2s;
+      stroke-dashoffset: 0;
+    }
+    .ai-fusefy-connector .connector-endpoint-circle {
+      fill: none;
+      stroke: #8e85ff;
+      stroke-width: 2;
+    }
+    .ai-fusefy-connector .connector-endpoint-arc {
+      fill: none;
+      stroke: #8e85ff;
+      stroke-width: 2;
+      transform: translateY(-2px);
+    }
+    /* --- UPDATED CONNECTOR STYLES END --- */
+
+
+    /* Connection line between AI Services and Fusefy */
+    .timeline.connected::after {
+      opacity: 1;
+    }
+
+    /* Background gradient */
+    .background-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        circle at top right,
+        rgba(14, 36, 112, 0.05) 0%,
+        transparent 70%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .reveal .evolution-slide h2 {
+      color: inherit;
+      font-family: inherit;
+      text-transform: none;
+      text-shadow: none;
+      margin: inherit;
+      padding: inherit;
+    }
+
+    .reveal .evolution-slide h2 {
+      font-size: 22px;
+      padding: 20px;
+      color: #0e2470;
+    }
+
+    /* Add class to make animations work */
+    .evolution-slide {
+      opacity: 1 !important;
+    }
+
+    /* Advanced diagram elements */
+    .diagram-details {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #0021f3;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .era:hover .diagram-details {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 3px;
+    }
+
+    .tech-item {
+      background: rgba(0, 33, 243, 0.08);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #002060;
+      transition: all 0.3s ease;
+    }
+
+    .era:hover .tech-item {
+      background: rgba(0, 33, 243, 0.15);
+      transform: scale(1.05);
+    }
+
+    /* Particle effects */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(0, 33, 243, 0.2);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .evolution-slide.present .particle {
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      90% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-400px) translateX(200px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <!-- SVG Definitions -->
+  <svg width="0" height="0" style="position: absolute">
+    <linearGradient id="journeyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e2470" />
+      <stop offset="100%" stop-color="#2a4dd0" />
+    </linearGradient>
+  </svg>
+
+  <!-- Particle effects -->
+  <div class="particles-container">
+    <div
+      class="particle"
+      style="
+        width: 8px;
+        height: 8px;
+        left: 10%;
+        top: 90%;
+        animation-duration: 18s;
+      "
+    ></div>
+    <div
+      class="particle"
+      style="
+        width: 12px;
+        height: 12px;
+        left: 20%;
+        top: 85%;
+        animation-duration: 15s;
+      "
+    ></div>
+    <div
+      class="particle"
+      style="
+        width: 6px;
+        height: 6px;
+        left: 35%;
+        top: 95%;
+        animation-duration: 20s;
+      "
+    ></div>
+    <div
+      class="particle"
+      style="
+        width: 10px;
+        height: 10px;
+        left: 50%;
+        top: 90%;
+        animation-duration: 17s;
+      "
+    ></div>
+    <div
+      class="particle"
+      style="
+        width: 7px;
+        height: 7px;
+        left: 65%;
+        top: 92%;
+        animation-duration: 19s;
+      "
+    ></div>
+    <div
+      class="particle"
+      style="
+        width: 9px;
+        height: 9px;
+        left: 80%;
+        top: 88%;
+        animation-duration: 16s;
+      "
+    ></div>
+    <div
+      class="particle"
+      style="
+        width: 5px;
+        height: 5px;
+        left: 90%;
+        top: 93%;
+        animation-duration: 21s;
+      "
+    ></div>
+  </div>
+
+  <header class="slide-header">
+    <h1>THE EVOLUTION OF INTELLIGENT AUTOMATION</h1>
+    <img src="images/Logo.png" alt="Company Logo" class="company-logo" />
+  </header>
+
+  <div class="slide-content">
+    <h2>The Journey of Automation</h2>
+
+    <div class="architecture-evolution">
+      <div class="timeline">
+        <!-- Era 1: Manual Workflows -->
+        <div class="era clickable fragment" data-fragment-index="1">
+          <div class="diagram-details">i</div>
+          <div class="icon-container monolith-bg">
+            <svg
+              class="arch-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21,2H3A2,2 0 0,0 1,4V20A2,2 0 0,0 3,22H21A2,2 0 0,0 23,20V4A2,2 0 0,0 21,2M21,20H3V6H21V20M9,8H11V10H9V8M5,8H7V10H5V8M13,8H15V10H13V8M9,12H11V14H9V12M5,12H7V14H5V12M13,12H15V14H13V12M9,16H11V18H9V16M5,16H7V18H5V16M13,16H15V18H13V16Z"
+                fill="#0021F3"
+              />
+            </svg>
+          </div>
+          <div class="arch-type">Manual Workflows</div>
+          <div class="infra">
+            <svg
+              class="infra-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4,1H20A1,1 0 0,1 21,2V6A1,1 0 0,1 20,7H4A1,1 0 0,1 3,6V2A1,1 0 0,1 4,1M4,9H20A1,1 0 0,1 21,10V14A1,1 0 0,1 20,15H4A1,1 0 0,1 3,14V10A1,1 0 0,1 4,9M4,17H20A1,1 0 0,1 21,18V22A1,1 0 0,1 20,23H4A1,1 0 0,1 3,22V18A1,1 0 0,1 4,17M9,5H10V3H9V5M9,13H10V11H9V13M9,21H10V19H9V21M5,3V5H7V3H5M5,11V13H7V11H5M5,19V21H7V19H5Z"
+                fill="#002060"
+              />
+            </svg>
+            <span class="infra-text">On-prem</span>
+          </div>
+          <div class="deployment-info">
+            <span>1980s-1990s</span>
+            <div class="tech-stack">
+              <span class="tech-item">Paper</span>
+              <span class="tech-item">Excel</span>
+              <span class="tech-item">Legacy</span>
+            </div>
+          </div>
+          <div class="evol">→</div>
+        </div>
+
+        <!-- Era 2: Rule-Based RPA -->
+        <div class="era clickable fragment" data-fragment-index="2">
+          <div class="diagram-details">i</div>
+          <div class="icon-container web-bg">
+            <svg
+              class="arch-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                fill="#FFAD0E"
+              />
+            </svg>
+          </div>
+          <div class="arch-type">Rule-Based RPA</div>
+          <div class="infra">
+            <svg
+              class="infra-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21,2H3A2,2 0 0,0 1,4V20A2,2 0 0,0 3,22H21A2,2 0 0,0 23,20V4A2,2 0 0,0 21,2M21,20H3V6H21V20M9,8H11V10H9V8M5,8H7V10H5V8M13,8H15V10H13V8M9,12H11V14H9V12M5,12H7V14H5V12M13,12H15V14H13V12M9,16H11V18H9V16M5,16H7V18H5V16M13,16H15V18H13V16Z"
+                fill="#0021f3"
+              />
+            </svg>
+            <span class="infra-text">VMs</span>
+          </div>
+          <div class="deployment-info">
+            <span>2000s-2010s</span>
+            <div class="tech-stack">
+              <span class="tech-item">UiPath</span>
+              <span class="tech-item">Automation Anywhere</span>
+            </div>
+          </div>
+          <div class="evol">→</div>
+        </div>
+
+        <!-- Era 3: Generative AI -->
+        <div class="era clickable fragment" data-fragment-index="3">
+          <div class="diagram-details">i</div>
+          <div class="icon-container micro-bg">
+            <svg
+              class="arch-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15,20A1,1 0 0,0 14,19H13V17H17A2,2 0 0,0 19,15V5A2,2 0 0,0 17,3H7A2,2 0 0,0 5,5V15A2,2 0 0,0 7,17H11V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15M7,15V5H17V15H7Z"
+                fill="#0021F3"
+              />
+            </svg>
+          </div>
+          <div class="arch-type">Generative AI</div>
+          <div class="infra">
+            <svg
+              class="infra-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20.62 13.07C20.86 12.72 21 12.28 21 11.81C21 10.76 20.23 9.86 19.23 9.65C19.24 9.42 19.21 9.19 19.14 8.97C18.88 8.14 18.13 7.5 17.23 7.5C16.72 7.5 16.26 7.67 15.9 7.95C15.45 6.8 14.34 6 13.05 6C11.76 6 10.66 6.8 10.2 7.95C9.84 7.67 9.38 7.5 8.87 7.5C7.97 7.5 7.23 8.14 6.97 8.97C6.89 9.19 6.86 9.42 6.87 9.65C5.86 9.86 5.1 10.76 5.1 11.81C5.1 12.28 5.23 12.72 5.47 13.07C4.59 13.43 4 14.27 4 15.26C4 16.58 5.09 17.67 6.41 17.67C6.5 17.67 6.58 17.66 6.67 17.65C7.11 18.92 8.28 19.83 9.66 19.83C10.81 19.83 11.82 19.18 12.34 18.21C12.85 19.18 13.86 19.83 15.01 19.83C16.39 19.83 17.56 18.92 18 17.65C18.09 17.66 18.17 17.67 18.26 17.67C19.58 17.67 20.67 16.58 20.67 15.26C20.67 14.27 20.08 13.43 19.21 13.07M8.25 17.67H7.5V16.92H8.25V17.67M8.25 16.17H7.5V15.42H8.25V16.17M8.25 14.67H7.5V13.92H8.25V14.67M10.67 17.67H9.92V16.92H10.67V17.67M10.67 16.17H9.92V15.42H10.67V16.17M10.67 14.67H9.92V13.92H10.67V14.67M10.67 13.17H9.92V12.42H10.67V13.17M13.08 17.67H12.33V16.92H13.08V17.67M13.08 16.17H12.33V15.42H13.08V16.17M13.08 14.67H12.33V13.92H13.08V14.67M13.08 13.17H12.33V12.42H13.08V13.17M15.5 17.67H14.75V16.92H15.5V17.67M15.5 16.17H14.75V15.42H15.5V16.17M15.5 14.67H14.75V13.92H15.5V14.67M15.5 13.17H14.75V12.42H15.5V13.17M17.92 17.67H17.17V16.92H17.92V17.67M17.92 16.17H17.17V15.42H17.92V16.17M17.92 14.67H17.17V13.92H17.92V14.67M17.92 13.17H17.17V12.42H17.92V13.17Z"
+                fill="#0021f3"
+              />
+            </svg>
+            <span class="infra-text">Containers</span>
+          </div>
+          <div class="deployment-info">
+            <span>2020-2023</span>
+            <div class="tech-stack">
+              <span class="tech-item">GPT-3</span>
+              <span class="tech-item">DALL-E</span>
+              <span class="tech-item">Stable Diffusion</span>
+              <span class="tech-item">Microservices</span>
+            </div>
+          </div>
+          <div class="evol">→</div>
+        </div>
+
+        <!-- Era 4: Agentic AI -->
+        <div
+          class="era highlight clickable fragment ai-services-era"
+          data-fragment-index="4"
+        >
+          <div class="diagram-details">i</div>
+          <div class="icon-container ai-bg">
+            <svg
+              class="arch-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12,3C10.34,3 9,4.34 9,6C9,7.31 9.83,8.42 11,8.83V15.17C9.83,15.58 9,16.69 9,18C9,19.66 10.34,21 12,21C13.66,21 15,19.66 15,18C15,16.69 14.17,15.58 13,15.17V8.83C14.17,8.42 15,7.31 15,6C15,4.34 13.66,3 12,3M7,17H5V15H3V17H1V19H3V21H5V19H7V17M19,7V9H21V7H19M19,11V13H21V11H19M19,15V17H21V15H19Z"
+                fill="#FFAD0E"
+              />
+            </svg>
+          </div>
+          <div class="arch-type">Agentic AI</div>
+          <div class="infra">
+            <svg
+              class="infra-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"
+                fill="#0021f3"
+              />
+            </svg>
+            <span class="infra-text">Cloud + LLM</span>
+          </div>
+          <div class="deployment-info">
+            <div class="ai-chips">
+              <span class="ai-chip">LLMs</span>
+              <span class="ai-chip">RAG</span>
+              <span class="ai-chip">Agents</span>
+            </div>
+            <span>2024+</span>
+            <div class="tech-stack">
+              <span class="tech-item">GPT-4</span>
+              <span class="tech-item">Claude 3</span>
+              <span class="tech-item">Gemini</span>
+            </div>
+          </div>
+          <!-- UPDATED SVG connection element -->
+          <div class="ai-fusefy-connector fragment" data-fragment-index="5">
+              <svg viewBox="0 0 260 180" preserveAspectRatio="none">
+                  <!-- Downward zigzag, then a perfectly horizontal leftward extension -->
+                  <path d="M 130,0 
+                           L 130,30 
+                           L 140,40 
+                           L 120,50 
+                           L 140,60 
+                           L 120,70 
+                           L 130,80 
+                           L 130,120 
+                           L 30,120 
+                           L 10,120" class="connector-path"></path>
+                  <!-- Arrowhead at the end (Fusefy box side) -->
+                  <polygon points="10,120 18,115 18,125" class="connector-arrow" />
+              </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fusefy Position Section -->
+    <div class="fusefy-position fragment glow-effect" data-fragment-index="6">
+      <div class="fusefy-box clickable">
+        <div class="fusefy-statement">
+          Agentic AI marks the shift to intelligent orchestration<br />and
+          decision-making at scale.
+        </div>
+
+        <!-- Fusefy Logo -->
+        <div class="fusefy-logo-container">
+          <img
+            class="fusefy-logo"
+            src="images/Fusefycolor.png"
+            alt="Fusefy"
+            onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 50\'><text x=\'10\' y=\'30\' fill=\'white\' font-family=\'Arial\' font-size=\'24\' font-weight=\'bold\'>FUSEFY</text></svg>'"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="background-gradient"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Add the 'present' class to make animations work
+      document.querySelector(".evolution-slide").classList.add("present");
+
+      // Setup click animations for clickable elements
+      function setupClickAnimations() {
+        const clickableElements = document.querySelectorAll(".clickable");
+
+        clickableElements.forEach((el) => {
+          el.addEventListener("click", function () {
+            // Choose a random animation from our set
+            const animations = [
+              "click-animate",
+              "click-rotate",
+              "click-bounce",
+              "click-flash",
+            ];
+            const randomAnim =
+              animations[Math.floor(Math.random() * animations.length)];
+
+            // Apply the animation
+            this.classList.add(randomAnim);
+
+            // Remove the animation class after it completes
+            setTimeout(() => {
+              this.classList.remove(randomAnim);
+            }, 500);
+
+            // For era elements, highlight the timeline
+            if (this.classList.contains("era")) {
+              const timeline = document.querySelector(".timeline");
+              timeline.style.transition = "all 0.3s ease";
+              timeline.style.boxShadow = "0 0 15px rgba(0, 33, 243, 0.5)";
+
+              setTimeout(() => {
+                timeline.style.boxShadow = "none";
+              }, 500);
+            }
+
+            // For Fusefy box, add special effect
+            if (this.classList.contains("fusefy-box")) {
+              this.style.transition = "all 0.3s ease";
+              this.style.boxShadow = "0 0 25px rgba(0, 33, 243, 0.7)";
+
+              setTimeout(() => {
+                this.style.boxShadow = "";
+              }, 500);
+            }
+          });
+        });
+      }
+
+      // Add event listener for the AI Services era
+      function setupAIServiceConnection() {
+        const aiServicesEra = document.querySelector(".ai-services-era");
+        const fusefyPosition = document.querySelector(".fusefy-position");
+        const timeline = document.querySelector(".timeline");
+
+        if (aiServicesEra && fusefyPosition) {
+          aiServicesEra.addEventListener("click", function () {
+            // Highlight the connection
+            document.querySelector(".ai-fusefy-connector").style.boxShadow =
+              "0 0 15px rgba(0, 33, 243, 0.8)";
+            fusefyPosition.style.transform = "scale(1.05)";
+            timeline.classList.add("connected");
+
+            setTimeout(() => {
+              document.querySelector(".ai-fusefy-connector").style.boxShadow =
+                "";
+              fusefyPosition.style.transform = "";
+            }, 800);
+          });
+
+          // Also make the Fusefy box highlight the connection when clicked
+          const fusefyBox = document.querySelector(".fusefy-box");
+          if (fusefyBox) {
+            fusefyBox.addEventListener("click", function () {
+              document.querySelector(".ai-fusefy-connector").style.boxShadow =
+                "0 0 15px rgba(0, 33, 243, 0.8)";
+              aiServicesEra.style.transform = "scale(1.05) translateY(-5px)";
+              timeline.classList.add("connected");
+
+              setTimeout(() => {
+                document.querySelector(".ai-fusefy-connector").style.boxShadow =
+                  "";
+                aiServicesEra.style.transform = "";
+              }, 800);
+            });
+          }
+        }
+      }
+
+      // Setup info tooltips for diagram details
+      function setupInfoTooltips() {
+        const detailButtons = document.querySelectorAll(".diagram-details");
+
+        detailButtons.forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation(); // Prevent triggering parent click
+            alert("Advanced diagram details would appear here");
+          });
+        });
+      }
+
+      // Run setup functions
+      setupClickAnimations();
+      setupAIServiceConnection();
+      setupInfoTooltips();
+
+      // Hook into Reveal.js events
+      if (typeof Reveal !== "undefined") {
+        Reveal.addEventListener("slidechanged", function (event) {
+          // Check if this is our slide
+          if (event.currentSlide.classList.contains("evolution-slide")) {
+            event.currentSlide.classList.add("present");
+            setupClickAnimations();
+            setupAIServiceConnection();
+            setupInfoTooltips();
+          } else {
+            document
+              .querySelectorAll(".evolution-slide")
+              .forEach(function (slide) {
+                slide.classList.remove("present");
+              });
+          }
+        });
+
+        // Handle fragment changes to ensure connection appears at the right time
+        Reveal.addEventListener("fragmentshown", function (event) {
+          if (event.fragment.classList.contains("ai-fusefy-connector")) {
+            document.querySelector(".timeline").classList.add("connected");
+          }
+        });
+
+        Reveal.addEventListener("fragmenthidden", function (event) {
+          if (event.fragment.classList.contains("ai-fusefy-connector")) {
+            document.querySelector(".timeline").classList.remove("connected");
+          }
+        });
+      }
+    });
+  </script>
+</section>

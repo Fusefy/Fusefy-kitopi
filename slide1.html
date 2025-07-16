@@ -1,0 +1,177 @@
+<section class="index-slide" data-auto-animate>
+  <style>
+    .index-slide {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: white;
+      width: 100vw;
+      height: 100vh;
+      padding: 4vh 6vw;
+      box-sizing: border-box;
+      text-align: center; /* Center all text content */
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Vertical center */
+      align-items: center; /* Horizontal center */
+      padding: 0 20px;
+      margin: auto; /* Center in available space */
+      max-width: 800px; /* Limit width for better readability */
+    }
+
+    .main-heading {
+      font-size: 38px;
+      font-weight: bold;
+      color: #0021f3;
+      text-align: center;
+      margin-top: 40px;
+      width: 100%;
+    }
+    
+    .subtitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #002060;
+      text-align: center;
+      margin: 0 0 20px 0;
+      opacity: 1 !important;
+      visibility: visible !important;
+      z-index: 10;
+      width: 100%;
+    }
+
+    .fusefy-logo {
+      max-width: 350px;
+      height: auto;
+      margin: 0 auto 20px; /* Center horizontally with margin and add bottom margin */
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+    .fusefy-logo-container {
+      width: 100%;
+      text-align: center; /* Ensure horizontal centering */
+    }
+
+    .fusefy-logo:hover {
+      transform: scale(1.05);
+    }
+
+    /* Fragment animations */
+    .fragment.custom-appear {
+      opacity: 0;
+    }
+
+    .fragment.custom-appear.visible {
+      opacity: 1;
+      animation: appearAnimation 1s ease-out forwards;
+    }
+
+    @keyframes appearAnimation {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+      }
+      70% {
+        transform: scale(1.1) rotate(5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .fusefy-logo.pulse {
+      animation: pulseAnimation 0.5s ease-in-out;
+    }
+
+    @keyframes pulseAnimation {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    h1.zoom-in {
+      transform: scale(0.5);
+      opacity: 0;
+      transition: all 1.5s cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    }
+
+    section.present h1.zoom-in {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    /* Ensure the header is properly positioned */
+    .slide-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Ensure the company logo is properly sized */
+    .company-logo {
+      height: 40px;
+      max-width: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .company-logo:hover {
+      transform: scale(1.1);
+    }
+
+    /* Navigation hint */
+    .nav-hint {
+      position: absolute;
+      bottom: 70px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #0021f3;
+      font-size: 16px;
+    }
+  </style>
+
+  <header class="slide-header" data-id="header">
+    <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
+      WELCOME TO FUSEFY
+    </h1>
+    <img
+      src="images/Logo.png"
+      alt="Company Logo"
+      class="company-logo"
+      data-auto-animate
+      data-auto-animate-duration="1"
+    />
+  </header>
+
+  <div class="slide-body">
+    <!-- Logo container for better centering -->
+    <div class="fusefy-logo-container fragment" data-fragment-index="0">
+      <img
+      style="padding-top: 70px; width: 300px; height: 85px;"
+        src="images/fusefy.svg"
+        alt="Fusefy Logo"
+        class="fusefy-logo custom-appear"
+      />
+    </div>
+
+    <!-- Paragraph below with fragment index 1 -->
+    <p class="main-heading fragment" data-fragment-index="1">
+      AI Adoption As A Service
+    </p>
+    <p data-fragment-index="2"  class="main-heading fragment" style="font-weight: 900; color: #002060; line-height: 0.3 !important;">Empowering Intelligent Automation at Scale</p>
+  </div>
+
+  <!-- No inline script needed - handled by global slides-interactive.js -->
+</section>
