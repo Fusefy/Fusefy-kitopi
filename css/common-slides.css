@@ -31,28 +31,28 @@
 /* Standard desktops and large laptops (1440px - 1599px) */
 @media (max-width: 1599px) and (min-width: 1441px) {
   .reveal .slides section {
-    transform: scale(0.92);
+    transform: scale(0.98);
   }
 }
 
 /* Laptops (1280px - 1440px) */
 @media (max-width: 1440px) and (min-width: 1281px) {
   .reveal .slides section {
-    transform: scale(0.87);
+    transform: scale(0.92);
   }
 }
 
 /* Small laptops (1024px - 1280px) */
 @media (max-width: 1280px) and (min-width: 1025px) {
   .reveal .slides section {
-    transform: scale(0.85);
+    transform: scale(0.90);
   }
 }
 
 /* Tablets and smaller devices (below 1024px) */
 @media (max-width: 1024px) {
   .reveal .slides section {
-    transform: scale(0.82);
+    transform: scale(0.85);
   }
 }
 
