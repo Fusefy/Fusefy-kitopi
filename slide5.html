@@ -49,9 +49,9 @@
     .main-logo:hover { transform: rotate(360deg); }
 
     .top-panel {
-      display: flex; gap: 3rem;
-      flex-grow: 1;
-      padding: 0 2rem;
+      display: flex; gap: 2rem;
+      padding: 0 1rem;
+      flex-grow: 0.7;
     }
 
     .content-column-deck { 
@@ -94,9 +94,9 @@
 
     .card-header-deck {
       display: flex; align-items: center; gap: 1rem;
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--card-border);
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.8rem;
     }
 
     .card-icon-deck {
@@ -134,7 +134,7 @@
     }
     .impact-item-deck {
       display: flex; align-items: center; gap: 0.6rem;
-      font-size: 0.9rem; font-weight: 500;
+      font-size: 16px; font-weight: 600;
       color: var(--text-secondary);
     }
     .impact-icon-deck {
@@ -152,10 +152,10 @@
       background: var(--fusefy-blue-bg); 
       border-radius: 20px;
       padding: 1.5rem 2.5rem;
-      margin: 0 2rem 1rem 2rem;
+      margin: 0rem 4rem;
       box-shadow: 0 15px 40px rgba(1, 33, 144, 0.4);
     }
-    .panel-header h3 { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 1rem; }
+    .panel-header h3 { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 1rem !important; }
     .solution-items-grid { display: flex; justify-content: space-around; gap: 1.5rem; }
     .solution-item { text-align: center; color: var(--fusefy-text-light); }
     .solution-icon {
@@ -198,7 +198,7 @@
         <div class="info-card-deck card-wins fragment fade-in-card" data-fragment-index="1">
           <div class="card-header-deck">
             <div class="card-icon-deck icon-bg-wins"><svg class="icon-wins-color" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-            <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D;" >Visible Wins</h3>
+            <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D;" >AI Hype</h3>
           </div>
           <ul class="impact-list-deck">
             <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.58 3H8.42L3 8.42v7.16L8.42 21h7.16L21 15.58V8.42L15.58 3zM12 8v5M12 16.01l.01-.011M9 12l3 3 3-3M12 17v-1"/></svg><span>Faster Processes</span></li>
@@ -215,13 +215,15 @@
             <div class="card-icon-deck icon-bg-risks"><svg class="icon-risks-color" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
             <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D;">Hidden Risks</h3>
           </div>
-          <ul class="impact-list-deck" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 1fr); gap: 0.8rem 1.5rem;">
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 13h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 8h.01M12 8h.01M16 8h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>RPA Silos</span></li>
+          <ul class="impact-list-deck" style="display: grid; grid-template-columns: 1fr 1fr;  gap: 0.2rem 0.5rem;">
+            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 13h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 8h.01M12 8h.01M16 8h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>RPA Silos with No Orchestration</span></li>
+            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01"/></svg><span>Privacy and Compliance Gaps</span></li>
             <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M12 14v.01M12 10a2 2 0 110-4 2 2 0 010 4zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16l-2-2 2-2 2 2-2 2z"/></svg><span>GenAI Hallucinations</span></li>
             <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M12 3v3M3 12h3M21 12h-3M12 21v-3M18.364 5.636l-2.122 2.121M5.636 18.364l2.121-2.121M5.636 5.636l2.121 2.121M18.364 18.364l-2.122-2.121"/></svg><span>Lack of Explainability</span></li>
+            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75L9 12.75M15 6.75L15 12.75M4.5 9.75L19.5 9.75"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M12 6.75v-4.5M12 2.25l4.5 4.5-4.5-4.5zm0 0L7.5 6.75l4.5-4.5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75V21M12 21l-4.5-4.5L12 21zm0 0l4.5-4.5L12 21z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 12.75a8.25 8.25 0 01-16.5 0"/></svg><span>Data Flow Security Risks</span></li>
             <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h.5A2.5 2.5 0 0020 5.5V3.935M3.055 11a9 9 0 019-9c4.125 0 7.665 2.578 8.945 6.165"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 12v.01M8 12v.01M16 12v.01"/></svg><span>Fragmented Tooling</span></li>
             <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span>Skill Shortages</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01"/></svg><span>Security Gaps</span></li>
+            
           </ul>
         </div>
       </div>
