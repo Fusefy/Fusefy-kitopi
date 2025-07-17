@@ -20,30 +20,42 @@
   transition: opacity 0.5s ease; /* Smooth transitions between slides */
 }
 
-/* Scale adjustments for different screen sizes */
-/* @media (min-width: 1600px) {
+/*Scale adjustments for different screen sizes */
+/* Large desktops and large laptops */
+@media (min-width: 1600px) {
   .reveal .slides section {
-    transform: scale(0.10);
+    transform: scale(0.98);
   }
 }
 
-@media (max-width: 1440px) {
+/* Standard desktops and large laptops (1440px - 1599px) */
+@media (max-width: 1599px) and (min-width: 1441px) {
   .reveal .slides section {
-    transform: scale(0.95);
+    transform: scale(0.92);
   }
 }
 
-@media (max-width: 1280px) {
+/* Laptops (1280px - 1440px) */
+@media (max-width: 1440px) and (min-width: 1281px) {
   .reveal .slides section {
-    transform: scale(0.90);
+    transform: scale(0.87);
   }
 }
 
+/* Small laptops (1024px - 1280px) */
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .reveal .slides section {
+    transform: scale(0.85);
+  }
+}
+
+/* Tablets and smaller devices (below 1024px) */
 @media (max-width: 1024px) {
   .reveal .slides section {
-    transform: scale(0.8);
+    transform: scale(0.82);
   }
-} */
+}
+
 
 /* Global heading styles for consistency */
 .reveal h2 {
