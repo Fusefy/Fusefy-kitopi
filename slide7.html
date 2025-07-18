@@ -272,6 +272,7 @@
     .card-recruitment { border-top: 3px solid var(--light-blue); }
     .card-claims { border-top: 3px solid var(--orange); }
     .card-customer { border-top: 3px solid var(--light-blue); }
+    .card-healthcare { border-top: 3px solid var(--light-blue); }
 
     .icon-procurement { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
     .icon-procurement svg { fill: var(--light-blue); }
@@ -283,6 +284,8 @@
     .icon-claims svg { fill: var(--orange); }
     .icon-customer { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
     .icon-customer svg { fill: var(--light-blue); }
+    .icon-healthcare { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
+    .icon-healthcare svg { fill: var(--light-blue); }
 
     .fragment { opacity: 0; transition: all 0.5s ease; }
     .fragment.visible { opacity: 1; }
@@ -413,8 +416,49 @@
     </div>
 
     <div class="agent-cards-container">
-      <!-- Top row with 2 cards -->
+      <!-- Top row with 3 cards -->
       <div class="top-row">
+        <!-- Healthcare Agent -->
+        <div class="agent-card card-healthcare" data-storylane-url="https://app.storylane.io/share/gh3snrqq5ljv">
+          <div class="card-header">
+            <div class="agent-icon icon-healthcare">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M18 14h-4v4h-4v-4H6v-4h4V6h4v4h4m1-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+              </svg>
+            </div>
+            <div class="agent-info">
+              <div class="agent-name">Healthcare Agent</div>
+              <div class="agent-use-case">Medical Document Processing</div>
+            </div>
+          </div>
+          <ul class="impact-list">
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span>65% faster documentation</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span>90% accuracy in records</span>
+            </li>
+            <li class="impact-item">
+              <div class="impact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+                </svg>
+              </div>
+              <span>4x patient data processing</span>
+            </li>
+          </ul>
+        </div>
+
         <!-- Onboarding Agent -->
         <div class="agent-card card-hr" data-storylane-url="https://app.storylane.io/share/d9xx3md7cyhg">
           <div class="card-header">
@@ -628,6 +672,18 @@
           <div class="storylane-loading">
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading Interview Agent Demo...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="storylane-modal-healthcare" class="storylane-modal">
+      <div class="storylane-container">
+        <div class="close-storylane">×</div>
+        <div class="sl-embed">
+          <div class="storylane-loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Healthcare Agent Demo...</div>
           </div>
         </div>
       </div>
