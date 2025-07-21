@@ -196,10 +196,51 @@
       <!-- VISIBLE WINS CARD -->
       <div class="content-column-deck">
         <div class="info-card-deck card-wins fragment fade-in-card" data-fragment-index="1">
-          <div class="card-header-deck">
+          
+          <!-- CARD HEADER: Aligned title and animated tech icons -->
+          <div class="card-header-deck" style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem;">
             <div class="card-icon-deck icon-bg-wins"><svg class="icon-wins-color" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-            <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D;" >AI Hype</h3>
+            <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D; margin-bottom: 0;">AI Hype</h3>
+            
+            <!-- Spacer to push icons to the right -->
+            <div style="flex-grow: 1;"></div>
+
+            <!-- Wrapper for tech icons to group them -->
+            <div class="tech-icons-wrapper" style="display: flex; gap: 0.5rem; align-items: center;">
+              <!-- ChatGPT: Added fade-up class, unified fragment index, and set base transition delay -->
+              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #1097700d 0%, #10977015 100%); position: relative; transform: scale(0.8);" title="ChatGPT" data-fragment-index="1">
+                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #109770;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                </svg>
+                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">ChatGPT</span>
+              </div>
+              <!-- LangChain: Added fade-up class, unified fragment index, and a 100ms delay -->
+              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #0254531a 0%, #02545310 100%); position: relative; transform: scale(0.8); transition-delay: 100ms;" title="LangChain" data-fragment-index="1">
+                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #025453;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.152 6.896l-2.304-2.304M20.208 13.952l-2.304-2.304M13.152 17.104l-2.304 2.304M3.792 10.048l2.304 2.304M6.096 6.896L3.792 4.592M17.904 18.704l-2.304-2.304M20.208 4.592l-2.304 2.304M8.4 18.704l2.304 2.304"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">LangChain</span>
+              </div>
+              <!-- CrewAI: Added fade-up class, unified fragment index, and a 200ms delay -->
+              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #ff44000d 0%, #ff440015 100%); position: relative; transform: scale(0.8); transition-delay: 200ms;" title="CrewAI" data-fragment-index="1">
+                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #ff4400;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 12a3 3 0 100-6 3 3 0 000 6z"/>
+                </svg>
+                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">CrewAI</span>
+              </div>
+              <!-- Claude: Added fade-up class, unified fragment index, and a 300ms delay -->
+              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #5436DA0d 0%, #5436DA15 100%); position: relative; transform: scale(0.8); transition-delay: 300ms;" title="Claude" data-fragment-index="1">
+                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #5436DA;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082c.25-.023.5-.054.75-.082M9.75 3.104c.251.023.501.05.75.082m-1.5 0L3 14.5m6.75-11.396c.386.198.74.469.972.822.23.353.28.762.28 1.174V21"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 3.104c.251.023.501.05.75.082M14.25 3.104c-.251.023-.501.05-.75.082m.75-.082c.386.198.74.469.972.822.23.353.28.762.28 1.174V21"/>
+                </svg>
+                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">Claude</span>
+              </div>
+            </div>
           </div>
+          
           <ul class="impact-list-deck" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.2rem 0.5rem;">
             <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.58 3H8.42L3 8.42v7.16L8.42 21h7.16L21 15.58V8.42L15.58 3zM12 8v5M12 16.01l.01-.011M9 12l3 3 3-3M12 17v-1"/></svg><span>Faster Processes</span></li>
             <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 3v2M3 12h2M12 19v2M19 12h2M18.364 5.636l-1.414 1.414M6.343 17.657l-1.414 1.414M5.636 5.636l1.414 1.414M17.657 17.657l1.414 1.414"/></svg><span>Improved Response Time</span></li>
