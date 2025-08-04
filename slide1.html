@@ -1,117 +1,25 @@
 <section class="index-slide" data-auto-animate>
   <style>
+    :root {
+      --brand-blue: #0021f3;
+      --brand-dark-blue: #002060;
+      --text-primary: #1f2937;
+      --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
     .index-slide {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: white;
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
       width: 100vw;
       height: 100vh;
       padding: 4vh 6vw;
       box-sizing: border-box;
-      text-align: center; /* Center all text content */
-    }
-
-    .slide-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* Vertical center */
-      align-items: center; /* Horizontal center */
-      padding: 0 20px;
-      margin: auto; /* Center in available space */
-      max-width: 800px; /* Limit width for better readability */
-    }
-
-    .main-heading {
-      font-size: 30px;
-      font-weight: bold;
-      color: #0021f3;
       text-align: center;
-      margin-top: 40px;
-      width: 100%;
-    }
-    
-    .subtitle {
-      font-size: 24px;
-      font-weight: 600;
-      color: #002060;
-      text-align: center;
-      margin: 0 0 20px 0;
-      opacity: 1 !important;
-      visibility: visible !important;
-      z-index: 10;
-      width: 100%;
+      font-family: var(--font-main);
     }
 
-    .fusefy-logo {
-      max-width: 350px;
-      height: auto;
-      margin: 0 auto 20px; /* Center horizontally with margin and add bottom margin */
-      cursor: pointer;
-      transition: all 0.5s ease;
-    }
-    .fusefy-logo-container {
-      width: 100%;
-      text-align: center; /* Ensure horizontal centering */
-    }
-
-    .fusefy-logo:hover {
-      transform: scale(1.05);
-    }
-
-    /* Fragment animations */
-    .fragment.custom-appear {
-      opacity: 0;
-    }
-
-    .fragment.custom-appear.visible {
-      opacity: 1;
-      animation: appearAnimation 1s ease-out forwards;
-    }
-
-    @keyframes appearAnimation {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(-10deg);
-      }
-      70% {
-        transform: scale(1.1) rotate(5deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-    }
-
-    .fusefy-logo.pulse {
-      animation: pulseAnimation 0.5s ease-in-out;
-    }
-
-    @keyframes pulseAnimation {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    h1.zoom-in {
-      transform: scale(0.5);
-      opacity: 0;
-      transition: all 1.5s cubic-bezier(0.26, 0.86, 0.44, 0.985);
-    }
-
-    section.present h1.zoom-in {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    /* Ensure the header is properly positioned */
     .slide-header {
       width: 100%;
       display: flex;
@@ -119,59 +27,107 @@
       align-items: center;
     }
 
-    /* Ensure the company logo is properly sized */
     .company-logo {
-      height: 40px;
-      max-width: 40px;
-      transition: transform 0.3s ease;
+      height: 45px;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-
     .company-logo:hover {
       transform: scale(1.1);
     }
 
-    /* Navigation hint */
-    .nav-hint {
-      position: absolute;
-      bottom: 70px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      color: #0021f3;
-      font-size: 16px;
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      margin: auto;
+    }
+
+    section.present .main-title {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Logo Animations */
+    .logos-pair {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .fusefy-logo, .kitopi-logo {
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .fusefy-logo:hover, .kitopi-logo:hover {
+      transform: scale(1.05);
+    }
+    .fusefy-logo { max-width: 350px; height: auto; }
+    .kitopi-logo { max-width: 180px; height: auto; }
+    
+    .fragment.fade-zoom-in {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .fragment.fade-zoom-in.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Text Line Animations */
+    .main-heading, .subtitle {
+      width: 100%;
+    }
+    .main-heading { font-size: 30px; font-weight: bold; color: var(--brand-blue); }
+    .subtitle { font-size: 24px; font-weight: 600; color: var(--brand-dark-blue); margin-top: 10px; }
+    
+    .fragment.fade-slide-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      transition-delay: var(--stagger-delay, 0s);
+    }
+    .fragment.fade-slide-up.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 
   <header class="slide-header" data-id="header">
-    <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
-      WELCOME TO FUSEFY
+    <!-- H1 has been replaced with a cleaner class -->
+    <h1 class="main-title">
+      INTRODUCTION
     </h1>
     <img
       src="images/Logo.png"
-      alt="Company Logo"
+      alt="Fusefy Logo"
       class="company-logo"
       data-auto-animate
-      data-auto-animate-duration="1"
     />
   </header>
 
   <div class="slide-body">
-    <!-- Logo container for better centering -->
-    <div class="fusefy-logo-container fragment" data-fragment-index="0">
-      <img
-      style="padding-top: 70px; width: 300px; height: 85px;"
-        src="images/fusefy.svg"
-        alt="Fusefy Logo"
-        class="fusefy-logo custom-appear"
-      />
+    <!-- Replaced custom animation with a smoother fade-zoom -->
+    <div class="logos-pair fragment fade-zoom-in" data-fragment-index="0">
+      <img src="images/fusefy.svg" alt="Fusefy Logo" class="fusefy-logo" />
+      <img src="images/kitopi.png" alt="Kitopi Logo" class="kitopi-logo" />
     </div>
 
-    <!-- Paragraph below with fragment index 1 -->
-    <p class="main-heading fragment" data-fragment-index="1">
+    <!-- Added a reusable fade-slide-up class with staggered delays -->
+    <p 
+      class="main-heading fragment fade-slide-up"
+      data-fragment-index="1"
+      style="--stagger-delay: 0.1s;">
       AI Adoption As A Service
     </p>
-    <p data-fragment-index="2"  class="main-heading fragment" style="font-weight: 900; color: #002060; line-height: 0.3 !important;">Empowering Intelligent Automation at Scale</p>
+    <p 
+      class="main-heading fragment fade-slide-up"
+      data-fragment-index="2"
+      style="--stagger-delay: 0.2s; font-weight: 900; color: var(--brand-dark-blue); line-height: 1.2;">
+     Empowering Cloud Kitchens with Intelligent Automation
+    </p>
   </div>
-
-  <!-- No inline script needed - handled by global slides-interactive.js -->
 </section>

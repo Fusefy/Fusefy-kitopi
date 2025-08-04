@@ -1,486 +1,222 @@
-<section class="ai-adoption-slide" data-transition="zoom">
+<section class="flywheel-slide" data-auto-animate>
   <style>
-    /* --- General & Shared Styles (UNCHANGED) --- */
-    .content-set {
-      flex-grow: 1;
+    :root {
+      /* Color Palette */
+      --fusefy-blue: #2563eb;
+      --fusefy-blue-dark: #1e40af;
+
+      --text-heading: #1f2937;
+      --text-primary: #374151;
+      --text-secondary: #4b5563;
+
+      --bg-gradient-start: #f9fafb;
+      --bg-gradient-end: #f3f4f6;
+
+      /* Card Colors */
+      --card-1: #eff6ff;   --icon-1: #1d4ed8; /* Blue */
+      --card-2: #f5f3ff;   --icon-2: #7c3aed; /* Violet */
+      --card-3: #fef2f2;   --icon-3: #b91c1c; /* Red */
+      --card-4: #f0fdf4;   --icon-4: #15803d; /* Green */
+      --card-5: #fffbeb;   --icon-5: #b45309; /* Amber */
+      --card-6: #fdf2f8;   --icon-6: #be185d; /* Pink */
+      --card-7: #f0fdfa;   --icon-7: #0f766e; /* Teal */
+      --card-8: #f7fee7;   --icon-8: #65a30d; /* Lime */
+      --card-9: #ecfeff;   --icon-9: #0e7490; /* Cyan */
+      --card-10: #faf5ff;  --icon-10: #86198f;/* Fuchsia */
+
+      --line-color: #e5e7eb;
+
+      /* Fonts */
+      --font-main: "Inter", -apple-system, sans-serif;
+    }
+
+    .flywheel-slide {
+      position: relative;
+      background: linear-gradient(
+        135deg,
+        var(--bg-gradient-start) 0%,
+        var(--bg-gradient-end) 100%
+      );
+      width: 100%;
+      min-height: 100vh;
+      padding: 6rem 4rem 4rem 4rem;
+      box-sizing: border-box;
+      font-family: var(--font-main);
       display: flex;
       flex-direction: column;
-      height: 100%;
-      overflow: hidden;
-    }
-    .clickable-image {
-      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-      position: relative; z-index: 10; cursor: pointer;
-    }
-    .clickable-image:hover {
-      transform: scale(1.02);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .navigation-button {
-      position: relative; z-index: 20;
-      transition: transform 0.2s ease;
-      background-color: white; color: blue; border: none;
-      border-radius: 4px; font-size: 12px; cursor: pointer;
-      display: inline-flex; align-items: center;
-    }
-    .navigation-button:hover { transform: scale(1.05); }
-
-    /* --- Zoom Overlay Styles (UNCHANGED) --- */
-    .zoom-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background-color: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-      display: flex; justify-content: center; align-items: center;
-      z-index: 2000; opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
-    }
-    .zoom-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
-    .zoom-image {
-      max-width: 80%; max-height: 80%; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border-radius: 8px; transform: scale(0.8);
-      transition: transform 0.3s cubic-bezier(0.26, 0.86, 0.44, 0.985);
-    }
-    .zoom-overlay.active .zoom-image { transform: scale(1); }
-    .close-zoom {
-      position: fixed; top: 30px; right: 40px; font-size: 30px; color: #002060;
-      cursor: pointer; background: white; width: 40px; height: 40px; border-radius: 50%;
-      display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      z-index: 2100;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* --- Reveal.js Fragment Animation Styles (UNCHANGED) --- */
-    .reveal .slides section .fragment.fade-in-up {
-      opacity: 0; visibility: hidden; transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s linear 0.6s;
-    }
-    .reveal .slides section .fragment.fade-in-up.visible {
-      opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
+    .content-layout-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px;
     }
 
-    /* --- PAGE 1: UPDATED STYLES for "A Glimpse Into the Future" --- */
-    .future-title {
-        color: #0021f3; 
-        font-weight: bold;
-        font-size: small;
-        text-align: center;
-        margin-bottom: 10px;
-        text-transform: uppercase;
+    .text-content {
+      text-align: left;
     }
-     .future-title .gold-text {
-        color: #f5b01b; /* Gold/Yellow */
+
+    .overview-statement {
+      font-size: 18px;
+      color: #0021f3;
+      line-height: 1.6;
+      margin: 0 0 3rem 0;
+      border-left: 4px solid var(--fusefy-blue);
+      font-weight: 800;
+      padding-left: 1rem;
     }
-    .future-grid-container {
-        display: flex;
-        justify-content: center;
-        gap: 6%; /* UPDATED: Increased gap between columns */
-        width: 100%;
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
     }
-    .future-column {
-        flex: 0 1 220px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        /* UPDATED: The border and padding are removed from here */
+
+    .capability-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem; /* Adjusted padding for more space */
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    .future-column-title {
-        font-size: medium;
+    .capability-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      border-color: #e5e7eb;
+    }
+
+    .capability-item:nth-child(1) { background: var(--card-1); }
+    .capability-item:nth-child(2) { background: var(--card-2); }
+    .capability-item:nth-child(3) { background: var(--card-3); }
+    .capability-item:nth-child(4) { background: var(--card-4); }
+    .capability-item:nth-child(5) { background: var(--card-5); }
+    .capability-item:nth-child(6) { background: var(--card-6); }
+    .capability-item:nth-child(7) { background: var(--card-7); }
+    .capability-item:nth-child(8) { background: var(--card-8); }
+    .capability-item:nth-child(9) { background: var(--card-9); }
+    .capability-item:nth-child(10) { background: var(--card-10); }
+    
+    .capability-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .capability-item:nth-child(1) .capability-icon { background-color: color-mix(in srgb, var(--icon-1) 15%, transparent); color: var(--icon-1); }
+    .capability-item:nth-child(2) .capability-icon { background-color: color-mix(in srgb, var(--icon-2) 15%, transparent); color: var(--icon-2); }
+    .capability-item:nth-child(3) .capability-icon { background-color: color-mix(in srgb, var(--icon-3) 15%, transparent); color: var(--icon-3); }
+    .capability-item:nth-child(4) .capability-icon { background-color: color-mix(in srgb, var(--icon-4) 15%, transparent); color: var(--icon-4); }
+    .capability-item:nth-child(5) .capability-icon { background-color: color-mix(in srgb, var(--icon-5) 15%, transparent); color: var(--icon-5); }
+    .capability-item:nth-child(6) .capability-icon { background-color: color-mix(in srgb, var(--icon-6) 15%, transparent); color: var(--icon-6); }
+    .capability-item:nth-child(7) .capability-icon { background-color: color-mix(in srgb, var(--icon-7) 15%, transparent); color: var(--icon-7); }
+    .capability-item:nth-child(8) .capability-icon { background-color: color-mix(in srgb, var(--icon-8) 15%, transparent); color: var(--icon-8); }
+    .capability-item:nth-child(9) .capability-icon { background-color: color-mix(in srgb, var(--icon-9) 15%, transparent); color: var(--icon-9); }
+    .capability-item:nth-child(10) .capability-icon { background-color: color-mix(in srgb, var(--icon-10) 15%, transparent); color: var(--icon-10); }
+
+    .capability-icon svg { width: 22px; height: 22px; stroke-width: 2; }
+    .capability-text { 
+      font-size: 0.95rem; 
+      color: var(--text-primary); 
+      font-weight: 500; 
+      line-height: 1.4; /* Adjusted for two lines */
+    }
+    .capability-text strong {
         font-weight: 600;
-        color: #333;
-        text-align: center;
-        margin-bottom: 5px;
-        text-transform: uppercase;
     }
-    .future-card {
-        background-color: #f9fafb;
-        border: 1px solid lightgray;
-        border-radius: 8px;
-        padding: 10px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        height: 110px; /* Fixed height for all cards */
-        position: relative;
-    }
-    .future-card-img-container {
-        width: 100%;
-        height: 60px; /* Fixed height for the image area */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 8px;
-        gap: 10px; /* UPDATED: Adds space between the two images */
-    }
-    .future-card-img {
-        max-width: 45%; /* UPDATED: Sized to fit two images side-by-side */
-        max-height: 100%;
-        object-fit: contain;
-    }
-    .future-card-title {
-        font-size: small;
-        font-weight: bold;
-        color: #111827;
-        margin: 0;
-        line-height: 1.2;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: color 0.2s ease;
-    }
-    .future-card-title:hover {
-        color: #0021f3;
-    }
-    .future-card-desc { display: none; } /* Hide description text */
-    .next-button-container {
-        display: flex; justify-content: center; align-items: center;
-        width: 100%; padding-top: 10px;
+    .capability-text small {
+        font-size: 0.75rem;
     }
 
-    /* Explanation Popup Styles */
-    .explanation-popup {
-        position: absolute;
-        left: -230px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 220px;
-        background: #000;
-        border: 1px solid #333;
-        border-radius: 8px;
-        padding: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        z-index: 100;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease, visibility 0s linear 0.2s;
-    }
-    .explanation-popup.active {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.2s ease;
-    }
-    .explanation-popup ul {
-        margin: 0;
-        padding-left: 16px;
-        font-size: 12px;
-        line-height: 1.4;
-        color: #fff;
-    }
-    .explanation-popup li {
-        margin-bottom: 6px;
-    }
-    .explanation-popup::after {
-        content: '';
-        position: absolute;
-        right: -10px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-left: 10px solid #000;
-    }
-
-    /* --- PAGE 2: Custom JS-triggered Animation Styles (UNCHANGED) --- */
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-on-show { opacity: 1; transform: translateY(20px); }
-    .animate-on-show.start-animation { animation: fadeInUp 0.6s ease-out forwards; }
-    .services-container { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-    .services-title { font-size: small; font-weight: 900; color: #0021F3; }
-    .service-box {
-      flex: 1; border: 1px solid #002060; border-radius: 6px;
-      padding: 15px; text-align: left; background-color: #f8faff;
-      min-height: 140px; display: flex; flex-direction: column;
-    }
-    .service-box p {
-      font-weight: bold; color: #002060; margin-top: 0;
-      margin-bottom: 8px; font-size: small;
-    }
-    .service-box ul {
-      font-size: small; line-height: 1.4; margin: 0;
-      padding-left: 16px; color: #333;
+    /* --- TRANSITION EFFECTS --- */
+    .fragment.fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .fragment.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+    
+    .capability-item.fragment { transition-delay: var(--stagger-delay, 0s); }
+    .capability-item:nth-child(1) { --stagger-delay: 0s; }
+    .capability-item:nth-child(2) { --stagger-delay: 0.05s; }
+    .capability-item:nth-child(3) { --stagger-delay: 0.1s; }
+    .capability-item:nth-child(4) { --stagger-delay: 0.15s; }
+    .capability-item:nth-child(5) { --stagger-delay: 0.2s; }
+    .capability-item:nth-child(6) { --stagger-delay: 0.25s; }
+    .capability-item:nth-child(7) { --stagger-delay: 0.3s; }
+    .capability-item:nth-child(8) { --stagger-delay: 0.35s; }
+    .capability-item:nth-child(9) { --stagger-delay: 0.4s; }
+    .capability-item:nth-child(10) { --stagger-delay: 0.45s; }
+    
+    @media (max-width: 768px) {
+      .flywheel-slide { padding: 6rem 2rem 2rem 2rem; }
+      .capabilities-grid { grid-template-columns: 1fr; }
     }
   </style>
 
-  <!-- Zoom Overlay (UNCHANGED) -->
-  <div class="zoom-overlay" id="zoomOverlay">
-    <div class="close-zoom">×</div>
-    <img class="zoom-image" id="zoomedImage" src="" alt="Zoomed Image" />
-  </div>
+  <header class="slide-header">
+    <h1>Fusefy for Food Organizations</h1>
+    <img src="images/Logo.png" alt="Company Logo" class="company-logo"/>
+  </header>
+  <div>
+    <div class="content-layout-container">
+      <div class="text-content">
+        <p class="overview-statement fragment fade-in-up" data-fragment-index="1">
+          Fusefy provides a conversational AI voice agent that automates customer calls with remarkable, human-like accuracy for complex foodtech operations.
+        </p>
 
-  <div class="slide-padding">
-    <!-- Slide Header (UNCHANGED) -->
-    <header class="slide-header">
-      <h1>What is AI Adoption as a Service?</h1>
-      <img src="./images/Logo.png" alt="Company Logo" class="company-logo">
-    </header>
-
-    <!-- Page 1 (UNCHANGED HTML) -->
-    <div id="content-set-1" class="content-set">
-      <h2 class="future-title fragment fade-in-up" data-fragment-index="0">A Glimpse Into The <span class="gold-text">Future</span></h2>
-      
-      <div class="future-grid-container">
-        <!-- Column 1: AI & Automation -->
-        <div class="future-column fragment fade-in-up" data-fragment-index="1">
-          <h3 class="future-column-title" style="font-size: medium;">AI Inventory</h3>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Heatmap.png" alt="AI Adoption Insights" class="future-card-img clickable-image" data-src="./images/Heatmap.png" />
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Inventory.png" alt="AI Adoption Insights" class="future-card-img clickable-image" data-src="./images/AI Inventory.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: small;" data-explanation="Neural Networks">AI Inventory - Heatmap</h4>
-            <div class="explanation-popup">
-                <ul>
-                  <p>Evaluates AI use cases by factors like compliance, redundancy, data quality, and strategic fit.
-Color-coded scores with hover insights help quickly prioritize high-impact, low-risk use cases.</p>
-                </ul>
-            </div>
+        <div class="capabilities-grid">
+          <!-- Row 1 -->
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4.6C12 4.04772 11.5523 3.6 11 3.6C10.4477 3.6 10 4.04772 10 4.6V5.11102C7.23456 5.5862 5.11102 7.71261 5.00519 10.5H5C4.44772 10.5 4 10.9477 4 11.5V12.5C4 13.0523 4.44772 13.5 5 13.5H5.00519C5.11102 16.2874 7.23456 18.4138 10 18.889V19.4C10 19.9523 10.4477 20.4 11 20.4C11.5523 20.4 12 19.9523 12 19.4V18.889C14.7654 18.4138 16.889 16.2874 16.9948 13.5H17C17.5523 13.5 18 13.0523 18 12.5V11.5C18 10.9477 17.5523 10.5 17 10.5H16.9948C16.889 7.71261 14.7654 5.5862 12 5.11102V4.6Z"/></svg></div>
+            <div class="capability-text"><strong>Multilingual Voice Agent</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Speak with customers in their preferred language.</small></div>
           </div>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/TCO-1.png" alt="Robotic Process Automation" class="future-card-img clickable-image" data-src="./images/TCO-1.png" />
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/TCO-NEW-2.png" alt="Robotic Process Automation" class="future-card-img clickable-image" data-src="./images/TCO-NEW-2.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: medium;" data-explanation="Robotic Process Automation">TCO</h4>
-            <div class="explanation-popup">
-                <ul>
-                    <p>TCO breaks down total cost across five key factors, visualized in chart segments.
-Includes usability costs like training and support to highlight major expense areas for better planning.</p>
-                </ul>
-            </div>
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+            <div class="capability-text"><strong>Improved Customer Experience</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Delight callers with fast, accurate, and friendly service.</small></div>
           </div>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/ROI-1.png" alt="Generative Companions" class="future-card-img clickable-image" data-src="./images/ROI-1.png" />
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/ROI-G.png" alt="Generative Companions" class="future-card-img clickable-image" data-src="./images/ROI-G.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: medium;" data-explanation="Generative Companions">ROI</h4>
-            <div class="explanation-popup">
-                <ul>
-                <p>Cumulative Benefits (blue) grow steadily over 5 years, while Costs (red) rise more slowly.
-Net Gain (green) shows profit over time, with ROI improving year by year.</p>
-                </ul>
-            </div>
+          <!-- Row 2 -->
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+            <div class="capability-text"><strong>Faster Order Processing</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Automate order-taking to reduce call times and increase throughput.</small></div>
           </div>
-        </div>
-
-        <!-- Column 2: Biotech & Health -->
-        <div class="future-column fragment fade-in-up" data-fragment-index="2">
-          <h3 class="future-column-title"style="font-size: medium;">AI foundry</h3>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/ARC-Foundary.png" alt="CRISPR Gene Editing" class="future-card-img clickable-image" data-src="./images/ARC-Foundary.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: small ;" data-explanation="CRISPR Gene Editing">AI Foundry Platform Architecture</h4>
-            <div class="explanation-popup">
-                <ul>
-                  <p>The flow starts with users providing cloud and framework details. Git repositories are then fetched for analysis. Based on repo data and Jira stories, code is generated. This code goes through automated testing, and if it passes, it’s deployed to the target environment.</p>    
-                </ul>
-            </div>
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+            <div class="capability-text"><strong>Error Reduction</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Minimize costly mistakes with precise, automated data capture.</small></div>
           </div>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-1.png" alt="CRISPR Gene Editing" class="future-card-img clickable-image" data-src="./images/AI Foundary-1.png" />
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-2.png" alt="CRISPR Gene Editing" class="future-card-img clickable-image" data-src="./images/AI Foundary-2.png" />
-              </div>
-            <h4 class="future-card-title" style="font-size: small;" data-explanation="3D Bioprinting">Use case selection and Service Choice</h4>
-            <div class="explanation-popup">
-                <ul>
-                    <p>AI Foundry lets you pick a use case, build agents instantly, choose a cloud provider, and integrate with frameworks like LangChain.</p>
-                </ul>
-            </div>
+          <!-- Row 3 -->
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 7L12 3L4 7M20 7L12 11.5M20 7V17L12 21M4 7L12 11.5M4 7V17L12 21M12 11.5V21" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="capability-text"><strong>Inventory-Aware Logic</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Check real-time stock to prevent out-of-stock order issues.</small></div>
           </div>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-3.png" alt="3D Bioprinting" class="future-card-img clickable-image" data-src="./images/AI Foundary-3.png" />
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/AI Foundary-3a.png" alt="3D Bioprinting" class="future-card-img clickable-image" data-src="./images/AI Foundary-3a.png" />
-              </div>
-            <h4 class="future-card-title" style="font-size: small;" data-explanation="Personalized Medicine">Source code generation & testing</h4>
-            <div class="explanation-popup">
-                <ul>
-                    <p>Fusefy generates project code with key files like app.py and `Dockerfile.
-Built-in tests verify functions like topic handling and exit commands.</p>
-                </ul>
-            </div>
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+             <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg></div>
+            <div class="capability-text"><strong>Personalized Recommendations</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Increase order value with smart, data-driven upselling.</small></div>
           </div>
-        </div>
-
-        <!-- Column 3: Energy & Exploration -->
-        <div class="future-column fragment fade-in-up" data-fragment-index="3">
-          <h3 class="future-column-title" style="font-size: medium;">Audit suite</h3>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/validation1.png" alt="Fusion Power" class="future-card-img clickable-image" data-src="./images/validation1.png" />
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/validation2.png" alt="Fusion Power" class="future-card-img clickable-image" data-src="./images/validation2.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: small;" data-explanation="Fusion Power">Model validation </h4>
-            <div class="explanation-popup">
-                <ul>
-                    <p>The Audit Suite validates model runs with metrics like accuracy, drift, and data quality.It highlights issues, tracks performance over time, and flags models needing attention.</p>
-                </ul>
-            </div>
+          <!-- Row 4 -->
+           <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg></div>
+            <div class="capability-text"><strong>Scalability</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Effortlessly handle call volume spikes without hiring more staff.</small></div>
           </div>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/Model Validatio-1.png" alt="Asteroid Mining" class="future-card-img clickable-image" data-src="./images/Model Validatio-1.png" />
-                <img style="width: 50%;border: 1.3px solid grey !important; " src="./images/Model Validation-2.png" alt="Asteroid Mining" class="future-card-img clickable-image" data-src="./images/Model Validation-2.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: small;" data-explanation="Asteroid Mining">Model Monitoring</h4>
-            <div class="explanation-popup">
-                <ul>
-                    <p>The Monitoring module tracks deployed models in real-time using metrics like accuracy, precision, and F1-score.
-It detects performance drops, data drift, and library vulnerabilities to ensure ongoing model reliability.</p>
-                </ul>
-            </div>
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V6.375c0-.621.504-1.125 1.125-1.125h.375m16.5 0h.375a1.125 1.125 0 011.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m0 0h-.375a1.125 1.125 0 01-1.125-1.125V6.375c0-.621.504-1.125 1.125-1.125h.375M3.75 9h16.5M12 12h.008v.008H12V12z" /></svg></div>
+            <div class="capability-text"><strong>Cost Efficiency</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Reduce operational expenses by automating routine customer calls.</small></div>
           </div>
-          <div class="future-card">
-            <div class="future-card-img-container">
-                <img style="width: 50%; border: 1.3px solid grey !important;" src="./images/risk.png" alt="Next-Gen Space Telescopes" class="future-card-img clickable-image" data-src="./images/risk.png" />
-            </div>
-            <h4 class="future-card-title" style="font-size: small;" data-explanation="Next-Gen Space Telescopes">Risk Assessment</h4>
-            <div class="explanation-popup">
-                <ul>
-                    <p>Medium risk identified for vendor consent under AI Governance. Remediation: implement a PO agent-based consent system with clear opt-ins, granular controls, and audit-ready logs.</p>
-                </ul>
-            </div>
+           <!-- Row 5 -->
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+            <div class="capability-text"><strong>24/7 Availability</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Capture every order and inquiry, any time of day or night.</small></div>
           </div>
-        </div>
-      </div>
-      
-      <!-- <div class="next-button-container fragment fade-in-up" data-fragment-index="4">
-          <button id="next-button" class="navigation-button" style="padding: 8px 16px;">
-              <span>Next</span>
-              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImJsdWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNNiA5bDYgNiA2LTYiLz48L3N2Zz4=" alt="Down Arrow" style="width: 20px; height: 20px; margin-left: 6px;">
-          </button>
-      </div> -->
-    </div>
-
-    <!-- Page 2 (Hidden by default, UNCHANGED) -->
-    <div id="content-set-2" class="content-set" style="display: none;">
-      <p class="services-title animate-on-show">Services</p>
-      <div class="services-container">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 35px;">
-          <div style="display: flex; justify-content: space-around; align-items: stretch; gap: 20px; width: 85%;">
-            <div class="service-box animate-on-show">
-              <p>GenAI + Agent Integration</p>
-              <ul>
-                <li>Seamlessly combine Generative AI models with intelligent agents.</li>
-                <li>Automate complex workflows and critical decision-making processes.</li>
-                <li>Personalize user experiences in real-time through adaptive, goal-driven interactions.</li>
-              </ul>
-            </div>
-            <div class="service-box animate-on-show">
-              <p>Cloud Enablement</p>
-              <ul>
-                <li>Leverage leading cloud platforms like Vertex AI, Azure, and Gemini.</li>
-                <li>Deploy scalable, secure, and high-performance AI solutions.</li>
-                <li>Accelerate innovation with managed services and streamlined experimentation.</li>
-              </ul>
-            </div>
-            <div class="service-box animate-on-show">
-              <p>Enterprise-Grade Deployment</p>
-              <ul>
-                <li>Ensure robust security and full regulatory compliance.</li>
-                <li>Streamline deployment and management across all environments.</li>
-                <li>Embed governance and trust throughout the entire AI lifecycle.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="back-button-container animate-on-show">
-            <button id="back-button" class="navigation-button" style="padding: 10px 20px;">
-              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImJsdWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTggMTVsLTYtNi02IDYiLz48L3N2Zz4=" alt="Up Arrow" style="width: 24px; height: 24px; margin-right: 8px;">
-              <span>Back</span>
-            </button>
+          <div class="capability-item fragment fade-in-up" data-fragment-index="2">
+            <div class="capability-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg></div>
+            <div class="capability-text"><strong>Human-like Conversation</strong><br><small style="color: var(--text-secondary); font-weight: 400;">Engage customers with natural, fluid dialogue that builds trust.</small></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <script>
-    // SCRIPT IS UNCHANGED
-    (function() {
-      const slide = document.querySelector('.ai-adoption-slide');
-      if (!slide) return;
-
-      const page1 = slide.querySelector('#content-set-1');
-      const page2 = slide.querySelector('#content-set-2');
-      const nextButton = slide.querySelector('#next-button');
-      const backButton = slide.querySelector('#back-button');
-      const zoomOverlay = slide.querySelector('#zoomOverlay');
-      const zoomedImage = slide.querySelector('#zoomedImage');
-      const closeZoomButton = slide.querySelector('.close-zoom');
-
-      // --- Content Switching Logic ---
-      if (nextButton) {
-        nextButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          page1.style.display = 'none';
-          page2.style.display = 'flex';
-
-          const elementsToAnimate = page2.querySelectorAll('.animate-on-show');
-          elementsToAnimate.forEach((el, index) => {
-            el.classList.remove('start-animation');
-            setTimeout(() => {
-                el.style.animationDelay = `${index * 150}ms`;
-                el.classList.add('start-animation');
-            }, 10);
-          });
-        });
-      }
-
-      if (backButton) {
-        backButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          page2.style.display = 'none';
-          page1.style.display = 'flex';
-          
-          page2.querySelectorAll('.animate-on-show').forEach(el => {
-            el.classList.remove('start-animation');
-            el.style.animationDelay = '';
-          });
-        });
-      }
-
-      // --- Image Zoom Logic ---
-      slide.querySelectorAll('.clickable-image').forEach(img => {
-        img.addEventListener('click', function(e) {
-          if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-          
-          zoomedImage.src = this.dataset.src || this.src;
-          zoomOverlay.classList.add('active');
-        });
-      });
-
-      // --- Explanation Popup Logic ---
-      slide.querySelectorAll('.future-card-title').forEach(title => {
-        const popup = title.nextElementSibling;
-        if (popup && popup.classList.contains('explanation-popup')) {
-          title.addEventListener('mouseenter', function() {
-            popup.classList.add('active');
-          });
-          
-          title.addEventListener('mouseleave', function() {
-            popup.classList.remove('active');
-          });
-        }
-      });
-
-      if (closeZoomButton) {
-        closeZoomButton.addEventListener('click', function() {
-          zoomOverlay.classList.remove('active');
-        });
-      }
-      
-      if (zoomOverlay) {
-        zoomOverlay.addEventListener('click', function(e) {
-            if (e.target === zoomOverlay) {
-                zoomOverlay.classList.remove('active');
-            }
-        });
-      }
-    })();
-  </script>
-  
-  <script src="slides-interactive.js"></script>
-</section> 
+</section>

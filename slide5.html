@@ -1,288 +1,224 @@
-<section class="ai-solution-card-deck" data-auto-animate data-transition="zoom">
+<section class="index-slide" data-auto-animate id="slide1">
+  <!-- CSS Styles for the slide -->
   <style>
-    .ai-solution-card-deck {
-      background: linear-gradient(160deg, #FDFEFE 0%, #EDF2F7 100%);
-      padding: 4vh 5vw;
-      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-      --wins-blue: #3A86FF;
-      --risks-orange: #FF6B35;
-      --text-heading: #0A2540;
-      --text-primary: #1A202C;
-      --text-secondary: #334155;
-      --card-bg: rgba(255, 255, 255, 0.8);
-      --card-border: rgba(226, 232, 240, 0.7);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-      
-      --fusefy-blue-bg: linear-gradient(135deg, #012190 0%, #00176D 100%);
-      --fusefy-text-light: #E0E7FF;
-      --fusefy-cyan-accent: #7DF9FF;
+    .index-slide {
+      display: flex; flex-direction: column; justify-content: space-between;
+      background: white; width: 100vw; height: 100vh;
+      padding: 4vh 6vw; box-sizing: border-box; text-align: center;
     }
-    
-    .ai-solution-card-deck * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    .slide-layout-container {
+    .slide-body {
+      flex: 1; display: flex; justify-content: center; align-items: center;
       width: 100%; height: 100%;
-      display: flex; flex-direction: column; gap: 2rem;
-      max-height: 90vh;
-      margin: auto;
     }
-    
-    .main-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.5rem 0;
+    .content-container {
+      display: flex; gap: 32px; justify-content: center; align-items: flex-start;
+      width: 100%; max-width: 1260px; /* CHANGED */
     }
-    .main-header h1 { 
-      font-size: 2rem; 
-      font-weight: 800; 
-      background: linear-gradient(90deg, var(--text-heading) 0%, var(--wins-blue) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
+    h1.zoom-in {
+      transform: scale(0.5); opacity: 0;
+      transition: all 1.5s cubic-bezier(0.26, 0.86, 0.44, 0.985);
     }
-    .main-logo { 
-      width: 40px; height: 40px; 
-      stroke: var(--wins-blue); 
-      stroke-width: 1.8;
-      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    section.present h1.zoom-in { transform: scale(1); opacity: 1; }
+    .slide-header {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
     }
-    .main-logo:hover { transform: rotate(360deg); }
-
-    .top-panel {
-      display: flex; gap: 2rem;
-      padding: 0 1rem;
-      flex-grow: 0.5;
+    .company-logo { height: 40px; max-width: 40px; }
+    .card {
+      background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
+      border-radius: 16px; box-shadow: 0 4px 15px -2px rgba(200, 210, 230, 0.4);
+      border: 1px solid #eef2f9; min-width: 350px; max-width: 100%;
+      box-sizing: border-box;
     }
-
-    .content-column-deck { 
-      flex: 1;
-      transition: all 0.5s ease;
-      max-width: calc(50% - 1.5rem);
+    .card-title {
+      font-size: 22px !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+      font-weight: 800 !important; margin-bottom: 24px; text-align: left;
     }
-
-    .info-card-deck {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-      height: 100%;
-      display: flex; flex-direction: column;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      position: relative;
-      overflow: hidden;
-      max-height: 85vh;
+    #impact-card { width: 700px; padding: 28px; } /* CHANGED */
+    #impact-card .card-title { color: #6d28d9; }
+    .metrics-container { display: flex; flex-direction: column; gap: 20px; }
+    .metric-item {
+      background-color: #fdfdff; border: 1px solid #eef2f9;
+      padding: 16px; border-radius: 12px;
     }
-    .info-card-deck:hover { 
-      transform: translateY(-5px); 
-      box-shadow: 0 12px 25px rgba(0,0,0,0.1); 
+    .metric-header {
+      display: flex; justify-content: space-between; align-items: baseline;
     }
-
-    /* Gradient Border and Background Effects */
-    .card-wins { 
-      border-top: 5px solid var(--wins-blue);
-      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(239, 246, 255, 0.6) 100%);
-      backdrop-filter: blur(8px);
+    .metric-label {
+      font-size: 18px; color: #030244;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 800;
     }
-    .card-risks { 
-      border-top: 5px solid var(--risks-orange);
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 247, 237, 0.6) 100%);
-      backdrop-filter: blur(8px);
+    .metric-value-container {
+      font-weight: 700; font-size: 24px; color: #1f2937;
+      transition: color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+      /* NEW: Flexbox to align "Before -> After" values */
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
     }
-
-    .card-header-deck {
-      display: flex; align-items: center; gap: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 0.8rem;
+    /* NEW: Span-specific coloring */
+    .metric-before.red, .metric-value-container .red { color: #ef4444; }
+    .metric-after.green, .metric-value-container .green { color: #10b981; }
+    .metric-separator {
+        color: #9ca3af; /* A neutral grey for the arrow */
+        font-weight: 400;
     }
-
-    .card-icon-deck {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.3s ease;
+    .metric-unit {
+      font-size: 16px; font-weight: 500; color: #6b7280; margin-left: 4px;
     }
-    .icon-bg-wins { 
-      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-      box-shadow: 0 3px 8px rgba(58, 134, 255, 0.2);
+    /* STYLES FOR DUAL PROGRESS BARS */
+    .progress-bars-wrapper { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .progress-row { display: flex; align-items: center; gap: 12px; }
+    .progress-label {
+      font-size: 13px; color: #6b7280; font-weight: 500;
+      width: 45px; flex-shrink: 0;
     }
-    .icon-bg-risks { 
-      background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
-      box-shadow: 0 3px 8px rgba(255, 107, 53, 0.2);
+    .progress-bar-bg {
+      flex-grow: 1; height: 8px; background-color: #eef2f9;
+      border-radius: 4px; overflow: hidden;
     }
-    .card-icon-deck svg { width: 20px; height: 20px; stroke-width: 2; }
-    .icon-wins-color { stroke: var(--wins-blue); }
-    .icon-risks-color { stroke: var(--risks-orange); }
-
-    .card-title-deck { 
-      font-size: 1.25rem; 
-      font-weight: 700; 
-      color: var(--text-heading);
+    .progress-bar-fg {
+      height: 100%; width: 0; border-radius: 4px;
+      transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
-    .impact-list-deck {
-      list-style: none;
-      display: flex; flex-direction: column;
-      gap: 1.2rem;
-      line-height: 1.6;
-      height: 100%;
-      justify-content: space-around;
+    .progress-bar-fg.before { background: #cbd5e1; }
+    .progress-bar-fg.after { background: linear-gradient(90deg, #22d3ee, #3b82f6); }
+    /* STYLES FOR DIFFERENTIATORS CARD */
+    #differentiators-card {
+      width: 520px; background: transparent; padding: 28px; border: none; box-shadow: none;
     }
-    .impact-item-deck {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-size: 16px; font-weight: 600;
-      color: var(--text-secondary);
+    #differentiators-card .card-title { color: #3B82F6; }
+    .differentiators-list { display: flex; flex-direction: column; gap: 20px; }
+    .differentiator-item {
+      display: flex; align-items: center; gap: 16px; position: relative; cursor: pointer;
+      padding: 16px 20px; border-radius: 12px;
+      box-shadow: 0 2px 8px -2px rgba(200, 210, 230, 0.4);
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; text-align: left;
     }
-    .impact-icon-deck {
-      width: 18px; height: 18px;
-      flex-shrink: 0; 
-      stroke-width: 2;
-      transition: all 0.3s ease;
+    .differentiator-item:hover {
+      transform: translateY(-4px); box-shadow: 0 6px 16px -4px rgba(179, 194, 224, 0.6);
     }
-    .impact-item-deck:hover .impact-icon-deck { transform: scale(1.2) rotate(-10deg); }
-    .impact-icon-wins { stroke: var(--wins-blue); }
-    .impact-icon-risks { stroke: var(--risks-orange); }
-    
-    /* --- BOTTOM FUSEFY PANEL --- */
-    .fusefy-solution-panel {
-      background: var(--fusefy-blue-bg); 
-      border-radius: 20px;
-      padding: 1.5rem 2.5rem;
-      margin: 0rem 4rem;
-      box-shadow: 0 15px 40px rgba(1, 33, 144, 0.4);
+    .differentiator-icon { width: 24px; height: 24px; flex-shrink: 0; }
+    .differentiator-text { font-size: 15px; color: #1f2937; font-weight: 500; }
+    .differentiator-item:nth-child(1) { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 1px solid #bae6fd; }
+    .differentiator-item:nth-child(1) .differentiator-icon { color: #3b82f6; }
+    .differentiator-item:nth-child(2) { background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%); border: 1px solid #e9d5ff; }
+    .differentiator-item:nth-child(2) .differentiator-icon { color: #8b5cf6; }
+    .differentiator-item:nth-child(3) { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1px solid #bbf7d0; }
+    .differentiator-item:nth-child(3) .differentiator-icon { color: #22c55e; }
+    .differentiator-item:nth-child(4) { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 1px solid #fde68a; }
+    .differentiator-item:nth-child(4) .differentiator-icon { color: #f59e0b; }
+    .tooltip {
+        position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-10px);
+        background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%); color: white; padding: 12px 16px;
+        border-radius: 8px; font-size: 14px; font-weight: 500; width: 320px; text-align: center;
+        margin-bottom: 12px; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none; z-index: 10; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    .panel-header h3 { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 1rem !important; }
-    .solution-items-grid { display: flex; justify-content: space-around; gap: 1.5rem; }
-    .solution-item { text-align: center; color: var(--fusefy-text-light); }
-    .solution-icon {
-        width: 40px; height: 40px;
-        margin: 0 auto 0.5rem auto;
-        display: flex; align-items: center; justify-content: center;
-        background: rgba(125, 249, 255, 0.1);
-        border: 1px solid rgba(125, 249, 255, 0.2);
-        border-radius: 10px;
-        transition: all 0.3s ease;
+    .tooltip::after {
+        content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px;
+        border-width: 6px; border-style: solid; border-color: #6366f1 transparent transparent transparent;
     }
-    .solution-icon:hover {
-      background: rgba(125, 249, 255, 0.2);
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 0 15px rgba(125, 249, 255, 0.3);
-    }
-    .solution-icon svg { stroke: var(--fusefy-cyan-accent); stroke-width: 1.8; width: 20px; height: 20px; }
-    .solution-item p { font-size: 0.8rem; font-weight: 500; line-height: 1.3; max-width: 110px; margin: 0 auto; }
-
-    /* Fragment Animations */
-    .fragment.fade-in-card { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }
-    .fragment.fade-in-card.visible { opacity: 1; transform: translateY(0) scale(1); }
-    .fragment.zoom-in { opacity: 0; transform: scale(0.8); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
-    .fragment.zoom-in.visible { opacity: 1; transform: scale(1); }
-    .fragment.fade-right { opacity: 0; transform: translateX(30px); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
-    .fragment.fade-right.visible { opacity: 1; transform: translateX(0); }
-    .fragment.fade-up { opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
-    .fragment.fade-up.visible { opacity: 1; transform: translateY(0); }
+    .differentiator-item:hover .tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
   </style>
 
-  <div class="slide-layout-container">
-    <header class="slide-header">
-      <h1>Hidden Risks in Intelligent Automation</h1>
-      <img src="./images/Logo.png" alt="Company Logo" class="company-logo">
-    </header>
+  <!-- HTML Content (No changes needed here) -->
+  <header class="slide-header" data-id="header">
+    <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
+      FROM MANUAL CHAOS TO AI CLARITY
+    </h1>
+    <img src="images/Logo.png" alt="Company Logo" class="company-logo" data-auto-animate data-auto-animate-duration="1" />
+  </header>
 
-    <div class="top-panel">
-      <!-- VISIBLE WINS CARD -->
-      <div class="content-column-deck">
-        <div class="info-card-deck card-wins fragment fade-in-card" data-fragment-index="1">
-          
-          <!-- CARD HEADER: Aligned title and animated tech icons -->
-          <div class="card-header-deck" style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem;">
-            <div class="card-icon-deck icon-bg-wins"><svg class="icon-wins-color" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-            <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D; margin-bottom: 0;">AI Hype</h3>
-            
-            <!-- Spacer to push icons to the right -->
-            <div style="flex-grow: 1;"></div>
+  <div class="slide-body">
+    <div class="content-container">
 
-            <!-- Wrapper for tech icons to group them -->
-            <div class="tech-icons-wrapper" style="display: flex; gap: 0.5rem; align-items: center;">
-              <!-- ChatGPT: Added fade-up class, unified fragment index, and set base transition delay -->
-              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #1097700d 0%, #10977015 100%); position: relative; transform: scale(0.8);" title="ChatGPT" data-fragment-index="1">
-                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #109770;">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-                </svg>
-                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">ChatGPT</span>
+      <!-- CARD 1: OPERATIONAL GAINS -->
+      <div class="card fragment" id="impact-card" data-fragment-index="1">
+        <h4 class="card-title">From Human-Only to Hybrid Intelligence</h4>
+        
+        <div class="metrics-container">
+          <!-- Metric 1: Operational Cost -->
+          <div class="metric-item">
+            <div class="metric-header">
+              <span class="metric-label">Monthly Operational Cost</span>
+              <span class="metric-value-container" id="cost-value"></span>
+            </div>
+            <div class="progress-bars-wrapper">
+              <div class="progress-row">
+                <span class="progress-label">Before</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fg before" id="cost-bar-before"></div></div>
               </div>
-              <!-- LangChain: Added fade-up class, unified fragment index, and a 100ms delay -->
-              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #0254531a 0%, #02545310 100%); position: relative; transform: scale(0.8); transition-delay: 100ms;" title="LangChain" data-fragment-index="1">
-                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #025453;">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.152 6.896l-2.304-2.304M20.208 13.952l-2.304-2.304M13.152 17.104l-2.304 2.304M3.792 10.048l2.304 2.304M6.096 6.896L3.792 4.592M17.904 18.704l-2.304-2.304M20.208 4.592l-2.304 2.304M8.4 18.704l2.304 2.304"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">LangChain</span>
-              </div>
-              <!-- CrewAI: Added fade-up class, unified fragment index, and a 200ms delay -->
-              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #ff44000d 0%, #ff440015 100%); position: relative; transform: scale(0.8); transition-delay: 200ms;" title="CrewAI" data-fragment-index="1">
-                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #ff4400;">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 12a3 3 0 100-6 3 3 0 000 6z"/>
-                </svg>
-                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">CrewAI</span>
-              </div>
-              <!-- Claude: Added fade-up class, unified fragment index, and a 300ms delay -->
-              <div class="card-icon-deck fragment fade-up" style="background: linear-gradient(135deg, #5436DA0d 0%, #5436DA15 100%); position: relative; transform: scale(0.8); transition-delay: 300ms;" title="Claude" data-fragment-index="1">
-                <svg class="icon-wins-color" fill="none" viewBox="0 0 24 24" style="stroke: #5436DA;">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082c.25-.023.5-.054.75-.082M9.75 3.104c.251.023.501.05.75.082m-1.5 0L3 14.5m6.75-11.396c.386.198.74.469.972.822.23.353.28.762.28 1.174V21"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 3.104c.251.023.501.05.75.082M14.25 3.104c-.251.023-.501.05-.75.082m.75-.082c.386.198.74.469.972.822.23.353.28.762.28 1.174V21"/>
-                </svg>
-                <span style="position: absolute; bottom: -18px; font-size: 10px; white-space: nowrap; font-weight: 600;">Claude</span>
+              <div class="progress-row">
+                <span class="progress-label">After</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fg after" id="cost-bar-after"></div></div>
               </div>
             </div>
           </div>
-          
-          <ul class="impact-list-deck" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.2rem 0.5rem;">
-            <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.58 3H8.42L3 8.42v7.16L8.42 21h7.16L21 15.58V8.42L15.58 3zM12 8v5M12 16.01l.01-.011M9 12l3 3 3-3M12 17v-1"/></svg><span>Faster Processes</span></li>
-            <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 3v2M3 12h2M12 19v2M19 12h2M18.364 5.636l-1.414 1.414M6.343 17.657l-1.414 1.414M5.636 5.636l1.414 1.414M17.657 17.657l1.414 1.414"/></svg><span>Improved Response Time</span></li>
-            <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7h-7.333L9.333 3H4C2.897 3 2 3.897 2 5v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zM12 18c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 12v4M14 14h-4"/></svg><span>Reduced Headcount Costs</span></li>
-            <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span>Intelligent Automation</span></li>
-            <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><span>Increased Revenue</span></li>
-            <li class="impact-item-deck fragment zoom-in" data-fragment-index="2"><svg class="impact-icon-deck impact-icon-wins" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg><span>Scalable Solutions</span></li>
-          </ul>
+          <!-- Metric 2: Orders Processed -->
+          <div class="metric-item">
+            <div class="metric-header">
+              <span class="metric-label">Orders Processed / min</span>
+              <span class="metric-value-container" id="orders-value"></span>
+            </div>
+            <div class="progress-bars-wrapper">
+              <div class="progress-row">
+                <span class="progress-label">Before</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fg before" id="orders-bar-before"></div></div>
+              </div>
+              <div class="progress-row">
+                <span class="progress-label">After</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fg after" id="orders-bar-after"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Metric 3: Customer Sentiment -->
+          <div class="metric-item">
+            <div class="metric-header">
+              <span class="metric-label">Customer Sentiment</span>
+              <span class="metric-value-container" id="sentiment-value"></span>
+            </div>
+            <div class="progress-bars-wrapper">
+               <div class="progress-row">
+                <span class="progress-label">Before</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fg before" id="sentiment-bar-before"></div></div>
+              </div>
+              <div class="progress-row">
+                <span class="progress-label">After</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fg after" id="sentiment-bar-after"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- CARD 2: DIFFERENTIATORS -->
+      <div class="card fragment" id="differentiators-card" data-fragment-index="2">
+         <h4 class="card-title">Turning Plans into Action</h4>
+        <div class="differentiators-list">
+          <div class="differentiator-item">
+            <svg class="differentiator-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <span class="differentiator-text">From Manual Workflows ➡️ To Smart Automation</span>
+            <div class="tooltip">Repetitive manual tasks are replaced with intelligent automation for faster, error-free execution.</div>
+          </div>
+          <div class="differentiator-item">
+            <svg class="differentiator-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+            <span class="differentiator-text">From Human-Only Teams ➡️ To AI-Augmented Power</span>
+            <div class="tooltip">Scale from 50 agents to just 10 supervisors, as our AI handles 80%+ of calls 24/7.</div>
+          </div>
+          <div class="differentiator-item">
+             <svg class="differentiator-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-6 0h6"></path></svg>
+            <span class="differentiator-text">From Long Waits ➡️ To Instant Responses</span>
+            <div class="tooltip">Turn wait times into wins. Customers get help in seconds, not minutes, boosting satisfaction.</div>
+          </div>
+          <div class="differentiator-item">
+             <svg class="differentiator-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span class="differentiator-text">From Limited Hours ➡️ To 24/7 AI-Powered Coverage</span>
+            <div class="tooltip">Go beyond 9-to-5. Ensure secure, round-the-clock service and capture every sales opportunity.</div>
+          </div>
         </div>
       </div>
 
-      <!-- HIDDEN RISKS CARD -->
-      <div class="content-column-deck" style="flex: 1.5;">
-        <div class="info-card-deck card-risks fragment fade-in-card" data-fragment-index="3">
-          <div class="card-header-deck">
-            <div class="card-icon-deck icon-bg-risks"><svg class="icon-risks-color" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
-            <h3 class="card-title-deck" style="font-size: 20px; font-weight: 800; color: #00176D;">Hidden Risks</h3>
-          </div>
-          <ul class="impact-list-deck" style="display: grid; grid-template-columns: 1fr 1fr;  gap: 0.2rem 0.5rem;">
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 13h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 8h.01M12 8h.01M16 8h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>RPA Silos with No Orchestration</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01"/></svg><span>Privacy and Compliance Gaps</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M12 14v.01M12 10a2 2 0 110-4 2 2 0 010 4zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16l-2-2 2-2 2 2-2 2z"/></svg><span>GenAI Hallucinations</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M12 3v3M3 12h3M21 12h-3M12 21v-3M18.364 5.636l-2.122 2.121M5.636 18.364l2.121-2.121M5.636 5.636l2.121 2.121M18.364 18.364l-2.122-2.121"/></svg><span>Lack of Explainability</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75L9 12.75M15 6.75L15 12.75M4.5 9.75L19.5 9.75"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M12 6.75v-4.5M12 2.25l4.5 4.5-4.5-4.5zm0 0L7.5 6.75l4.5-4.5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75V21M12 21l-4.5-4.5L12 21zm0 0l4.5-4.5L12 21z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 12.75a8.25 8.25 0 01-16.5 0"/></svg><span>Data Flow Security Risks</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h.5A2.5 2.5 0 0020 5.5V3.935M3.055 11a9 9 0 019-9c4.125 0 7.665 2.578 8.945 6.165"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 12v.01M8 12v.01M16 12v.01"/></svg><span>Fragmented Tooling</span></li>
-            <li class="impact-item-deck fragment fade-right" data-fragment-index="4"><svg class="impact-icon-deck impact-icon-risks" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span>Skill Shortages</span></li>
-            
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <!-- FUSEFY SOLUTION PANEL -->
-    <div class="fusefy-solution-panel fragment" data-fragment-index="5">
-      <div class="panel-header"><h3>The Fusefy Solution: From Risk to Reward</h3></div>
-      <div class="solution-items-grid">
-          <div class="solution-item fragment fade-up" data-fragment-index="6"><div class="solution-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M14 15l-2 2m0 0l-2-2m2 2v4m-4-3h8M8 4v4M12 4v2m4-2v4"/></svg></div><p>Unified Orchestration</p></div>
-          <div class="solution-item fragment fade-up" data-fragment-index="7"><div class="solution-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 12l2-1m-2 1l-2-1m2 1v2.5"/></svg></div><p>Grounded & Auditable AI</p></div>
-          <div class="solution-item fragment fade-up" data-fragment-index="8"><div class="solution-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h.5A2.5 2.5 0 0020 5.5V3.935M3.055 11a9 9 0 019-9c4.125 0 7.665 2.578 8.945 6.165"/><circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>'Glass Box' Transparency</p></div>
-          <div class="solution-item fragment fade-up" data-fragment-index="9"><div class="solution-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M14 12H4M20 12h-2"/></svg></div><p>Integrated Low-Code Tools</p></div>
-          <div class="solution-item fragment fade-up" data-fragment-index="10"><div class="solution-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 12v.01M8 12v.01M16 12v.01"/></svg></div><p>Enterprise Security</p></div>
-      </div>
     </div>
   </div>
 </section>

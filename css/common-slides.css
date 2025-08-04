@@ -58,26 +58,7 @@
 
 
 /* Global heading styles for consistency */
-.reveal h2 {
-  color: #012190;
-  font-size: 24px; /* Even smaller heading */
-  font-weight: 800 !important;
-  margin: 12px 0; /* Reduced margins */
-  position: relative;
-  z-index: 10; /* Ensure it's above other elements but below header */
-  visibility: visible !important; /* Force visibility */
-  opacity: 1 !important; /* Ensure opacity is set to visible */
-  text-align: center;
-  padding-bottom: 8px; /* Reduced padding */
-  letter-spacing: -0.5px;
-  background: linear-gradient(90deg, #012190, #0021F3, #FFAD0E);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-  margin: 0 auto 10px; /* Reduced margin */
-  width: auto;
-}
+
 
 
 

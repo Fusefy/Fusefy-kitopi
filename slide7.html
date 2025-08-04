@@ -1,692 +1,142 @@
-<section class="intelligent-agents-slide" data-auto-animate data-transition="zoom">
+<section class="thank-you-slide" data-auto-animate data-transition="zoom">
   <style>
-    .intelligent-agents-slide {
-      --dark-blue: #0a2540;
-      --light-blue: #3a86ff;
-      --orange: #ff6b35;
-      --text-primary: #1a202c;
-      --text-secondary: #4a5568;
-      --card-border: #e2e8f0;
-      --card-shadow: rgba(0, 0, 0, 0.1);
-      --gradient-bg: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
-      --success-green: #10b981;
+    .thank-you-slide {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      background: white;
-      width: 100%;
-      height: 100%;
-      padding: 4vh 6vw;
-      box-sizing: border-box;
-      position: relative;
-      font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    
-    /* MODIFIED: Storylane modal styles for full screen */
-    .storylane-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
+      align-items: center;
+      justify-content: center;
       width: 100vw;
       height: 100vh;
-      background-color: #000; /* Background for transition */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
-    }
-    
-    .storylane-modal.active {
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.3s ease;
-    }
-    
-    .storylane-container {
-      /* MODIFIED FOR FULL SCREEN */
-      width: 100%;
-      height: 100%;
-      max-width: none;
-      aspect-ratio: unset;
-      background-color: white;
-      border-radius: 0;
-      box-shadow: none;
+      background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+      font-family: "Segoe UI", "SF Pro Display", -apple-system,
+        BlinkMacSystemFont, sans-serif;
       position: relative;
-      transform: none;
-      transition: none;
-      display: flex;
-      flex-direction: column;
       overflow: hidden;
-      padding: 0;
-      justify-content: center;
     }
-    
-    .storylane-modal.active .storylane-container {
-       transform: none;
-    }
-    
-    .close-storylane {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      z-index: 100;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-    
-    .close-storylane:hover {
-      background-color: rgba(0, 0, 0, 0.7);
-      transform: scale(1.1);
-      color: #ff6b35;
-    }
-
-    .intelligent-agents-slide * {
-      box-sizing: border-box;
-    }
-
-    .slide-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 15px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .subtitle-wrapper {
-        font-size: 20px;
-        color: #0a2540 !important;
-      text-align: center;
-      margin-bottom: 25px;
-      position: relative;
-    }
-
-    .company-logo {
-      height: 40px;
-      max-width: 40px;
-      transition: transform 0.3s ease;
-    }
-
-    .company-logo:hover {
-      transform: scale(1.1);
-    }
-
-    .slide-content {
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      position: relative;
-    }
-
-    .agent-cards-container {
+    .thank-you-content {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      width: 100%;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .top-row, .bottom-row {
-      display: flex;
-      gap: 50px;
-      justify-content: center;
-    }
-
-    .top-row {
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
-
-    .bottom-row {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .agent-card {
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      padding: 16px;
-      position: relative;
-      overflow: visible;
-      border: 1px solid var(--card-border);
-      flex: 1;
-      min-width: 200px;
-      max-width: 400px;
-      height: 200px;
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      cursor: pointer;
-    }
-
-    .agent-card:hover {
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      transform: translateY(-5px) scale(1.02);
-      border-color: var(--light-blue);
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #f0f4f8;
-    }
-
-    .agent-icon {
-      width: 40px;
-      height: 40px;
-      display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
-      margin-right: 12px;
-      background: linear-gradient(135deg, #f0f5fa 0%, #e6eef7 100%);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(58, 134, 255, 0.1);
+      padding: 60px 40px 40px 40px;
+      min-width: 320px;
+      max-width: 600px;
+      margin: 0 auto;
       position: relative;
     }
-
-    .agent-icon svg {
-      width: 20px;
-      height: 20px;
+    .thank-you-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 24px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(58, 134, 255, 0.1);
+      background: #f0f5fa;
+      object-fit: contain;
+    }
+    .thank-you-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #0a2540;
+      margin-bottom: 18px;
+      text-align: center;
+      letter-spacing: -1px;
+    }
+    .thank-you-message h2 {
+      font-size: 22px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #012190;
+      margin-bottom: 32px;
+      text-align: center;
+      font-weight: 800;
     }
 
-    .agent-info {
-      flex: 1;
+    .thank-you-message p {
+      font-size: 16px !important;
+      color: #4a5568;
+      text-align: center;
     }
 
-    .agent-name {
+    .download-button {
       font-size: 16px;
+      display: inline-block;
+      background: #0021F3;
+      color: #fff !important;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
       font-weight: 600;
-      margin-bottom: 3px;
-      color: var(--dark-blue);
-      letter-spacing: -0.3px;
+      transition: background 0.3s;
     }
 
-    .agent-use-case {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
+    .download-button:hover {
+      background: #2a66cc;
     }
 
-    .impact-list {
-      list-style-type: none;
-      margin-top: 10px;
-      padding: 0;
-    }
-
-    .impact-item {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: flex-start;
-      font-size: 13px;
-      color: var(--text-primary);
-      font-weight: 500;
-      position: relative;
-      line-height: 1.4;
-      text-align: left;
-      padding-left: 0;
-      list-style-type: none;
-      gap: 8px;
-    }
-
-    .impact-icon {
-      width: 18px;
-      height: 18px;
-      margin-right: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background-color: rgba(16, 185, 129, 0.1);
-      position: relative;
-      overflow: visible;
-    }
-
-    .impact-icon svg {
-      width: 10px;
-      height: 10px;
-      fill: var(--success-green);
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-procurement { border-top: 3px solid var(--light-blue); }
-    .card-hr { border-top: 3px solid var(--orange); }
-    .card-recruitment { border-top: 3px solid var(--light-blue); }
-    .card-claims { border-top: 3px solid var(--orange); }
-    .card-customer { border-top: 3px solid var(--light-blue); }
-    .card-healthcare { border-top: 3px solid var(--light-blue); }
-
-    .icon-procurement { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
-    .icon-procurement svg { fill: var(--light-blue); }
-    .icon-hr { background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%); }
-    .icon-hr svg { fill: var(--orange); }
-    .icon-recruitment { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
-    .icon-recruitment svg { fill: var(--light-blue); }
-    .icon-claims { background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%); }
-    .icon-claims svg { fill: var(--orange); }
-    .icon-customer { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
-    .icon-customer svg { fill: var(--light-blue); }
-    .icon-healthcare { background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0.05) 100%); }
-    .icon-healthcare svg { fill: var(--light-blue); }
-
-    .fragment { opacity: 0; transition: all 0.5s ease; }
-    .fragment.visible { opacity: 1; }
-
-    .agent-card.glow::after {
-      content: '';
-      position: absolute;
-      top: -2px; left: -2px; right: -2px; bottom: -2px;
-      background: linear-gradient(45deg, var(--light-blue), transparent, var(--orange));
-      z-index: -1;
-      border-radius: 14px;
-      opacity: 0.2;
-    }
-
-    .bg-accent { position: absolute; border-radius: 50%; z-index: -1; filter: blur(50px); opacity: 0.1; }
-    .bg-accent-1 { width: 200px; height: 200px; top: -50px; right: -50px; background: var(--light-blue); }
-    .bg-accent-2 { width: 150px; height: 150px; bottom: -30px; left: -30px; background: var(--orange); }
-
-    .shimmer { position: relative; overflow: visible; }
-    .shimmer::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
-      opacity: 0;
-    }
-    
-    /* MODIFIED: Standardized styles for the full screen embed */
-    .sl-embed {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .storylane-loading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #FFF; /* Use a solid background */
-      z-index: 1;
-    }
-    
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid rgba(58, 134, 255, 0.2);
-      border-top: 4px solid var(--light-blue);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
-    }
-    
-    .loading-text {
-      color: var(--dark-blue);
-      font-size: 16px;
+    .thank-you-footer {
+      font-size: 1rem;
+      color: #3a86ff;
       text-align: center;
+      margin-top: 12px;
+      font-weight: 600;
     }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .agent-card.clickable {
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .agent-card.clickable:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .agent-card.clicked {
-      transform: scale(0.96);
-      transition: transform 0.1s ease;
-    }
-    
-    .agent-card::after {
-      content: "Click to view demo";
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background-color: rgba(10, 37, 64, 0.1);
-      color: var(--dark-blue);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 10px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .agent-card:hover::after {
-      opacity: 0.7;
-    }
-
-    @media (max-width: 768px) {
-      /* MODIFIED: Removed specific overrides for modal as it's now always full screen */
+    @media (max-width: 600px) {
+      .thank-you-content {
+        padding: 32px 10px 24px 10px;
+        min-width: unset;
+        max-width: 95vw;
+      }
+      .thank-you-title {
+        font-size: 2rem;
+      }
+      .thank-you-logo {
+        width: 56px;
+        height: 56px;
+      }
     }
   </style>
-
   <header class="slide-header" data-id="header">
     <h1 class="zoom-in" data-auto-animate data-auto-animate-duration="1.5">
-      AGENTIC AI USE CASES
+      Together, We Innovate
     </h1>
     <img
-      src="./images/Logo.png"
+      src="images/Logo.png"
       alt="Company Logo"
       class="company-logo"
       data-auto-animate
       data-auto-animate-duration="1"
     />
   </header>
-
-  <div class="slide-content">
-    <div class="subtitle-wrapper">
-      <h2>
-        Intelligent Agents Built for Business Operations
-      </h2>
+  <div class="thank-you-content">
+    <img src="./images/Logo.png" alt="Company Logo" class="thank-you-logo" />
+    <div class="thank-you-title">Thank You!</div>
+    <div class="thank-you-message">
+      <h2>Let's build the future of AI together</h2>
+      <p>
+        Visit
+        <a
+          href="https://www.fusefy.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+          >www.fusefy.ai</a
+        >
+        to learn more
+      </p>
+      <p>
+        For inquiries, contact us at
+        <a href="mailto:info@fusefy.ai">info@fusefy.ai</a>
+      </p>
     </div>
-
-    <div class="agent-cards-container">
-      <!-- Top row with 3 cards -->
-      <div class="top-row">
-        <!-- Healthcare Agent -->
-        <div class="agent-card card-healthcare" data-storylane-url="https://app.storylane.io/share/gh3snrqq5ljv">
-          <div class="card-header">
-            <div class="agent-icon icon-healthcare">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M18 14h-4v4h-4v-4H6v-4h4V6h4v4h4m1-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Healthcare Agent</div>
-              <div class="agent-use-case">Medical Document Processing</div>
-            </div>
-          </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>65% faster documentation</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>90% accuracy in records</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>4x patient data processing</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Onboarding Agent -->
-        <div class="agent-card card-hr" data-storylane-url="https://app.storylane.io/share/d9xx3md7cyhg">
-          <div class="card-header">
-            <div class="agent-icon icon-hr">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Onboarding Agent</div>
-              <div class="agent-use-case">Employee Onboarding Assistant</div>
-            </div>
-          </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>70% faster onboarding</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>45% reduced HR support</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>2x faster query resolution</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Interview Agent -->
-        <div class="agent-card card-recruitment" data-storylane-url="https://app.storylane.io/share/daptmkw6awmo">
-          <div class="card-header">
-            <div class="agent-icon icon-recruitment">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M14,20V19C14,17.67 11.33,17 10,17C8.67,17 6,17.67 6,19V20H14M10,12A2,2 0 0,0 8,14A2,2 0 0,0 10,16A2,2 0 0,0 12,14A2,2 0 0,0 10,12Z"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Interview Agent</div>
-              <div class="agent-use-case">Recruitment Assistance</div>
-            </div>
-          </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>50% faster screening</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>85% auto-scheduling</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>3x recruiter productivity</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Bottom row with 2 cards -->
-      <div class="bottom-row">
-        <!-- Claim Reimbursement Agent -->
-        <div class="agent-card card-claims" data-storylane-url="https://app.storylane.io/share/dhhssqjljjan">
-          <div class="card-header">
-            <div class="agent-icon icon-claims">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,10.5A1.5,1.5 0 0,0 10.5,12A1.5,1.5 0 0,0 12,13.5A1.5,1.5 0 0,0 13.5,12A1.5,1.5 0 0,0 12,10.5M7.5,12A4.5,4.5 0 0,1 12,7.5A4.5,4.5 0 0,1 16.5,12H15A3,3 0 0,0 12,9A3,3 0 0,0 9,12H7.5Z"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Claim Reimbursement Agent</div>
-              <div class="agent-use-case">Claims Automation</div>
-            </div>
-          </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>40% faster processing</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>30% less manual review</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>Improved audit quality</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- PO Agent -->
-        <div class="agent-card card-procurement" data-storylane-url="https://app.storylane.io/share/1qaq6ksdkphn">
-          <div class="card-header">
-            <div class="agent-icon icon-procurement">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L11.5,17.5L9.5,15.5L11.5,13.5L10,12L7,15L10,18V19Z"/>
-              </svg>
-            </div>
-            <div class="agent-info">
-              <div class="agent-name">Purchase Order Agent</div>
-              <div class="agent-use-case">PO Processing Automation</div>
-            </div>
-          </div>
-          <ul class="impact-list">
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>60% less manual effort</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>95% data accuracy</span>
-            </li>
-            <li class="impact-item">
-              <div class="impact-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-                </svg>
-              </div>
-              <span>3x cycle time speed-up</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+       <a
+      href="images/kitopi-final.pdf"
+      download
+      class="download-button"
+    >
     
-    <!-- Storylane modals for each agent -->
-    <div id="storylane-modal-interview" class="storylane-modal">
-      <div class="storylane-container">
-        <div class="close-storylane">×</div>
-        <div class="sl-embed">
-          <div class="storylane-loading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading Claim Reimbursement Demo...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="storylane-modal-claim" class="storylane-modal">
-      <div class="storylane-container">
-        <div class="close-storylane">×</div>
-        <div class="sl-embed">
-          <div class="storylane-loading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading Interview Agent Demo...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="storylane-modal-po" class="storylane-modal">
-      <div class="storylane-container">
-        <div class="close-storylane">×</div>
-        <div class="sl-embed">
-          <div class="storylane-loading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading onboarding agent demo...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="storylane-modal-onboarding" class="storylane-modal">
-      <div class="storylane-container">
-        <div class="close-storylane">×</div>
-        <div class="sl-embed">
-          <div class="storylane-loading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading Interview Agent Demo...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="storylane-modal-healthcare" class="storylane-modal">
-      <div class="storylane-container">
-        <div class="close-storylane">×</div>
-        <div class="sl-embed">
-          <div class="storylane-loading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading Healthcare Agent Demo...</div>
-          </div>
-        </div>
-      </div>
-    </div>
+      Download PDF
+    </a>
+    <div class="thank-you-footer">— The Fusefy Team —</div>
   </div>
 </section>
