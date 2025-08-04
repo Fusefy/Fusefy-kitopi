@@ -660,20 +660,20 @@ function setupImpactCardInteractions() {
   const slide = document.querySelector('#slide1');
   if (!slide) return;
 
-  // --- DATA SCENARIO: 50 Human Agents -> AI + 10 Human Agents ---
-  // Before: 50 agents @ $4k/mo = $200k/mo. They handle 10 orders/min combined.
-  // After: AI cost + 10 agents @ $4k/mo = $60k/mo. AI scales to 500+ orders/min.
-  // Cost reduction: ($200k - $60k) / $200k = 70%
+  // --- DATA SCENARIO ---
+  // Before: $200k/mo cost. This represents a 0% reduction.
+  // After: $60k/mo cost. This is a $140k reduction, which is 70% of the original cost.
 
   const beforeData = {
-    cost: { value: 200000, unit: '$/mo', progress: '90%' },
+    // CHANGED: Metric is now cost REDUCTION
+    cost: { value: 80, unit: '%', progress: '80%' }, 
     orders: { value: 10, unit: '/min', progress: '15%' },
     sentiment: { value: 75, unit: '%', progress: '75%' },
   };
 
   const afterData = {
-    // UPDATED: Now using the final value for direct comparison
-    cost: { value: 60000, unit: '$/mo', progress: '25%' },
+    // CHANGED: Metric is now cost REDUCTION
+    cost: { value: 30, unit: '%', progress: '30%' }, 
     orders: { value: 50, unit: '/min', progress: '75%' },
     sentiment: { value: 92, unit: '%', progress: '92%' },
   };
@@ -713,18 +713,15 @@ function setupImpactCardInteractions() {
     sentimentBarAfter.style.width = afterData.sentiment.progress;
   }
 
-  // NEW: Function to display "Before -> After" values
   function updateMetricsDisplay() {
     if (!costValue) return;
 
-    // Helper to format cost values like 200000 -> $200k
-    const formatCost = (val) => `$${val / 1000}k`;
-
-    // --- Cost Metric ---
-    const beforeCost = `${formatCost(beforeData.cost.value)}<span class="metric-unit">${beforeData.cost.unit}</span>`;
-    const afterCost = `${formatCost(afterData.cost.value)}<span class="metric-unit">${beforeData.cost.unit}</span>`; // Use same unit
+    // --- Cost Reduction Metric ---
+    // The "before" state (0%) is neutral, not bad, so we remove the 'red' class.
+    const beforeCost = `${beforeData.cost.value}<span class="metric-unit">${beforeData.cost.unit}</span>`;
+    const afterCost = `${afterData.cost.value}<span class="metric-unit">${afterData.cost.unit}</span>`;
     costValue.innerHTML = `
-      <span class="metric-before red">${beforeCost}</span>
+      <span class="metric-before">${beforeCost}</span>
       <span class="metric-separator">→</span>
       <span class="metric-after green">${afterCost}</span>
     `;
@@ -749,11 +746,8 @@ function setupImpactCardInteractions() {
   }
 
   // --- Event Listeners for Reveal.js Fragments ---
-  // SIMPLIFIED: Logic now only depends on the main #impact-card fragment
   Reveal.addEventListener('fragmentshown', function(event) {
     if (!event.fragment.closest('#slide1')) return;
-
-    // When the #impact-card appears, show everything at once
     if (event.fragment.id === 'impact-card') {
       populateBars();
       updateMetricsDisplay();
@@ -762,8 +756,6 @@ function setupImpactCardInteractions() {
 
   Reveal.addEventListener('fragmenthidden', function(event) {
     if (!event.fragment.closest('#slide1')) return;
-
-    // If we hide the #impact-card, clear everything
     if (event.fragment.id === 'impact-card') {
       clearMetrics();
     }
